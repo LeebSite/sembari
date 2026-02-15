@@ -58,6 +58,14 @@
                 </a>
             </li>
 
+            <!-- BUKU -->
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('admin.books*') ? 'active' : '' }}"
+                   href="{{ route('admin.books.index') }}">
+                    <i class="bi bi-book me-2"></i>Buku
+                </a>
+            </li>
+                        
             <!-- PUBLIKASI -->
             <!-- PUBLIKASI -->
             {{-- <li class="nav-item">

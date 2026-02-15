@@ -42,7 +42,17 @@ Route::prefix('admin')
             return view('admin.dashboard');
         })->name('admin.dashboard');
 
-        
+        // ===== BUKU =====
+        Route::resource('books', \App\Http\Controllers\Admin\BookController::class)->names([
+            'index' => 'admin.books.index',
+            'create' => 'admin.books.create',
+            'store' => 'admin.books.store',
+            'show' => 'admin.books.show',
+            'edit' => 'admin.books.edit',
+            'update' => 'admin.books.update',
+            'destroy' => 'admin.books.destroy',
+        ]);
+
         // ===== PENGATURAN =====
         Route::get('/pengaturan', [APengaturanController::class, 'index'])
             ->name('admin.pengaturan');
