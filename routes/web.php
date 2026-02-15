@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AdminAuthController;
+use App\Http\Controllers\Admin\APengaturanController;
+use App\Http\Middleware\AdminAuth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -9,3 +12,48 @@ Route::get('/', function () {
 Route::get('/flipbook', function () {
     return view('flipbook');
 });
+
+/*
+|--------------------------------------------------------------------------
+| AUTH ADMIN
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/admin/login', [AdminAuthController::class, 'showLogin'])
+    ->name('admin.login');
+
+Route::post('/admin/login', [AdminAuthController::class, 'login'])
+    ->name('admin.login.submit');
+
+Route::post('/admin/logout', [AdminAuthController::class, 'logout'])
+    ->name('admin.logout');
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN (WAJIB LOGIN)
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('admin')
+    ->middleware(AdminAuth::class)
+    ->group(function () {
+
+        Route::get('/dashboard', function () {
+            return view('admin.dashboard');
+        })->name('admin.dashboard');
+
+        
+        // ===== PENGATURAN =====
+        Route::get('/pengaturan', [APengaturanController::class, 'index'])
+            ->name('admin.pengaturan');
+
+        Route::post('/pengaturan', [APengaturanController::class, 'store'])
+            ->name('admin.pengaturan.store');
+
+        Route::post('/pengaturan/update', [APengaturanController::class, 'update'])
+            ->name('admin.pengaturan.update');
+
+        Route::post('/pengaturan/delete', [APengaturanController::class, 'destroy'])
+            ->name('admin.pengaturan.destroy');
+
+    });
