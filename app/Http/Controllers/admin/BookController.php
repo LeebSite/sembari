@@ -15,13 +15,7 @@ class BookController extends Controller
     public function index()
     {
         $books = DB::table('books')
-            ->leftJoin('reading_levels', 'books.reading_level_id', '=', 'reading_levels.id')
-            ->leftJoin('licenses', 'books.license_id', '=', 'licenses.id')
-            ->select(
-                'books.*',
-                'reading_levels.label as reading_level',
-                'licenses.name as license_name'
-            )
+            ->select('books.*')
             ->orderBy('books.created_at', 'desc')
             ->paginate(10);
 
@@ -33,12 +27,10 @@ class BookController extends Controller
      */
     public function create()
     {
-        $readingLevels = DB::table('reading_levels')->get();
-        $licenses = DB::table('licenses')->get();
-        $categories = DB::table('categories')->get();
-        $authors = DB::table('authors')->orderBy('name')->get();
+        $categories = DB::table('categories')->orderBy('name')->get();
+        $bookTypes = DB::table('book_types')->orderBy('name')->get();
 
-        return view('admin.books.create', compact('readingLevels', 'licenses', 'categories', 'authors'));
+        return view('admin.books.create', compact('categories', 'bookTypes'));
     }
 
     /**
@@ -49,9 +41,11 @@ class BookController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'nullable',
+            'contributors' => 'nullable',
+            'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
             'cover_image' => 'nullable|image|max:2048',
-            'reading_level_id' => 'nullable|exists:reading_levels,id',
-            'license_id' => 'nullable|exists:licenses,id',
+            'categories' => 'nullable|array',
+            'book_types' => 'nullable|array',
         ]);
 
         $slug = Str::slug($request->title);
@@ -67,9 +61,9 @@ class BookController extends Controller
             'title' => $request->title,
             'slug' => $slug,
             'description' => $request->description,
+            'contributors' => $request->contributors,
+            'license' => $request->license,
             'cover_image' => $coverImagePath,
-            'reading_level_id' => $request->reading_level_id,
-            'license_id' => $request->license_id,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -96,37 +90,12 @@ class BookController extends Controller
             }
         }
 
-        // Attach contributors (authors)
-        if ($request->has('penulis')) {
-            foreach ($request->penulis as $authorId) {
-                DB::table('book_contributors')->insert([
+        // Attach book types
+        if ($request->has('book_types')) {
+            foreach ($request->book_types as $bookTypeId) {
+                DB::table('book_book_type')->insert([
                     'book_id' => $bookId,
-                    'author_id' => $authorId,
-                    'role' => 'penulis',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-        }
-
-        if ($request->has('penerjemah')) {
-            foreach ($request->penerjemah as $authorId) {
-                DB::table('book_contributors')->insert([
-                    'book_id' => $bookId,
-                    'author_id' => $authorId,
-                    'role' => 'penerjemah',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-        }
-
-        if ($request->has('ilustrator')) {
-            foreach ($request->ilustrator as $authorId) {
-                DB::table('book_contributors')->insert([
-                    'book_id' => $bookId,
-                    'author_id' => $authorId,
-                    'role' => 'ilustrator',
+                    'book_type_id' => $bookTypeId,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -148,19 +117,19 @@ class BookController extends Controller
             abort(404);
         }
 
-        $contributors = DB::table('book_contributors')
-            ->join('authors', 'book_contributors.author_id', '=', 'authors.id')
-            ->where('book_contributors.book_id', $id)
-            ->select('authors.name', 'book_contributors.role')
-            ->get();
-
         $categories = DB::table('book_categories')
             ->join('categories', 'book_categories.category_id', '=', 'categories.id')
             ->where('book_categories.book_id', $id)
             ->select('categories.name')
             ->get();
 
-        return view('admin.books.show', compact('book', 'contributors', 'categories'));
+        $bookTypes = DB::table('book_book_type')
+            ->join('book_types', 'book_book_type.book_type_id', '=', 'book_types.id')
+            ->where('book_book_type.book_id', $id)
+            ->select('book_types.name')
+            ->get();
+
+        return view('admin.books.show', compact('book', 'categories', 'bookTypes'));
     }
 
     /**
@@ -174,10 +143,8 @@ class BookController extends Controller
             abort(404);
         }
 
-        $readingLevels = DB::table('reading_levels')->get();
-        $licenses = DB::table('licenses')->get();
-        $categories = DB::table('categories')->get();
-        $authors = DB::table('authors')->orderBy('name')->get();
+        $categories = DB::table('categories')->orderBy('name')->get();
+        $bookTypes = DB::table('book_types')->orderBy('name')->get();
 
         // Get selected categories
         $selectedCategories = DB::table('book_categories')
@@ -185,35 +152,18 @@ class BookController extends Controller
             ->pluck('category_id')
             ->toArray();
 
-        // Get selected contributors
-        $selectedPenulis = DB::table('book_contributors')
+        // Get selected book types
+        $selectedBookTypes = DB::table('book_book_type')
             ->where('book_id', $id)
-            ->where('role', 'penulis')
-            ->pluck('author_id')
-            ->toArray();
-
-        $selectedPenerjemah = DB::table('book_contributors')
-            ->where('book_id', $id)
-            ->where('role', 'penerjemah')
-            ->pluck('author_id')
-            ->toArray();
-
-        $selectedIlustrator = DB::table('book_contributors')
-            ->where('book_id', $id)
-            ->where('role', 'ilustrator')
-            ->pluck('author_id')
+            ->pluck('book_type_id')
             ->toArray();
 
         return view('admin.books.edit', compact(
             'book',
-            'readingLevels',
-            'licenses',
             'categories',
-            'authors',
+            'bookTypes',
             'selectedCategories',
-            'selectedPenulis',
-            'selectedPenerjemah',
-            'selectedIlustrator'
+            'selectedBookTypes'
         ));
     }
 
@@ -225,9 +175,11 @@ class BookController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'nullable',
+            'contributors' => 'nullable',
+            'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
             'cover_image' => 'nullable|image|max:2048',
-            'reading_level_id' => 'nullable|exists:reading_levels,id',
-            'license_id' => 'nullable|exists:licenses,id',
+            'categories' => 'nullable|array',
+            'book_types' => 'nullable|array',
         ]);
 
         $slug = Str::slug($request->title);
@@ -245,9 +197,9 @@ class BookController extends Controller
             'title' => $request->title,
             'slug' => $slug,
             'description' => $request->description,
+            'contributors' => $request->contributors,
+            'license' => $request->license,
             'cover_image' => $coverImagePath,
-            'reading_level_id' => $request->reading_level_id,
-            'license_id' => $request->license_id,
             'updated_at' => now(),
         ]);
 
@@ -264,39 +216,13 @@ class BookController extends Controller
             }
         }
 
-        // Update contributors
-        DB::table('book_contributors')->where('book_id', $id)->delete();
-        
-        if ($request->has('penulis')) {
-            foreach ($request->penulis as $authorId) {
-                DB::table('book_contributors')->insert([
+        // Update book types
+        DB::table('book_book_type')->where('book_id', $id)->delete();
+        if ($request->has('book_types')) {
+            foreach ($request->book_types as $bookTypeId) {
+                DB::table('book_book_type')->insert([
                     'book_id' => $id,
-                    'author_id' => $authorId,
-                    'role' => 'penulis',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-        }
-
-        if ($request->has('penerjemah')) {
-            foreach ($request->penerjemah as $authorId) {
-                DB::table('book_contributors')->insert([
-                    'book_id' => $id,
-                    'author_id' => $authorId,
-                    'role' => 'penerjemah',
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-        }
-
-        if ($request->has('ilustrator')) {
-            foreach ($request->ilustrator as $authorId) {
-                DB::table('book_contributors')->insert([
-                    'book_id' => $id,
-                    'author_id' => $authorId,
-                    'role' => 'ilustrator',
+                    'book_type_id' => $bookTypeId,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -312,6 +238,7 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
+        // Delete akan cascade ke book_categories dan book_book_type
         DB::table('books')->where('id', $id)->delete();
 
         return redirect()->route('admin.books.index')
