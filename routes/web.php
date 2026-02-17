@@ -5,6 +5,11 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\APengaturanController;
 use App\Http\Middleware\AdminAuth;
 
+// Test route
+Route::get('/test-admin', function () {
+    return view('test-admin');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });

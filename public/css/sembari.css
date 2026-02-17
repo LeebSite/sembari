@@ -1,0 +1,316 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f8fafc;
+}
+
+/* ================= NAVBAR ================= */
+.navbar-sembari {
+    width: 100%;
+    background: #4da3ff;
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* pastikan di atas konten lain */
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+}
+
+/* INNER agar sejajar stat-bar */
+.navbar-sembari .nav-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 64px;
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nav-left img {
+    height: 34px;
+}
+
+.nav-left span {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* MENU */
+.nav-menu {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.nav-menu li {
+    position: relative;
+}
+
+.nav-menu a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    height: 64px;
+}
+
+/* DROPDOWN */
+.arrow {
+    font-size: 12px;
+    transition: transform .25s ease;
+}
+
+.dropdown:hover .arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 64px;
+    left: 0;
+    background: #fff;
+    min-width: 180px;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.15);
+    opacity: 0;
+    transform: translateY(10px);
+    pointer-events: none;
+    transition: all .25s ease;
+    z-index: 999;
+}
+
+.dropdown:hover .dropdown-menu {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.dropdown-menu a {
+    padding: 12px 16px;
+    color: #1e293b;
+}
+
+/* RIGHT */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border-radius: 999px;
+    padding: 6px 14px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+}
+
+.icon-btn {
+    color: #fff;
+    font-size: 18px;
+}
+
+/* ================= STAT BAR ================= */
+.stat-bar {
+    width: 100%;
+    background: #6fb24c;
+    color: #fff;
+}
+
+.stat-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 26px 0;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.stat-item {
+    flex: 1;
+}
+
+.stat-item h2 {
+    font-size: 36px;
+    font-weight: 700;
+}
+
+.stat-item p {
+    margin-top: 6px;
+    font-size: 16px;
+}
+
+/* ================= MAIN CONTENT ================= */
+main {
+    padding: 40px;
+}
+
+/* ================= FOOTER SEMBARI ================= */
+.footer-sembari {
+    width: 100%;
+    background: #4da3ff;
+    color: #ffffff;
+    margin-top: 80px;
+}
+
+/* GRID UTAMA */
+.footer-sembari-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 40px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+/* KOLOM */
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* BRAND */
+.brand-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+}
+
+.brand-top img {
+    height: 42px;
+}
+
+.brand-top h3 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.brand-top p {
+    font-size: 14px;
+    opacity: .95;
+}
+
+/* INSTANSI */
+.instansi {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.instansi img {
+    height: 44px;
+}
+
+.instansi p {
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+/* KONTAK */
+.kontak {
+    list-style: none;
+    padding: 0;
+}
+
+.kontak li {
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+/* LINK */
+.footer-col h4 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.footer-links,
+.statistik {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li,
+.statistik li {
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.footer-links a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+/* SOSIAL */
+.socials {
+    display: flex;
+    gap: 14px;
+    margin-top: 6px;
+}
+
+.socials a {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255,255,255,.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-decoration: none;
+}
+
+.socials a:hover {
+    background: rgba(255,255,255,.15);
+}
+
+/* BOTTOM */
+.footer-bottom {
+    border-top: 1px solid rgba(255,255,255,.4);
+    padding: 16px 20px;
+    text-align: center;
+    font-size: 13px;
+}
+
+/* UTIL */
+.mt-20 {
+    margin-top: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .footer-sembari-inner {
+        grid-template-columns: 1fr;
+        padding: 40px 20px;
+        gap: 40px;
+    }
+}

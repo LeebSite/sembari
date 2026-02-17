@@ -2,15 +2,23 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Admin Laman BBPR</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sembari - @yield('title', 'Dashboard')</title>
 
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/adminpengaturan.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admintokoh.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/adminprofil.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Admin Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v={{ time() }}">
+    
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 <body>
@@ -21,271 +29,130 @@
     $ziwbkOpen = request()->routeIs('admin.ziwbk.*');
 @endphp
 
-<div class="d-flex min-vh-100">
-    <aside class="sidebar d-flex flex-column">
-
-        <!-- PROFIL ADMIN -->
-        <div class="admin-profile px-2 py-1">
-            <div class="d-flex align-items-center">
-                <img src="https://ppidbbpriau.kemendikdasmen.go.id/bbpr/img/AkunLogo.png" alt="Foto Profil Admin" class="avatar-circle me-1">
-                <div class="admin-info">
-                    @php
-                        $adminLogin = (object) [
-                            'username' => session('admin_username'),
-                            'role' => session('admin_role'),
-                        ];
-                    @endphp
-
-                    <div class="fw-bold fs-6" style="color:#1e3a8a;">
-                        {{ $adminLogin->username ?? '-' }}
-                    </div>
-                    <div class="small" style="color:#1e3a8a; font-weight:600;">
-                        {{ $adminLogin->role === 'super_admin' ? 'Super Admin' : ucfirst($adminLogin->role) }}
-                    </div>
-                </div>
+<div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <!-- Logo & Brand -->
+        <div class="sidebar-brand">
+            <img src="{{ asset('img/logobalai.png') }}" alt="Logo Balai Bahasa" class="brand-logo">
+            <div class="brand-text">
+                <h5 class="mb-0">Sembari</h5>
+                <small>Perpustakaan Digital</small>
             </div>
         </div>
 
-        <hr class="sidebar-hr">
+        <!-- Admin Profile -->
+        <div class="admin-profile-card">
+            <div class="profile-avatar">
+                <i class="bi bi-person-circle"></i>
+            </div>
+            <div class="profile-info">
+                @php
+                    $adminLogin = (object) [
+                        'username' => session('admin_username', 'Admin'),
+                        'role' => session('admin_role', 'admin'),
+                    ];
+                @endphp
+                <h6 class="profile-name">{{ $adminLogin->username }}</h6>
+                <span class="profile-role">{{ $adminLogin->role === 'super_admin' ? 'Super Admin' : 'Admin' }}</span>
+            </div>
+        </div>
 
-        <ul class="nav flex-column menu-list flex-grow-1">
-
-            <!-- DASHBOARD -->
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}"
-                   href="{{ route('admin.dashboard') }}">
-                    <i class="bi bi-speedometer2 me-2"></i>Dashboard
-                </a>
-            </li>
-
-            <!-- BUKU -->
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.books*') ? 'active' : '' }}"
-                   href="{{ route('admin.books.index') }}">
-                    <i class="bi bi-book me-2"></i>Buku
-                </a>
-            </li>
-                        
-            <!-- PUBLIKASI -->
-            <!-- PUBLIKASI -->
-            {{-- <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.publikasi*') ? 'active' : '' }}"
-                   href="{{ route('admin.publikasi') }}">
-                    <i class="bi bi-journal-text me-2"></i>Publikasi
-                </a>
-            </li> --}}
-            
-            <!-- TOKOH -->
-            <!-- TOKOH -->
-            {{-- <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.tokoh*') ? 'active' : '' }}"
-                    href="{{ route('admin.tokoh') }}">
-                    <i class="bi bi-person-badge me-2"></i>Tokoh
-                </a>
-             </li> --}}
-
-            <!-- GALERI -->
-            <!-- GALERI -->
-            {{-- <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.galeri*') ? 'active' : '' }}"
-                   href="{{ route('admin.galeri') }}">
-                    <i class="bi bi-images me-2"></i>Galeri
-                </a>
-            </li> --}}
-
-            <!-- PROFIL LAMAN -->
-            <!-- PROFIL LAMAN -->
-            {{-- <li class="nav-item">
-                <a class="nav-link d-flex justify-content-between align-items-center"
-                   href="#"
-                   onclick="toggleSubMenu(this)">
-                    <div>
-                        <i class="bi bi-building-gear me-2"></i>Profil Laman
-                    </div>
-                    <i class="bi submenu-arrow {{ $profilOpen ? 'bi-caret-down-fill' : 'bi-caret-right-fill' }}"></i>
-                </a>
-                <ul id="SubMenu"
-                    class="nav flex-column ms-3"
-                    @if($profilOpen) style="display:block" @else style="display:none" @endif>
-                    <li>
-                        <a class="nav-link {{ request()->routeIs('admin.profil.visimisi*') ? 'active' : '' }}"
-                           href="{{ route('admin.profil.visimisi') }}">
-                            <i class="bi bi-bullseye me-2"></i>Visi & Misi
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link {{ request()->routeIs('admin.profil.tugasfungsi*') ? 'active' : '' }}"
-                           href="{{ route('admin.profil.tugasfungsi') }}">
-                            <i class="bi bi-list-task me-2"></i>Tugas & Fungsi
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link {{ request()->routeIs('admin.profil.pegawai') ? 'active' : '' }}"
-                        href="{{ route('admin.profil.pegawai') }}">
-                            <i class="bi bi-people me-2"></i>Pegawai
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link {{ request()->routeIs('admin.profil.strukturorganisasi') ? 'active' : '' }}"
-                        href="{{ route('admin.profil.strukturorganisasi') }}">
-                            <i class="bi bi-diagram-3 me-2"></i>Struktur Organisasi
-                        </a>
-                    </li>
-                </ul>
-            </li> --}}
-
-            <!-- AKUNTABILITAS -->
-            <!-- AKUNTABILITAS -->
-            {{-- <li class="nav-item">
-                    <a class="nav-link d-flex justify-content-between align-items-center" href="#" onclick="toggleSubMenu(this)">
-                        <div>
-                            <i class="bi bi-clipboard-check me-2"></i>Akuntabilitas
-                        </div>
-                        <i class="bi submenu-arrow {{ $akuntabilitasOpen ? 'bi-caret-down-fill' : 'bi-caret-right-fill' }}"></i>
+        <!-- Navigation Menu -->
+        <nav class="sidebar-nav">
+            <ul class="nav-list">
+                <!-- Dashboard -->
+                <li class="nav-item">
+                    <a href="{{ route('admin.dashboard') }}" 
+                       class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                        <i class="bi bi-speedometer2"></i>
+                        <span>Dashboard</span>
                     </a>
-                    <ul class="nav flex-column ms-3 submenu-list" 
-                        style="display: {{ $akuntabilitasOpen ? 'block' : 'none' }}">
-                        
-                        <li>
-                            <a class="nav-link {{ request()->is('admin/akuntabilitas/renstra*') ? 'active' : '' }}"
-                               href="{{ route('admin.akuntabilitas.index', 'renstra') }}">
-                                <i class="fas fa-arrow-right me-2"></i>Renstra
-                            </a>
-                        </li>
-                
-                        <li>
-                            <a class="nav-link {{ request()->is('admin/akuntabilitas/dipa*') ? 'active' : '' }}"
-                               href="{{ route('admin.akuntabilitas.index', 'dipa') }}">
-                                <i class="fas fa-dollar-sign me-2"></i>DIPA
-                            </a>
-                        </li>
-                
-                        <li>
-                            <a class="nav-link {{ request()->is('admin/akuntabilitas/perjanjian-kinerja*') ? 'active' : '' }}"
-                               href="{{ route('admin.akuntabilitas.index', 'perjanjian-kinerja') }}">
-                                <i class="fas fa-file-signature me-2"></i>Perjanjian Kinerja
-                            </a>
-                        </li>
-                
-                        <li>
-                            <a class="nav-link {{ request()->is('admin/akuntabilitas/rencana-aksi*') ? 'active' : '' }}"
-                               href="{{ route('admin.akuntabilitas.index', 'rencana-aksi') }}">
-                                <i class="fas fa-list-check me-2"></i>Rencana Aksi
-                            </a>
-                        </li>
-                
-                        <li>
-                            <a class="nav-link {{ request()->is('admin/akuntabilitas/lakin*') ? 'active' : '' }}"
-                               href="{{ route('admin.akuntabilitas.index', 'lakin') }}">
-                                <i class="fas fa-list-check me-2"></i>Lakin
-                            </a>
-                        </li>
-                
-                        <li>
-                            <a class="nav-link {{ request()->is('admin/akuntabilitas/sakai*') ? 'active' : '' }}"
-                               href="{{ route('admin.akuntabilitas.index', 'sakai') }}">
-                                <i class="fas fa-list-check me-2"></i>SAKAI
-                            </a>
-                        </li>
-                    </ul>
-                </li> --}}
-                 
-                 <!-- ZI - WBK -->
-                    {{-- <li class="nav-item">
-                        <a class="nav-link d-flex justify-content-between align-items-center"
-                           href="#"
-                           onclick="toggleSubMenu(this)">
-                            <div>
-                                <i class="bi bi-shield-check me-2"></i>ZI - WBK
-                            </div>
-                            <i class="bi submenu-arrow {{ $ziwbkOpen ? 'bi-caret-down-fill' : 'bi-caret-right-fill' }}"></i>
-                        </a>
-    
-                    <ul class="nav flex-column ms-3 submenu-list"
-                        style="display: {{ $ziwbkOpen ? 'block' : 'none' }}">
-                
-                        <li>
-                            <a class="nav-link {{ request()->routeIs('admin.ziwbk.index') ? 'active' : '' }}"
-                               href="{{ route('admin.ziwbk.index') }}">
-                                <i class="bi bi-folder2-open me-2"></i>Daftar Dokumen
-                            </a>
-                        </li>
-    
-                    <li>
-                        <a class="nav-link {{ request()->routeIs('admin.ziwbk.create') ? 'active' : '' }}"
-                           href="{{ route('admin.ziwbk.create') }}">
-                            <i class="bi bi-upload me-2"></i>Upload Dokumen
-                        </a>
-                    </li>
-            
-                </ul>
-            </li> --}}
-        
-            <!-- SEMBARI -->
-            <!-- SEMBARI -->
-            {{-- <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.sembari*') ? 'active' : '' }}"
-                   href="{{ route('admin.sembari.index') }}">
-                    <i class="bi bi-book me-2"></i>Sembari
-                </a>
-            </li> --}}
-             
-            <!-- HASIL SURVEI -->
-            <!-- HASIL SURVEI -->
-            {{-- <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.hasilsurvei.*') ? 'active' : '' }}"
-                   href="{{ route('admin.hasilsurvei.index') }}">
-                    <i class="bi bi-bar-chart me-2"></i>Hasil Survei
-                </a>
-            </li> --}}
+                </li>
 
+                <!-- Buku -->
+                <li class="nav-item">
+                    <a href="{{ route('admin.books.index') }}" 
+                       class="nav-link {{ request()->routeIs('admin.books*') ? 'active' : '' }}">
+                        <i class="bi bi-book"></i>
+                        <span>Buku</span>
+                    </a>
+                </li>
 
-            <!-- PENGATURAN -->
-            @if(strtolower(session('admin_role')) === 'super_admin')
-            <li class="nav-item">
-                <a class="nav-link {{ request()->routeIs('admin.pengaturan') ? 'active' : '' }}"
-                href="{{ route('admin.pengaturan') }}">
-                    <i class="bi bi-gear me-2"></i>Pengaturan
-                </a>
-            </li>
-            @endif
+                <!-- Pengaturan (Super Admin Only) -->
+                @if(strtolower(session('admin_role')) === 'super_admin')
+                <li class="nav-item">
+                    <a href="{{ route('admin.pengaturan') }}" 
+                       class="nav-link {{ request()->routeIs('admin.pengaturan') ? 'active' : '' }}">
+                        <i class="bi bi-gear"></i>
+                        <span>Pengaturan</span>
+                    </a>
+                </li>
+                @endif
 
-            <li class="nav-item">
-                <a href="#" class="nav-link logout-link"
-                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    <i class="bi bi-box-arrow-right me-2"></i>
-                    Keluar
-                </a>
-
-                <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
-                    @csrf
-                </form>
-            </li>
-
-        </ul>
+                <!-- Logout -->
+                <li class="nav-item-logout">
+                    <a href="#" class="nav-link" 
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Keluar</span>
+                    </a>
+                    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </li>
+            </ul>
+        </nav>
     </aside>
 
-    <main class="flex-fill p-4 bg-content">
-        @yield('content')
+    <!-- Main Content -->
+    <main class="admin-content">
+        <!-- Top Bar -->
+        <div class="top-bar">
+            <button class="mobile-menu-toggle" onclick="toggleSidebar()">
+                <i class="bi bi-list"></i>
+            </button>
+            
+            <div class="top-bar-right">
+                <span class="welcome-text">Selamat datang, <strong>{{ session('admin_username', 'Admin') }}</strong></span>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-wrapper">
+            @yield('content')
+        </div>
+
+        <!-- Footer -->
+        <footer class="admin-footer">
+            <p class="mb-0">&copy; {{ date('Y') }} Balai Bahasa Provinsi Riau. All rights reserved.</p>
+        </footer>
     </main>
 </div>
 
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-function toggleSubMenu(el) {
-    const arrow = el.querySelector('.submenu-arrow');
-    const submenu = el.nextElementSibling;
-
-    if (!submenu || !arrow) return;
-
-    const isOpen = submenu.style.display === "block";
-    submenu.style.display = isOpen ? "none" : "block";
-
-    arrow.classList.toggle("bi-caret-down-fill", !isOpen);
-    arrow.classList.toggle("bi-caret-right-fill", isOpen);
+// Toggle sidebar for mobile
+function toggleSidebar() {
+    document.querySelector('.admin-sidebar').classList.toggle('active');
 }
+
+// Close sidebar when clicking outside (mobile)
+document.addEventListener('click', function(event) {
+    const sidebar = document.querySelector('.admin-sidebar');
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    
+    if (window.innerWidth <= 992) {
+        if (!sidebar.contains(event.target) && !toggle.contains(event.target)) {
+            sidebar.classList.remove('active');
+        }
+    }
+});
 </script>
+
+@stack('scripts')
 
 </body>
 </html>

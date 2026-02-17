@@ -11,8 +11,7 @@
     </div>
 
     <div class="header-logo">
-        <img src="https://ppidbbpriau.kemendikdasmen.go.id/bbpr/img/logobbpr4.png"
-             alt="Logo Balai Bahasa Provinsi Riau"
+        <img src="{{ asset('img/logobalai.png') }}" alt="Logo Balai Bahasa" class="brand-logo"
              class="img-fluid header-logo">
     </div>
 </div>

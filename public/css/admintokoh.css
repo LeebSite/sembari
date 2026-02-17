@@ -1,0 +1,403 @@
+/* =========================================================
+   MODAL TOKOH (GLOBAL)
+========================================================= */
+.modal-tokoh {
+    border-radius: 16px;
+}
+
+/* Lebar modal create & detail */
+#modalTambahTokoh .modal-dialog,
+#modalDetailTokoh .modal-dialog,
+#modalEditTokoh .modal-dialog {
+    max-width: 560px;
+}
+
+/* =========================================================
+   HEADER & BODY MODAL
+========================================================= */
+#modalTambahTokoh .modal-header,
+#modalDetailTokoh .modal-header {
+    padding: 16px 20px 0px;
+    border-bottom: 1px solid #e5e7eb; /* 🔥 garis pembatas */
+}
+
+.tokoh-modal-body {
+    padding: 10px 20px 10px; /* 🔥 body lebih rapat */
+}
+
+.modal-title {
+    color: #1e3a8a; /* biru navy */
+    font-weight: 600;
+}
+/* =========================================================
+   FORM ATAS (FOTO + INPUT)
+========================================================= */
+.tokoh-form-top {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* =========================================================
+   FOTO (RASIO 3x4)
+========================================================= */
+.tokoh-photo-col {
+    width: 120px;
+    flex-shrink: 0;
+}
+
+.upload-wrapper {
+    width: 100%;
+}
+
+.upload-box,
+.photo-preview {
+    width: 100%;
+    aspect-ratio: 3 / 4; /* 🔥 FIX 3x4 */
+    border-radius: 14px;
+}
+
+/* Upload box */
+.upload-box {
+    border: 2px dashed #e5e7eb;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.upload-box:hover {
+    border-color: #2563eb;
+    background: #f1f5f9;
+}
+
+.upload-content {
+    text-align: center;
+    font-size: 13px;
+    color: #64748b;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+/* Preview foto */
+.photo-preview {
+    position: relative;
+    overflow: hidden;
+    background: #f1f5f9;
+}
+
+.photo-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 🔥 foto pas box */
+}
+
+/* tombol hapus foto */
+.btn-remove-photo {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: none;
+    background: #ef4444;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* =========================================================
+   INPUT FORM
+========================================================= */
+.tokoh-input-col {
+    flex: 1;
+}
+
+.input-soft {
+    background: #f5f5f5;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 14px;
+}
+
+
+.input-soft:focus {
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(37,99,235,0.25);
+}
+
+select.input-soft {
+    background-color: #f5f5f5;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px 10px;
+    padding-right: 36px;
+    appearance: none;
+}
+
+
+/* =========================================================
+   DESKRIPSI
+========================================================= */
+.tokoh-desc-wrapper {
+    margin-top: 12px; /* 🔥 jarak lebih rapat */
+}
+
+/* =========================================================
+   FOOTER MODAL
+========================================================= */
+#modalTambahTokoh .modal-footer {
+    padding-top: 6px;     /* 🔥 jarak dikecilkan */
+    padding-bottom: 12px;
+}
+
+.btn-submit-tokoh {
+    background-color: #1e3a8a;
+    border-radius: 12px;
+    padding: 10px;
+    border: none;
+    font-size: 15px;
+    color: #fff;
+}
+
+.btn-submit-tokoh:hover {
+    background-color: #1b3478;
+}
+
+/* =========================================================
+   LIST TOKOH
+========================================================= */
+.tokoh-list-wrapper {
+    background: #f8fafc;
+    padding: 14px;
+    border-radius: 18px;
+}
+
+/* CARD ROW TOKOH */
+.tokoh-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 8px 12px;
+    display: grid;
+    grid-template-columns: 40px 200px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    cursor: pointer;
+}
+
+.tokoh-card:hover {
+    background: #f9fafb;
+}
+
+/* FOTO AVATAR */
+.tokoh-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* NAMA + KATEGORI */
+.tokoh-name-col {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.tokoh-nama {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.2;
+    color: #111827;
+}
+
+/* BADGE */
+.tokoh-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-weight: 500;
+    width: fit-content;
+}
+
+.tokoh-badge.green {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* DESKRIPSI LIST */
+.tokoh-desc-col {
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* =========================================================
+   ACTION ICON (STYLE PUBLIKASI)
+========================================================= */
+.publication-action {
+    display: flex;
+    gap: 8px;
+}
+
+.publication-action .btn {
+    padding: 4px 8px;
+}
+
+/* =========================================================
+   MODAL DETAIL TOKOH
+========================================================= */
+#modalDetailTokoh img {
+    border-radius: 14px;
+}
+
+#modalDetailTokoh p {
+    color: #374151;
+    line-height: 1.5;
+}
+
+#modalDetailTokoh .tokoh-badge {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+/* =========================================================
+   SEARCH + FILTER TOKOH (WAJIB)
+========================================================= */
+
+.search-wrapper-inside {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    overflow: visible; /* 🔥 PENTING */
+}
+
+.search-icon {
+    color: #64748b;
+    font-size: 14px;
+}
+
+.search-input-inside {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    background: transparent;
+    padding: 6px 4px;
+}
+
+.search-input-inside::placeholder {
+    color: #9ca3af;
+}
+
+/* ================= FILTER BUTTON ================= */
+
+.filter-btn-inside {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+}
+
+.filter-btn-inside:hover {
+    background: #f1f5f9;
+}
+
+/* ================= FILTER DROPDOWN ================= */
+
+.filter-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    width: auto;
+    min-width: 210px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    padding: 10px;
+    display: none;
+    z-index: 99999;
+}
+
+.filter-dropdown {
+    padding-bottom: 16px;
+}
+
+.filter-dropdown .filter-item:last-of-type {
+    margin-bottom: 5px;
+}
+
+
+.filter-dropdown.show {
+    display: block;
+}
+
+.filter-header {
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+    padding: 6px 8px;
+}
+
+.filter-item {
+    display: block;
+    padding: 10px 10px;
+    font-size: 13px;
+    border-radius: 8px;
+    color: #111827;
+    text-decoration: none;
+}
+
+.filter-item:hover {
+    background: #f1f5f9;
+}
+
+.filter-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 6px 0;
+}
+
+/* TOAST NOTIFIKASI */
+.notif-top {
+    position: fixed;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 18px 32px;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    text-align: center;
+    min-width: 330px;
+    z-index: 10000;
+}
+
+/* WARNA NOTIFIKASI */
+.notif-terbit {
+    background: #0dbf4e;
+    color: #ffffff;
+}
+
+.notif-draf {
+    background: #0dbf4e;
+    color: #ffffff;
+}
+
+.notif-delete {
+    background: #d9534f;   
+    color: #ffffff;
+}
+

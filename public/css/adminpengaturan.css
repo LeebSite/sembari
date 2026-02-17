@@ -1,0 +1,42 @@
+.table th {
+    font-size: 13px;
+    font-weight: 600;
+    color: #374151;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table td {
+    font-size: 14px;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.badge {
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Wrapper seperti bg-gray-100 */
+.admin-table-wrapper {
+    background: #f3f4f6;          /* abu-abu lembut */
+    border-radius: 16px;
+    padding: 16px;
+}
+
+/* Card tabel */
+.admin-table-card {
+    border-radius: 14px;
+    overflow: hidden;             /* biar radius rapi */
+}
+
+/* ===== BADGE ROLE ADMIN ===== */
+.badge-admin {
+    background-color: #e0f2fe;
+    color: #0369a1;              /* biru tua */
+}
+
+.badge-super-admin {
+    background-color: #fee2e2;   /* merah muda */
+    color: #b91c1c;              /* merah tua */
+}
+
