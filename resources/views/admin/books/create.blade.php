@@ -2,8 +2,7 @@
 
 @section('title', 'Tambah Buku')
 
-@section('content')
-
+@push('styles')
 <style>
     .form-section {
         background: #fff;
@@ -314,6 +313,9 @@
         margin-left: 3px;
     }
 </style>
+@endpush
+
+@section('content')
 
 <!-- Page Header -->
 <div class="page-header">

@@ -2,8 +2,7 @@
 
 @section('title', 'Edit Buku')
 
-@section('content')
-
+@push('styles')
 <style>
     .form-section {
         background: #fff;
@@ -165,6 +164,9 @@
     .page-header h3 { font-size: 20px; font-weight: 700; color: #1e293b; margin: 0 0 4px; }
     .page-header p { font-size: 13px; color: #94a3b8; margin: 0; }
 </style>
+@endpush
+
+@section('content')
 
 <!-- Page Header -->
 <div class="page-header">

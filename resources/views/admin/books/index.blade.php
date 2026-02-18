@@ -2,8 +2,7 @@
 
 @section('title', 'Daftar Buku')
 
-@section('content')
-
+@push('styles')
 <style>
     .page-hero {
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 60%, #7c3aed 100%);
@@ -215,6 +214,9 @@
     }
     .alert-success .btn-close { margin-left: auto; }
 </style>
+@endpush
+
+@section('content')
 
 <!-- Page Hero -->
 <div class="page-hero">

@@ -2,8 +2,7 @@
 
 @section('title', 'Detail Buku')
 
-@section('content')
-
+@push('styles')
 <style>
     .detail-header {
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 60%, #7c3aed 100%);
@@ -189,8 +188,10 @@
         font-size: 12px; font-weight: 600;
         padding: 4px 12px; border-radius: 20px;
         display: inline-flex; align-items: center; gap: 5px;
-    }
 </style>
+@endpush
+
+@section('content')
 
 <!-- Header -->
 <div class="detail-header">
