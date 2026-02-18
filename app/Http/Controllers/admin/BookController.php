@@ -29,8 +29,9 @@ class BookController extends Controller
     {
         $categories = DB::table('categories')->orderBy('name')->get();
         $bookTypes = DB::table('book_types')->orderBy('name')->get();
+        $readingLevels = DB::table('reading_levels')->orderBy('order')->get();
 
-        return view('admin.books.create', compact('categories', 'bookTypes'));
+        return view('admin.books.create', compact('categories', 'bookTypes', 'readingLevels'));
     }
 
     /**
@@ -43,7 +44,9 @@ class BookController extends Controller
             'description' => 'nullable',
             'contributors' => 'nullable',
             'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
+            'reading_level_id' => 'nullable|exists:reading_levels,id',
             'cover_image' => 'nullable|image|max:2048',
+            'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
             'categories' => 'nullable|array',
             'book_types' => 'nullable|array',
         ]);
@@ -56,6 +59,12 @@ class BookController extends Controller
             $coverImagePath = $request->file('cover_image')->store('covers', 'public');
         }
 
+        // Handle PDF file upload
+        $pdfFilePath = null;
+        if ($request->hasFile('pdf_file')) {
+            $pdfFilePath = $request->file('pdf_file')->store('books', 'public');
+        }
+
         // Insert book
         $bookId = DB::table('books')->insertGetId([
             'title' => $request->title,
@@ -63,6 +72,8 @@ class BookController extends Controller
             'description' => $request->description,
             'contributors' => $request->contributors,
             'license' => $request->license,
+            'reading_level_id' => $request->reading_level_id,
+            'pdf_file' => $pdfFilePath,
             'cover_image' => $coverImagePath,
             'created_at' => now(),
             'updated_at' => now(),
@@ -145,6 +156,7 @@ class BookController extends Controller
 
         $categories = DB::table('categories')->orderBy('name')->get();
         $bookTypes = DB::table('book_types')->orderBy('name')->get();
+        $readingLevels = DB::table('reading_levels')->orderBy('order')->get();
 
         // Get selected categories
         $selectedCategories = DB::table('book_categories')
@@ -162,6 +174,7 @@ class BookController extends Controller
             'book',
             'categories',
             'bookTypes',
+            'readingLevels',
             'selectedCategories',
             'selectedBookTypes'
         ));
@@ -177,19 +190,28 @@ class BookController extends Controller
             'description' => 'nullable',
             'contributors' => 'nullable',
             'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
+            'reading_level_id' => 'nullable|exists:reading_levels,id',
             'cover_image' => 'nullable|image|max:2048',
+            'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
             'categories' => 'nullable|array',
             'book_types' => 'nullable|array',
         ]);
 
         $slug = Str::slug($request->title);
 
-        // Handle cover image upload
+        // Get current book data
         $book = DB::table('books')->where('id', $id)->first();
         $coverImagePath = $book->cover_image;
+        $pdfFilePath = $book->pdf_file;
         
+        // Handle cover image upload
         if ($request->hasFile('cover_image')) {
             $coverImagePath = $request->file('cover_image')->store('covers', 'public');
+        }
+
+        // Handle PDF file upload
+        if ($request->hasFile('pdf_file')) {
+            $pdfFilePath = $request->file('pdf_file')->store('books', 'public');
         }
 
         // Update book
@@ -199,6 +221,8 @@ class BookController extends Controller
             'description' => $request->description,
             'contributors' => $request->contributors,
             'license' => $request->license,
+            'reading_level_id' => $request->reading_level_id,
+            'pdf_file' => $pdfFilePath,
             'cover_image' => $coverImagePath,
             'updated_at' => now(),
         ]);

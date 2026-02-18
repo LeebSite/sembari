@@ -21,7 +21,7 @@
     @php
         $totalBooks = DB::table('books')->count();
         $totalCategories = DB::table('categories')->count();
-        $totalAuthors = DB::table('authors')->count();
+        $totalBookTypes = DB::table('book_types')->count();
         $totalReads = DB::table('book_stats')->sum('reads_count');
     @endphp
 
@@ -64,12 +64,12 @@
             <div class="card-body">
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
-                        <p class="text-muted mb-1 small">Penulis</p>
-                        <h2 class="mb-0 fw-bold" style="color: #8b5cf6;">{{ $totalAuthors }}</h2>
+                        <p class="text-muted mb-1 small">Jenis Buku</p>
+                        <h2 class="mb-0 fw-bold" style="color: #8b5cf6;">{{ $totalBookTypes }}</h2>
                     </div>
                     <div class="rounded-circle d-flex align-items-center justify-content-center" 
                          style="width: 56px; height: 56px; background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
-                        <i class="bi bi-people-fill text-white" style="font-size: 24px;"></i>
+                        <i class="bi bi-bookmark-fill text-white" style="font-size: 24px;"></i>
                     </div>
                 </div>
             </div>
