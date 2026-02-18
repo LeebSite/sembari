@@ -16,8 +16,8 @@ class APengaturanController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return view('admin.pengaturan', [
-            'admin' => $admin,
+        return view('admin.pengaturan.index', [
+            'admin'      => $admin,
             'totalAdmin' => $admin->count(),
         ]);
     }

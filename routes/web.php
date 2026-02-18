@@ -44,7 +44,7 @@ Route::prefix('admin')
     ->group(function () {
 
         Route::get('/dashboard', function () {
-            return view('admin.dashboard');
+            return view('admin.dashboard.index');
         })->name('admin.dashboard');
 
         // ===== BUKU =====
