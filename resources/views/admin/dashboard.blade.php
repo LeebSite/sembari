@@ -111,7 +111,7 @@
                 @php
                     $recentBooks = DB::table('books')
                         ->leftJoin('reading_levels', 'books.reading_level_id', '=', 'reading_levels.id')
-                        ->select('books.*', 'reading_levels.label as reading_level')
+                        ->select('books.*', 'reading_levels.name as reading_level')
                         ->orderBy('books.created_at', 'desc')
                         ->limit(5)
                         ->get();

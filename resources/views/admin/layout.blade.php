@@ -34,7 +34,7 @@
     <aside class="admin-sidebar">
         <!-- Logo & Brand -->
         <div class="sidebar-brand">
-            <img src="{{ asset('img/logobalai.png') }}" alt="Logo Balai Bahasa" class="brand-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/9/9c/Logo_of_Ministry_of_Education_and_Culture_of_Republic_of_Indonesia.svg" alt="Logo Balai Bahasa" class="brand-logo">
             <div class="brand-text">
                 <h5 class="mb-0">Sembari</h5>
                 <small>Perpustakaan Digital</small>
