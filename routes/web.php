@@ -4,15 +4,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\APengaturanController;
 use App\Http\Middleware\AdminAuth;
+use App\Http\Controllers\HomeController;
 
-// Test route
-Route::get('/test-admin', function () {
-    return view('test-admin');
-});
+// --- PUBLIC ROUTES ---
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// --- EBOOK VIEWER (PUBLIC) ---
+Route::get('/baca/{slug}', function () {
+    return view('flipbook');
+})->name('book.read');
 
 Route::get('/flipbook', function () {
     return view('flipbook');
