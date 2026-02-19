@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Book;
@@ -12,13 +13,13 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // 1. Buku Terbaru (Limit 8)
+        // 1. Buku Terbaru (4 terbaru)
         $terbaru = Book::with(['readingLevel', 'stat'])
             ->orderBy('created_at', 'desc')
             ->take(4)
             ->get();
 
-        // 2. Buku Terpopuler (Berdasarkan views di table book_stats)
+        // 2. Buku Terpopuler (berdasarkan views di table book_stats)
         $terpopuler = Book::select('books.*')
             ->leftJoin('book_stats', 'books.id', '=', 'book_stats.book_id')
             ->orderBy('book_stats.views_count', 'desc')
@@ -33,21 +34,21 @@ class HomeController extends Controller
         // 4. Jenjang Pembaca
         $jenjang = ReadingLevel::orderBy('order')->get();
 
-        // 5. Kategori
+        // 5. Kategori beserta jumlah buku
         $kategori = Category::withCount('books')->get();
 
-        // Statistik
+        // 6. Statistik ringkasan
         $stats = [
-            'buku' => DB::table('books')->count(),
-            'pembaca' => DB::table('book_stats')->sum('reads_count'),
+            'buku'     => DB::table('books')->count(),
+            'pembaca'  => DB::table('book_stats')->sum('reads_count'),
             'kategori' => DB::table('categories')->count(),
         ];
 
-        return view('public.home', compact(
-            'terbaru', 
-            'terpopuler', 
-            'terbatas', 
-            'jenjang', 
+        return view('public.home.home', compact(
+            'terbaru',
+            'terpopuler',
+            'terbatas',
+            'jenjang',
             'kategori',
             'stats'
         ));
