@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\APengaturanController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Web\HomeController;
 
@@ -49,14 +50,22 @@ Route::prefix('admin')
 
         // ===== BUKU =====
         Route::resource('books', \App\Http\Controllers\Admin\BookController::class)->names([
-            'index' => 'admin.books.index',
-            'create' => 'admin.books.create',
-            'store' => 'admin.books.store',
-            'show' => 'admin.books.show',
-            'edit' => 'admin.books.edit',
-            'update' => 'admin.books.update',
+            'index'   => 'admin.books.index',
+            'create'  => 'admin.books.create',
+            'store'   => 'admin.books.store',
+            'show'    => 'admin.books.show',
+            'edit'    => 'admin.books.edit',
+            'update'  => 'admin.books.update',
             'destroy' => 'admin.books.destroy',
         ]);
+
+        // ===== KATEGORI =====
+        Route::resource('categories', CategoryController::class)->names([
+            'index'   => 'admin.categories.index',
+            'store'   => 'admin.categories.store',
+            'update'  => 'admin.categories.update',
+            'destroy' => 'admin.categories.destroy',
+        ])->only(['index', 'store', 'update', 'destroy']);
 
         // ===== PENGATURAN =====
         Route::get('/pengaturan', [APengaturanController::class, 'index'])

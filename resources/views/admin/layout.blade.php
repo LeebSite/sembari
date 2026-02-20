@@ -75,6 +75,14 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('admin.categories.index') }}"
+                       class="nav-link {{ request()->routeIs('admin.categories*') ? 'active' : '' }}">
+                        <i class="bi bi-tags"></i>
+                        <span>Kategori</span>
+                    </a>
+                </li>
+
                 @if(strtolower(session('admin_role')) === 'super_admin')
                 <li class="nav-item">
                     <a href="{{ route('admin.pengaturan') }}"
