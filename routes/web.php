@@ -6,9 +6,11 @@ use App\Http\Controllers\Admin\APengaturanController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Web\HomeController;
+use App\Http\Controllers\Web\BookListController;
 
 // --- PUBLIC ROUTES ---
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/koleksi', [BookListController::class, 'index'])->name('book.list');
 
 // --- EBOOK VIEWER (PUBLIC) ---
 Route::get('/baca/{slug}', function () {

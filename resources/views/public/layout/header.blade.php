@@ -27,7 +27,7 @@
                 </svg>
                 Beranda
             </a>
-            <a href="#koleksi" class="hover:text-white hover:bg-white/10 px-4 py-2 rounded-full transition flex items-center gap-2">
+            <a href="{{ route('book.list') }}" class="hover:text-white hover:bg-white/10 px-4 py-2 rounded-full transition flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                 </svg>
@@ -48,15 +48,18 @@
         </div>
 
         {{-- Search Bar --}}
-        <div class="relative hidden lg:block">
-            <input type="text" placeholder="Cari buku seru..."
+        <form action="{{ route('book.list') }}" method="GET" class="relative hidden lg:block">
+            <input type="text" name="q" placeholder="Cari buku seru..."
+                   value="{{ request('q') }}"
                    class="pl-11 pr-4 py-2.5 rounded-full text-sm font-semibold text-gray-700
                           bg-white/95 border-0 focus:ring-3 focus:ring-brand-yellow w-60
                           shadow-inner transition focus:w-72">
-            <svg class="w-4 h-4 text-gray-400 absolute left-4 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-        </div>
+            <button type="submit" class="absolute left-4 top-1/2 -translate-y-1/2">
+                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </button>
+        </form>
 
         {{-- Mobile Hamburger --}}
         <button class="md:hidden text-white p-2">

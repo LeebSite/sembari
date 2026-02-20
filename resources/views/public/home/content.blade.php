@@ -82,7 +82,7 @@
 
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             @forelse($jenjang as $index => $level)
-            <a href="#" class="cat-pill group flex flex-col items-center bg-white border-2 border-gray-100 rounded-2xl p-5 text-center hover:border-brand-blue hover:bg-blue-50 transition-all">
+            <a href="{{ route('book.list', ['jenjang' => $level->id]) }}" class="cat-pill group flex flex-col items-center bg-white border-2 border-gray-100 rounded-2xl p-5 text-center hover:border-brand-blue hover:bg-blue-50 transition-all">
                 <div class="w-14 h-14 {{ $levelColors[$index % count($levelColors)] }} text-white rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-md group-hover:scale-110 transition-transform">
                     {{ $levelEmoji[$index % count($levelEmoji)] }}
                 </div>
@@ -114,7 +114,7 @@
                 <span class="inline-block bg-yellow-100 text-yellow-600 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-2">⭐ Paling Disukai</span>
                 <h2 class="text-3xl font-black text-gray-900">Paling Sering Dibaca</h2>
             </div>
-            <a href="#" class="hidden md:flex items-center gap-1 text-brand-blue font-black text-sm hover:underline">Lihat Semua →</a>
+            <a href="{{ route('book.list', ['sort' => 'populer']) }}" class="hidden md:flex items-center gap-1 text-brand-blue font-black text-sm hover:underline">Lihat Semua →</a>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -174,10 +174,10 @@
         @endphp
 
         <div class="flex flex-wrap justify-center gap-3">
-            @foreach($kategori as $index => $cat)
-            @php $c = $catColors[$index % count($catColors)]; @endphp
-            <a href="#" class="cat-pill flex items-center gap-2.5 px-5 py-3 rounded-2xl border-2 font-black text-sm transition-all hover:text-white {{ $c }}">
-                <span class="text-lg">{{ $catEmoji[$index % count($catEmoji)] }}</span>
+            @foreach($kategori ?? [] as $index => $cat)
+            @php $c = $catColors[$index % count($catColors)] ?? 'bg-blue-100 text-blue-600 border-blue-200 hover:bg-blue-500'; @endphp
+            <a href="{{ route('book.list', ['kategori' => $cat->id]) }}" class="cat-pill flex items-center gap-2.5 px-5 py-3 rounded-2xl border-2 font-black text-sm transition-all hover:text-white {{ $c }}">
+                <span class="text-lg">{{ $catEmoji[$index % count($catEmoji)] ?? '📖' }}</span>
                 {{ $cat->name }}
                 <span class="text-xs opacity-75 bg-black/10 px-2 py-0.5 rounded-full">{{ $cat->books_count }}</span>
             </a>

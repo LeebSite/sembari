@@ -43,7 +43,7 @@
                     <li><a href="{{ route('home') }}"        class="hover:text-brand-sky transition flex items-center gap-2">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                         Beranda</a></li>
-                    <li><a href="#koleksi"                   class="hover:text-brand-sky transition flex items-center gap-2">
+                    <li><a href="{{ route('book.list') }}"                   class="hover:text-brand-sky transition flex items-center gap-2">
                         <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                         Koleksi Buku</a></li>
                     <li><a href="#jenjang"                   class="hover:text-brand-sky transition flex items-center gap-2">
