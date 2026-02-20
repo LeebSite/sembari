@@ -10,17 +10,58 @@ use Illuminate\Support\Str;
 class BookController extends Controller
 {
     /**
-     * Display a listing of books.
+     * Display a listing of books with search, filter, and sort.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $books = DB::table('books')
-            ->select('books.*')
-            ->orderBy('books.created_at', 'desc')
-            ->paginate(10);
+        $search  = $request->input('search', '');
+        $kategori = $request->input('kategori', '');
+        $lisensi  = $request->input('lisensi', '');
+        $sort     = $request->input('sort', 'terbaru');
 
-        return view('admin.books.index', compact('books'));
+        $query = DB::table('books')
+            ->select('books.*')
+            ->leftJoin('book_categories', 'books.id', '=', 'book_categories.book_id')
+            ->leftJoin('categories', 'book_categories.category_id', '=', 'categories.id')
+            ->leftJoin('book_stats', 'books.id', '=', 'book_stats.book_id')
+            ->groupBy('books.id');
+
+        // ── Search judul / kontributor ──
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('books.title', 'like', "%{$search}%")
+                  ->orWhere('books.contributors', 'like', "%{$search}%");
+            });
+        }
+
+        // ── Filter kategori ──
+        if ($kategori) {
+            $query->where('categories.id', $kategori);
+        }
+
+        // ── Filter lisensi ──
+        if ($lisensi) {
+            $query->where('books.license', $lisensi);
+        }
+
+        // ── Sort ──
+        match ($sort) {
+            'az'        => $query->orderBy('books.title', 'asc'),
+            'za'        => $query->orderBy('books.title', 'desc'),
+            'terpopuler'=> $query->orderByRaw('COALESCE(book_stats.views_count, 0) DESC'),
+            default     => $query->orderBy('books.created_at', 'desc'),
+        };
+
+        $books      = $query->paginate(12)->withQueryString();
+        $categories = DB::table('categories')->orderBy('name')->get();
+        $totalAll   = DB::table('books')->count();
+
+        return view('admin.books.index', compact(
+            'books', 'categories', 'totalAll',
+            'search', 'kategori', 'lisensi', 'sort'
+        ));
     }
+
 
     /**
      * Show the form for creating a new book.
