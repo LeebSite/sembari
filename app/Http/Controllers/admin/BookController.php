@@ -85,6 +85,7 @@ class BookController extends Controller
             'description' => 'nullable',
             'contributors' => 'nullable',
             'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
+            'tahun_terbit' => 'nullable|integer|min:1900|max:' . date('Y'),
             'reading_level_id' => 'nullable|exists:reading_levels,id',
             'cover_image' => 'nullable|image|max:2048',
             'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
@@ -113,6 +114,7 @@ class BookController extends Controller
             'description' => $request->description,
             'contributors' => $request->contributors,
             'license' => $request->license,
+            'tahun_terbit' => $request->tahun_terbit ?: null,
             'reading_level_id' => $request->reading_level_id,
             'pdf_file' => $pdfFilePath,
             'cover_image' => $coverImagePath,
@@ -231,6 +233,7 @@ class BookController extends Controller
             'description' => 'nullable',
             'contributors' => 'nullable',
             'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
+            'tahun_terbit' => 'nullable|integer|min:1900|max:' . date('Y'),
             'reading_level_id' => 'nullable|exists:reading_levels,id',
             'cover_image' => 'nullable|image|max:2048',
             'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
@@ -262,6 +265,7 @@ class BookController extends Controller
             'description' => $request->description,
             'contributors' => $request->contributors,
             'license' => $request->license,
+            'tahun_terbit' => $request->tahun_terbit ?: null,
             'reading_level_id' => $request->reading_level_id,
             'pdf_file' => $pdfFilePath,
             'cover_image' => $coverImagePath,

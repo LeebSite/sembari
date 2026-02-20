@@ -286,6 +286,29 @@
                             </label>
                         </div>
                     </div>
+
+                    {{-- Tahun Terbit --}}
+                    <div class="mb-4">
+                        <label class="form-label">
+                            Tahun Terbit
+                            <span class="text-muted fw-normal">(Opsional)</span>
+                        </label>
+                        <input type="number"
+                               class="form-control @error('tahun_terbit') is-invalid @enderror"
+                               name="tahun_terbit"
+                               value="{{ old('tahun_terbit', $book->tahun_terbit) }}"
+                               min="1900"
+                               max="{{ date('Y') }}"
+                               placeholder="Contoh: 2023"
+                               style="max-width: 180px;">
+                        @error('tahun_terbit')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                        <small class="text-muted mt-1 d-block">
+                            <i class="bi bi-info-circle me-1"></i>Tahun buku diterbitkan (1900–{{ date('Y') }})
+                        </small>
+                    </div>
+
                     <div class="mb-0">
                         <label class="form-label">Tingkat Pembaca <span class="text-muted fw-normal">(Opsional)</span></label>
                         <select class="form-select @error('reading_level_id') is-invalid @enderror"

@@ -294,6 +294,18 @@
                     </span>
                 </div>
                 <div class="detail-row">
+                    <span class="detail-label">Tahun Terbit</span>
+                    <span class="detail-value">
+                        @if($book->tahun_terbit)
+                            <span style="display:inline-flex;align-items:center;gap:5px;background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:700;">
+                                <i class="bi bi-calendar-check"></i> {{ $book->tahun_terbit }}
+                            </span>
+                        @else
+                            <span style="color:#94a3b8;">—</span>
+                        @endif
+                    </span>
+                </div>
+                <div class="detail-row">
                     <span class="detail-label">Tingkat Pembaca</span>
                     <span class="detail-value">
                         @php
