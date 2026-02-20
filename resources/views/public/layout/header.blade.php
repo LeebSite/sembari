@@ -11,7 +11,7 @@
         <a href="{{ route('home') }}" class="flex items-center gap-3 flex-shrink-0">
             <img src="{{ asset('img/logo/logobalai.png') }}" alt="Logo Balai Bahasa Provinsi Riau"
                  class="h-12 w-auto object-contain"
-                 style="filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35)) drop-shadow(0 0 12px rgba(255,255,255,0.25));"
+                 style="max-height: 48px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.35)) drop-shadow(0 0 12px rgba(255,255,255,0.25));"
                  onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
             {{-- Fallback teks jika gambar tidak ditemukan --}}
             <div style="display:none" class="bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-xl flex items-center gap-2">
