@@ -4,7 +4,7 @@
     ⚠️  Stat bar ada di: public/home/statsbar.blade.php
         (tidak diletakkan di sini karena hanya muncul di halaman Home)
 ══════════════════════════════════════════════ --}}
-<nav class="bg-brand-blue navbar-glow sticky top-0 z-50">
+<nav class="bg-brand-darkblue navbar-glow sticky top-0 z-50">
     <div class="max-w-6xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
 
         {{-- Logo Balai Bahasa --}}

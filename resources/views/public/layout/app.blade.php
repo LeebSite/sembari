@@ -17,14 +17,15 @@
                     },
                     colors: {
                         brand: {
-                            blue:   '#0762c9',
+                            blue:   '#0766d2ff',
                             sky:    '#1d83d1',
                             green:  '#27AE60',
                             yellow: '#F5A623',
                             orange: '#E8621E',
                             purple: '#7C3AED',
                             pink:   '#E91E8C',
-                            footer: '#08105fff',
+                            navy: '#08105fff',
+                            darkblue: '#2838c3ff',
                         }
                     },
                     animation: {

@@ -1,7 +1,7 @@
 {{-- ═══════════════════════════════════════════
     FOOTER — Sembari (Premium Melayu Design)
 ══════════════════════════════════════════════ --}}
-<footer class="relative bg-brand-footer text-white overflow-hidden">
+<footer class="relative bg-brand-navy text-white overflow-hidden">
     {{-- Gradient Overlay --}}
     <div class="absolute inset-0 bg-gradient-to-br from-indigo-900/50 via-transparent to-black/30 pointer-events-none"></div>
 
