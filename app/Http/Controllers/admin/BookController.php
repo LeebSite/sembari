@@ -21,10 +21,7 @@ class BookController extends Controller
 
         $query = DB::table('books')
             ->select('books.*')
-            ->leftJoin('book_categories', 'books.id', '=', 'book_categories.book_id')
-            ->leftJoin('categories', 'book_categories.category_id', '=', 'categories.id')
-            ->leftJoin('book_stats', 'books.id', '=', 'book_stats.book_id')
-            ->groupBy('books.id');
+            ->leftJoin('book_stats', 'books.id', '=', 'book_stats.book_id');
 
         // ── Search judul / kontributor ──
         if ($search) {
@@ -36,7 +33,12 @@ class BookController extends Controller
 
         // ── Filter kategori ──
         if ($kategori) {
-            $query->where('categories.id', $kategori);
+            $query->whereExists(function ($q) use ($kategori) {
+                $q->select(DB::raw(1))
+                  ->from('book_categories')
+                  ->whereColumn('book_categories.book_id', 'books.id')
+                  ->where('category_id', $kategori);
+            });
         }
 
         // ── Filter lisensi ──

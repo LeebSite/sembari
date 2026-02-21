@@ -24,6 +24,7 @@
                             orange: '#E8621E',
                             purple: '#7C3AED',
                             pink:   '#E91E8C',
+                            footer: '#08105fff',
                         }
                     },
                     animation: {
@@ -45,8 +46,9 @@
         }
     </script>
 
-    {{-- Google Fonts: Nunito --}}
+    {{-- Google Fonts: Nunito & Bootstrap Icons --}}
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <style>
         * { font-family: 'Nunito', sans-serif; }
