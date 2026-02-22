@@ -465,15 +465,31 @@
                             </div>
 
                             <div class="p-4 flex-1 flex flex-col">
-                                <h3 class="font-black text-gray-800 text-sm leading-snug line-clamp-2 mb-2 group-hover:text-brand-blue transition">{{ $book->title }}</h3>
+                                <h3 class="font-black text-gray-800 text-sm leading-snug line-clamp-2 mb-1 group-hover:text-brand-blue transition">{{ $book->title }}</h3>
                                 
+                                {{-- Kategori --}}
+                                @if($book->categories->count() > 0)
+                                    <div class="text-[10px] text-gray-400 font-bold mb-2 flex flex-wrap gap-1">
+                                        @foreach($book->categories->take(2) as $cat)
+                                            <span>#{{ $cat->name }}</span>
+                                        @endforeach
+                                    </div>
+                                @endif
+
                                 @if($book->readingLevel)
-                                    <div class="text-[10px] font-black text-brand-purple bg-purple-50 px-2.5 py-1 rounded-full w-fit mb-3">🎯 {{ $book->readingLevel->name }}</div>
+                                    <div class="text-[10px] font-black text-brand-purple bg-purple-50 px-2.5 py-1 rounded-full w-fit mb-3">{{ $book->readingLevel->description ?? $book->readingLevel->name }}</div>
                                 @endif
 
                                 <div class="mt-auto pt-3 border-t border-gray-50 flex items-center justify-between">
-                                    <div class="flex items-center gap-1.5 text-[11px] font-bold text-gray-400">
-                                        <span>👁 {{ number_format($book->stat->views_count ?? 0) }}</span>
+                                    <div class="flex items-center gap-3 text-[11px] font-bold text-gray-400">
+                                        <div class="flex items-center gap-1" title="Jumlah Dibaca">
+                                            <i class="bi bi-book"></i> 
+                                            <span>{{ number_format($book->stat->reads_count ?? 0) }}</span>
+                                        </div>
+                                        <div class="flex items-center gap-1" title="Jumlah Disukai">
+                                            <i class="bi bi-heart-fill text-red-400"></i> 
+                                            <span>{{ number_format($book->stat->likes_count ?? 0) }}</span>
+                                        </div>
                                     </div>
                                     <span class="bg-blue-50 text-brand-blue text-[9px] font-black px-2 py-0.5 rounded-md">PDF</span>
                                 </div>
