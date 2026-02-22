@@ -82,4 +82,15 @@ class BookListController extends Controller
             'search', 'lisensi', 'jenjang', 'kategori', 'jenis', 'tahun', 'sort'
         ));
     }
+
+    public function show($id)
+    {
+        // Cari buku berdasarkan slug atau ID
+        $book = Book::with(['readingLevel', 'stat', 'categories', 'bookTypes'])
+            ->where('id', $id)
+            ->orWhere('slug', $id)
+            ->firstOrFail();
+
+        return view('public.books.show', compact('book'));
+    }
 }

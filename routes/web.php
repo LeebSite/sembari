@@ -12,10 +12,12 @@ use App\Http\Controllers\Web\BookListController;
 // --- PUBLIC ROUTES ---
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/koleksi', [BookListController::class, 'index'])->name('book.list');
+Route::get('/buku/{id}', [BookListController::class, 'show'])->name('book.show');
 
 // --- EBOOK VIEWER (PUBLIC) ---
-Route::get('/baca/{slug}', function () {
-    return view('flipbook');
+Route::get('/baca/{slug}', function ($slug) {
+    $book = \App\Models\Book::where('slug', $slug)->orWhere('id', $slug)->firstOrFail();
+    return view('public.flipbook', compact('book'));
 })->name('book.read');
 
 Route::get('/flipbook', function () {

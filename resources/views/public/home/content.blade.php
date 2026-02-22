@@ -33,7 +33,7 @@
                     @endif
 
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-3">
-                        <a href="{{ route('book.read', $book->slug ?? $book->id) }}"
+                        <a href="{{ route('book.show', $book->slug ?? $book->id) }}"
                            class="w-full py-2.5 bg-brand-yellow text-white font-black text-xs rounded-xl text-center shadow-lg transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             📖 Baca Sekarang
                         </a>
@@ -196,7 +196,7 @@
                             <span>👁 {{ $popular->stat->views_count ?? 0 }}</span>
                             <span>❤️ {{ $popular->stat->likes_count ?? 0 }}</span>
                         </div>
-                        <a href="{{ route('book.read', $popular->slug ?? $popular->id) }}"
+                        <a href="{{ route('book.show', $popular->slug ?? $popular->id) }}"
                            class="text-xs font-black text-white bg-brand-blue px-3 py-1.5 rounded-xl hover:bg-blue-700 transition flex-shrink-0">
                             Baca →
                         </a>

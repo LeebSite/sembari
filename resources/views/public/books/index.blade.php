@@ -442,7 +442,7 @@
                 {{-- Grid --}}
                 <div class="book-grid">
                     @forelse($books as $book)
-                        <a href="{{ route('book.read', $book->slug ?? $book->id) }}" class="book-card bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex flex-col group">
+                        <a href="{{ route('book.show', $book->slug ?? $book->id) }}" class="book-card bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden flex flex-col group">
                             <div class="bk-img">
                                 @if($book->cover_image)
                                     <img src="{{ asset('storage/' . $book->cover_image) }}" alt="{{ $book->title }}" class="group-hover:scale-110 transition-transform duration-500">
@@ -459,7 +459,7 @@
 
                                 <div class="bk-overlay opacity-0 group-hover:opacity-100 transition-opacity">
                                     <div class="w-full bg-brand-yellow text-white text-xs font-black py-2.5 rounded-xl text-center translate-y-4 group-hover:translate-y-0 transition-transform">
-                                        📖 Baca Sekarang
+                                        Baca
                                     </div>
                                 </div>
                             </div>

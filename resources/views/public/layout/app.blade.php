@@ -26,6 +26,7 @@
                             pink:   '#E91E8C',
                             navy: '#08105fff',
                             darkblue: '#2838c3ff',
+                            gray: '#94A3B8',
                         }
                     },
                     animation: {
