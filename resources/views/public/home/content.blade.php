@@ -65,37 +65,95 @@
 
 
 {{-- ═══ JENJANG PEMBACA ═══ --}}
-<section id="jenjang" class="py-16 bg-white">
-    <div class="max-w-6xl mx-auto px-6 lg:px-10">
-        <div class="text-center mb-10">
-            <span class="inline-block bg-purple-100 text-purple-600 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-3">
-                🎯 Sesuai Kemampuan
+<section id="jenjang" class="py-20 bg-white relative overflow-hidden">
+    {{-- Decorative Background Elements --}}
+    <div class="absolute top-0 left-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl opacity-50 -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-50 rounded-full blur-3xl opacity-50 translate-x-1/3 translate-y-1/3"></div>
+
+    <div class="max-w-6xl mx-auto px-6 lg:px-10 relative z-10">
+        <div class="text-center mb-14">
+            <span class="inline-block bg-brand-blue/10 text-brand-blue text-[11px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-4">
+                🎯 Temukan Levelmu
             </span>
-            <h2 class="text-3xl font-black text-gray-900">Jenjang Pembaca</h2>
-            <p class="text-gray-500 mt-2">Buku yang pas untuk tingkat kemampuan membacamu!</p>
+            <h2 class="text-4xl font-black text-gray-900 tracking-tight">Jenjang Pembaca</h2>
+            <div class="w-16 h-1.5 bg-brand-yellow mx-auto mt-4 rounded-full"></div>
+            <p class="text-gray-500 mt-5 text-lg max-w-2xl mx-auto leading-relaxed">
+                Pilih koleksi buku yang paling pas dengan tingkat kemampuan membacamu untuk pengalaman literasi yang lebih seru!
+            </p>
         </div>
 
-        @php
-            $levelColors = ['bg-red-400','bg-orange-400','bg-yellow-400','bg-green-400','bg-blue-400','bg-purple-400'];
-            $levelEmoji  = ['🐣','🐥','🐤','🦅','🦁','🌟'];
-        @endphp
-
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div class="flex flex-nowrap gap-4 lg:gap-6 overflow-x-auto pb-8 pt-4 no-scrollbar custom-scroll">
             @forelse($jenjang as $index => $level)
-            <a href="{{ route('book.list', ['jenjang' => $level->id]) }}" class="cat-pill group flex flex-col items-center bg-white border-2 border-gray-100 rounded-2xl p-5 text-center hover:border-brand-blue hover:bg-blue-50 transition-all">
-                <div class="w-14 h-14 {{ $levelColors[$index % count($levelColors)] }} text-white rounded-2xl flex items-center justify-center text-2xl mb-3 shadow-md group-hover:scale-110 transition-transform">
-                    {{ $levelEmoji[$index % count($levelEmoji)] }}
+            <a href="{{ route('book.list', ['jenjang' => $level->id]) }}" 
+               class="flex-none w-[160px] lg:w-[190px] group relative bg-white rounded-[2rem] p-5 border border-gray-100 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_-20px_rgba(7,98,201,0.2)] hover:border-brand-blue/30 transition-all duration-500 flex flex-col items-center text-center overflow-hidden">
+                
+                {{-- Decorative Circle on Hover --}}
+                <div class="absolute top-0 right-0 w-24 h-24 bg-brand-yellow/5 rounded-full translate-x-12 -translate-y-12 group-hover:scale-[3] transition-transform duration-700 pointer-events-none"></div>
+
+                <div class="relative mb-5">
+                    <div class="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center p-3 group-hover:bg-brand-gray transition-colors duration-500 shadow-inner overflow-hidden">
+                        @if($level->icon)
+                            <img src="{{ asset('storage/' . $level->icon) }}" 
+                                 alt="{{ $level->name }}" 
+                                 class="w-full h-full object-contain group-hover:brightness-0 group-hover:invert transition-all duration-500">
+                        @else
+                            <span class="text-3xl group-hover:scale-110 transition-transform duration-500">📖</span>
+                        @endif
+                    </div>
+                    {{-- Small floating badge --}}
+                    <div class="absolute -bottom-1 -right-1 bg-brand-yellow text-white text-[10px] font-black w-7 h-7 rounded-full flex items-center justify-center shadow-lg border-2 border-white">
+                        {{ $level->order }}
+                    </div>
                 </div>
-                <h4 class="font-black text-gray-800 text-sm leading-tight">{{ $level->name }}</h4>
+
+                <div class="relative flex-1">
+                    <h4 class="font-black text-gray-900 text-base mb-1 group-hover:text-brand-blue transition-colors duration-300">
+                        {{ $level->name }}
+                    </h4>
+                    <p class="text-gray-400 text-[14px] font-semibold line-clamp-1 mb-3">
+                        {{ $level->description ?: 'Koleksi pembaca ' . $level->name }}
+                    </p>
+                    <span class="inline-flex items-center gap-1.5 text-brand-blue font-black text-[10px] uppercase tracking-wider group-hover:gap-3 transition-all duration-300">
+                        Jelajahi <i class="bi bi-arrow-right"></i>
+                    </span>
+                </div>
             </a>
             @empty
-            <div class="col-span-6 text-center py-8">
-                <p class="text-gray-400">Belum ada jenjang terdaftar</p>
+            <div class="w-full py-12 text-center flex-none">
+                <div class="bg-gray-50 border-2 border-dashed border-gray-200 rounded-[2rem] p-10">
+                    <p class="text-gray-400 font-bold">Belum ada jenjang pembaca terdaftar saat ini.</p>
+                </div>
             </div>
             @endforelse
         </div>
     </div>
 </section>
+
+<style>
+    .custom-scroll::-webkit-scrollbar {
+        height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+        background: #f1f5f9;
+        border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+        background: #e2e8f0;
+        border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+        background: #cbd5e1;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    @media (min-width: 1024px) {
+        .custom-scroll {
+            padding-left: 2px;
+            padding-right: 2px;
+        }
+    }
+</style>
 
 
 {{-- ═══ WAVE ═══ --}}
