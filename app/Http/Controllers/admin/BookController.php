@@ -158,6 +158,12 @@ class BookController extends Controller
             }
         }
 
+        // Dispatch conversion job if PDF exists
+        if ($pdfFilePath) {
+            $book = \App\Models\Book::find($bookId);
+            \App\Jobs\ProcessBookPages::dispatch($book);
+        }
+
         return redirect()->route('admin.books.index')
             ->with('success', 'Buku berhasil ditambahkan!');
     }
@@ -298,6 +304,12 @@ class BookController extends Controller
                     'updated_at' => now(),
                 ]);
             }
+        }
+
+        // Dispatch conversion job if new PDF was uploaded
+        if ($request->hasFile('pdf_file')) {
+            $book = \App\Models\Book::find($id);
+            \App\Jobs\ProcessBookPages::dispatch($book);
         }
 
         return redirect()->route('admin.books.index')

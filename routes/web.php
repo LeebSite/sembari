@@ -21,12 +21,32 @@ Route::get('/baca/{slug}', function ($slug) {
     $stat = $book->stat()->firstOrCreate(['book_id' => $book->id]);
     $stat->increment('reads_count');
 
-    return view('public.flipbook', compact('book'));
+    // Get pages
+    $pagesPath = storage_path('app/public/books/' . $book->id . '/pages');
+    $pages = [];
+    if (file_exists($pagesPath)) {
+        $files = \Illuminate\Support\Facades\File::files($pagesPath);
+        // Sort naturally: page-1.jpg, page-2.jpg, ..., page-10.jpg
+        usort($files, function($a, $b) {
+            return strnatcmp($a->getFilename(), $b->getFilename());
+        });
+
+        foreach ($files as $file) {
+            $pages[] = asset('storage/books/' . $book->id . '/pages/' . $file->getFilename());
+        }
+    }
+
+    return view('public.flipbook', compact('book', 'pages'));
 })->name('book.read');
 
-Route::get('/flipbook', function () {
-    return view('flipbook');
-});
+// Manual Trigger for PDF Conversion (Debugging/Maintenance)
+Route::get('/admin/books/{id}/process', function($id) {
+    if (!auth()->check()) abort(403);
+    $book = \App\Models\Book::findOrFail($id);
+    \App\Jobs\ProcessBookPages::dispatchSync($book);
+    return "Proses konversi selesai untuk buku: " . $book->title;
+})->name('admin.books.process');
+
 
 /*
 |--------------------------------------------------------------------------
