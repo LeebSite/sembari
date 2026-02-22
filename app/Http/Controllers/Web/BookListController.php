@@ -91,6 +91,40 @@ class BookListController extends Controller
             ->orWhere('slug', $id)
             ->firstOrFail();
 
+        // ── Logic Stats: Views ──
+        // Gunakan session untuk mencegah spam views dalam satu sesi
+        $viewed = session()->get('viewed_books', []);
+        if (!in_array($book->id, $viewed)) {
+            $stat = $book->stat()->firstOrCreate(['book_id' => $book->id]);
+            $stat->increment('views_count');
+            session()->push('viewed_books', $book->id);
+        }
+
         return view('public.books.show', compact('book'));
+    }
+
+    /**
+     * Fitur Like tanpa login (Public).
+     * Validasi dilakukan via frontend (localStorage) & backend increment/decrement.
+     */
+    public function toggleLike(Request $request, $id)
+    {
+        $book = Book::findOrFail($id);
+        $stat = $book->stat()->firstOrCreate(['book_id' => $book->id]);
+        $type = $request->get('type', 'like'); // like atau unlike
+
+        if ($type === 'like') {
+            $stat->increment('likes_count');
+        } else {
+            if ($stat->likes_count > 0) {
+                $stat->decrement('likes_count');
+            }
+        }
+
+        return response()->json([
+            'success' => true,
+            'likes_count' => $stat->likes_count,
+            'likes_formatted' => number_format($stat->likes_count)
+        ]);
     }
 }

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class BookStat extends Model
 {
     protected $table = 'book_stats';
+    protected $primaryKey = 'book_id';
+    public $incrementing = false;
 
     protected $fillable = [
         'book_id',

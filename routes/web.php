@@ -13,10 +13,14 @@ use App\Http\Controllers\Web\BookListController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/koleksi', [BookListController::class, 'index'])->name('book.list');
 Route::get('/buku/{id}', [BookListController::class, 'show'])->name('book.show');
-
-// --- EBOOK VIEWER (PUBLIC) ---
+Route::post('/buku/{id}/like', [\App\Http\Controllers\Web\BookListController::class, 'toggleLike'])->name('book.like');
 Route::get('/baca/{slug}', function ($slug) {
     $book = \App\Models\Book::where('slug', $slug)->orWhere('id', $slug)->firstOrFail();
+    
+    // Increment reads count
+    $stat = $book->stat()->firstOrCreate(['book_id' => $book->id]);
+    $stat->increment('reads_count');
+
     return view('public.flipbook', compact('book'));
 })->name('book.read');
 
