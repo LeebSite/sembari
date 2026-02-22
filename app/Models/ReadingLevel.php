@@ -9,6 +9,7 @@ class ReadingLevel extends Model
 {
     protected $fillable = [
         'name',
+        'icon',
         'order',
         'description',
     ];

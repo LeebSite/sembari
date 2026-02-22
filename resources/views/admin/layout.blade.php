@@ -83,6 +83,14 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a href="{{ route('admin.reading-levels.index') }}"
+                       class="nav-link {{ request()->routeIs('admin.reading-levels*') ? 'active' : '' }}">
+                        <i class="bi bi-bar-chart-steps"></i>
+                        <span>Jenjang Baca</span>
+                    </a>
+                </li>
+
                 @if(strtolower(session('admin_role')) === 'super_admin')
                 <li class="nav-item">
                     <a href="{{ route('admin.pengaturan') }}"

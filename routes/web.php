@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\APengaturanController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ReadingLevelController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\BookListController;
@@ -67,6 +68,14 @@ Route::prefix('admin')
             'store'   => 'admin.categories.store',
             'update'  => 'admin.categories.update',
             'destroy' => 'admin.categories.destroy',
+        ])->only(['index', 'store', 'update', 'destroy']);
+
+        // ===== JENJANG BACA =====
+        Route::resource('reading-levels', ReadingLevelController::class)->names([
+            'index'   => 'admin.reading-levels.index',
+            'store'   => 'admin.reading-levels.store',
+            'update'  => 'admin.reading-levels.update',
+            'destroy' => 'admin.reading-levels.destroy',
         ])->only(['index', 'store', 'update', 'destroy']);
 
         // ===== PENGATURAN =====
