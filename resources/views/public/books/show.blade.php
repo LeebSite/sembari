@@ -66,26 +66,26 @@
                     <div class="h-8 w-px bg-gray-100"></div>
 
                     {{-- Reads --}}
-                    <div class="flex flex-col items-center gap-1.5 flex-1 text-center border-x border-gray-100 px-2">
-                        <div class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-50">
-                            <i class="bi bi-book-half text-[12px] text-gray-400"></i>
+                    <div class="flex flex-col items-center gap-1.5 group flex-1 text-center border-x border-gray-100 px-2">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-50 group-hover:bg-blue-50 transition-colors">
+                            <i class="bi bi-book-half text-[12px] text-gray-400 group-hover:text-brand-blue transition-colors"></i>
                         </div>
                         <div class="flex flex-col items-center gap-0">
-                            <span class="text-sm font-black text-gray-800 leading-none">{{ number_format($book->stat->reads_count ?? 0) }}</span>
-                            <span class="text-[7px] font-black text-gray-400 uppercase tracking-widest">Dibaca</span>
+                            <span class="text-sm font-black text-gray-800 leading-none group-hover:text-brand-blue transition-colors">{{ number_format($book->stat->reads_count ?? 0) }}</span>
+                            <span class="text-[7px] font-black text-gray-400 uppercase tracking-widest group-hover:text-brand-blue transition-colors">Dibaca</span>
                         </div>
                     </div>
 
-                    {{-- Like --}}
-                    <button id="like-btn" data-id="{{ $book->id }}" onclick="toggleLike({{ $book->id }})" class="flex flex-col items-center gap-1.5 group flex-1">
-                        <div id="like-icon-bg" class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-50 group-hover:bg-red-50 transition-colors">
-                            <i id="like-icon" class="bi bi-heart text-[11px] text-gray-400 group-hover:text-red-500 transition-colors"></i>
+                    {{-- Like (Static Display) --}}
+                    <div class="flex flex-col items-center gap-1.5 flex-1 text-center">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center bg-gray-50">
+                            <i class="bi bi-heart-fill text-[11px] text-red-400"></i>
                         </div>
                         <div class="flex flex-col items-center gap-0">
-                            <span id="like-count" class="text-sm font-black text-gray-800 leading-none group-hover:text-red-500 transition-colors">{{ number_format($book->stat->likes_count ?? 0) }}</span>
-                            <span class="text-[7px] font-black text-gray-400 uppercase tracking-widest group-hover:text-red-500 transition-colors">Disukai</span>
+                            <span class="text-sm font-black text-gray-800 leading-none">{{ number_format($book->stat->likes_count ?? 0) }}</span>
+                            <span class="text-[7px] font-black text-gray-400 uppercase tracking-widest">Disukai</span>
                         </div>
-                    </button>
+                    </div>
                 </div>
 
                 {{-- Action Button --}}
@@ -223,66 +223,6 @@
 
 @push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        checkLikeStatus({{ $book->id }});
-    });
-
-    function checkLikeStatus(bookId) {
-        const likedBooks = JSON.parse(localStorage.getItem('liked_books') || '[]');
-        const btn = document.getElementById('like-btn');
-        const icon = document.getElementById('like-icon');
-        const bg = document.getElementById('like-icon-bg');
-
-        if (likedBooks.includes(bookId)) {
-            icon.classList.remove('bi-heart', 'text-gray-400');
-            icon.classList.add('bi-heart-fill', 'text-red-500');
-            bg.classList.add('bg-red-50');
-        }
-    }
-
-    async function toggleLike(bookId) {
-        let likedBooks = JSON.parse(localStorage.getItem('liked_books') || '[]');
-        const isCurrentlyLiked = likedBooks.includes(bookId);
-        const type = isCurrentlyLiked ? 'unlike' : 'like';
-
-        try {
-            const response = await fetch(`/buku/${bookId}/like`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: JSON.stringify({ type: type })
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                // Update UI count
-                document.getElementById('like-count').innerText = data.likes_formatted;
-
-                // Update localStorage & Icon Appearance
-                const icon = document.getElementById('like-icon');
-                const bg = document.getElementById('like-icon-bg');
-
-                if (type === 'like') {
-                    likedBooks.push(bookId);
-                    icon.classList.remove('bi-heart', 'text-gray-400');
-                    icon.classList.add('bi-heart-fill', 'text-red-500');
-                    bg.classList.add('bg-red-50');
-                } else {
-                    likedBooks = likedBooks.filter(id => id !== bookId);
-                    icon.classList.remove('bi-heart-fill', 'text-red-500');
-                    icon.classList.add('bi-heart', 'text-gray-400');
-                    bg.classList.remove('bg-red-50');
-                }
-                localStorage.setItem('liked_books', JSON.stringify(likedBooks));
-            }
-        } catch (error) {
-            console.error('Error toggling like:', error);
-        }
-    }
-
     function copyToClipboard() {
         const url = window.location.href;
         navigator.clipboard.writeText(url).then(() => {
