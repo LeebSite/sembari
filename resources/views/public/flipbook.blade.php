@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $book->title ?? 'Membaca' }} — Sembari Reader</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -215,7 +216,28 @@
             document.getElementById('finish-overlay').classList.remove('show');
         }
 
-        function submitRating(val) {
+        async function submitRating(val) {
+            // Hanya kirim like jika memilih "suka"
+            if (val === 'suka') {
+                try {
+                    const response = await fetch("{{ route('book.like', $book->id) }}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({ type: 'like' })
+                    });
+                    
+                    const result = await response.json();
+                    if (result.success) {
+                        console.log("Liked! New count:", result.likes_count);
+                    }
+                } catch (error) {
+                    console.error("Error liking book:", error);
+                }
+            }
+            
             // Animasi feedback sederhana sebelum pindah
             alert("Terima kasih atas penilaianmu!");
             window.location.href = "{{ route('home') }}";
