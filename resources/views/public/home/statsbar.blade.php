@@ -31,7 +31,7 @@
                 </svg>
             </div>
             <div>
-                <div id="stat-pembaca" class="text-2xl font-black" data-target="12744">0</div>
+                <div id="stat-pembaca" class="text-2xl font-black" data-target="1274">0</div>
                 {{-- <div id="stat-pembaca" class="text-2xl font-black" data-target="{{ $stats['pembaca'] ?? 0 }}">0</div> --}}
                 <div class="text-[10px] font-bold uppercase tracking-wider opacity-90">Pembaca</div>
             </div>
