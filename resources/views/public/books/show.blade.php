@@ -39,13 +39,13 @@
             <div class="w-full max-w-[200px] sm:max-w-[240px] lg:w-[280px] lg:max-w-none flex-shrink-0 animate-fadeInLeft">
                 <div class="relative group">
                     {{-- Elegant Cover shadow & border --}}
-                    <div class="aspect-[3/4.2] rounded-[1.25rem] lg:rounded-[1.5rem] overflow-hidden shadow-[0_20px_40px_-12px_rgba(0,0,0,0.12)] border-[6px] border-white ring-1 ring-gray-100 transform group-hover:-rotate-1 transition-transform duration-700 bg-gray-50">
+                    <div class="rounded-[1.25rem] lg:rounded-[1.5rem] overflow-hidden shadow-[0_20px_40px_-12px_rgba(0,0,0,0.12)] border-[6px] border-white ring-1 ring-gray-100 transform group-hover:-rotate-1 transition-transform duration-700 bg-gray-50">
                         @if($book->cover_image)
                             <img src="{{ asset('storage/' . $book->cover_image) }}" 
-                                 class="w-full h-full object-cover" 
+                                 class="w-full h-auto block" 
                                  alt="{{ $book->title }}">
                         @else
-                            <div class="w-full h-full bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col items-center justify-center gap-4">
+                            <div class="aspect-[3/4.2] w-full bg-gradient-to-br from-blue-50 to-purple-50 flex flex-col items-center justify-center gap-4">
                                 <i class="bi bi-book text-5xl text-gray-200"></i>
                                 <span class="text-gray-300 font-black text-[9px] uppercase tracking-widest">No Cover</span>
                             </div>
