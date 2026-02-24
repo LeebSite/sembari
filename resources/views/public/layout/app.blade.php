@@ -41,6 +41,10 @@
                         wiggle: {
                             '0%, 100%': { transform: 'rotate(-3deg)' },
                             '50%':      { transform: 'rotate(3deg)' },
+                        },
+                        'slide-in': {
+                            '0%': { transform: 'translateX(100%)', opacity: '0' },
+                            '100%': { transform: 'translateX(0)', opacity: '1' },
                         }
                     }
                 }
@@ -113,6 +117,11 @@
         /* ── Category Pill ── */
         .cat-pill { transition: all 0.2s; }
         .cat-pill:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+
+        /* ── Toast Notification ── */
+        .toast-animate {
+            animation: slide-in 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
+        }
     </style>
 
     @yield('styles')
@@ -122,6 +131,35 @@
     @include('public.layout.header')
 
     @yield('content')
+
+    {{-- Global Toast --}}
+    @if(session('success_like'))
+    <div id="toast-notif" class="fixed bottom-6 right-6 z-[9999] toast-animate">
+        <div class="bg-brand-navy border-l-4 border-brand-yellow text-white p-4 rounded-2xl shadow-2xl flex items-center gap-4 min-w-[300px]">
+            <div class="bg-brand-yellow/20 p-2.5 rounded-xl">
+                <i class="bi bi-heart-fill text-brand-yellow text-xl"></i>
+            </div>
+            <div>
+                <h4 class="font-black text-sm tracking-tight">Sangat Suka!</h4>
+                <p class="text-xs font-bold text-gray-400">{{ session('success_like') }}</p>
+            </div>
+            <button onclick="this.parentElement.parentElement.remove()" class="ml-auto text-gray-500 hover:text-white transition">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+    </div>
+    <script>
+        setTimeout(() => {
+            const toast = document.getElementById('toast-notif');
+            if(toast) {
+                toast.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(50px) scale(0.9)';
+                setTimeout(() => toast.remove(), 600);
+            }
+        }, 4000);
+    </script>
+    @endif
 
     @include('public.layout.footer')
 

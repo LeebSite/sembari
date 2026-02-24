@@ -115,6 +115,7 @@ class BookListController extends Controller
 
         if ($type === 'like') {
             $stat->increment('likes_count');
+            session()->flash('success_like', 'Terima kasih atas penilaianmu!');
         } else {
             if ($stat->likes_count > 0) {
                 $stat->decrement('likes_count');

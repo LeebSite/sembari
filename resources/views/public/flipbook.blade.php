@@ -238,9 +238,8 @@
                 }
             }
             
-            // Animasi feedback sederhana sebelum pindah
-            alert("Terima kasih atas penilaianmu!");
-            window.location.href = "{{ route('home') }}";
+            // Redirect ke Koleksi (Notifikasi akan muncul di sana via session flash)
+            window.location.href = "{{ route('book.list') }}";
         }
 
         document.addEventListener('DOMContentLoaded', async function() {
