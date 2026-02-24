@@ -8,10 +8,12 @@ use App\Http\Controllers\Admin\ReadingLevelController;
 use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\BookListController;
+use App\Http\Controllers\Web\AboutController;
 
 // --- PUBLIC ROUTES ---
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/koleksi', [BookListController::class, 'index'])->name('book.list');
+Route::get('/tentang', [AboutController::class, 'index'])->name('about');
 Route::get('/buku/{id}', [BookListController::class, 'show'])->name('book.show');
 Route::post('/buku/{id}/like', [\App\Http\Controllers\Web\BookListController::class, 'toggleLike'])->name('book.like');
 Route::get('/baca/{slug}', function ($slug) {
