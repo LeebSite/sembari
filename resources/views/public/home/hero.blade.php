@@ -21,11 +21,11 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="#koleksi" class="flex items-center justify-center gap-2.5 px-7 py-4 bg-brand-blue text-white font-black text-base rounded-2xl shadow-lg hover:bg-blue-700 hover:-translate-y-1 transition-all duration-200 sm:w-[210px]">
+                    <a href="#koleksi" class="w-full sm:w-52 flex items-center justify-center gap-2.5 px-4 py-4 bg-brand-blue text-white font-black text-base rounded-2xl shadow-lg hover:bg-blue-700 hover:-translate-y-1 transition-all duration-200">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                         Mulai Membaca
                     </a>
-                    <a href="{{ route('book.list') }}" class="flex items-center justify-center gap-2.5 px-7 py-4 bg-brand-yellow text-white font-black text-base rounded-2xl shadow-md hover:bg-yellow-500 hover:-translate-y-1 transition-all duration-200 sm:w-[210px]">
+                    <a href="{{ route('book.list') }}" class="w-full sm:w-52 flex items-center justify-center gap-2.5 px-4 py-4 bg-brand-yellow text-white font-black text-base rounded-2xl shadow-md hover:bg-yellow-500 hover:-translate-y-1 transition-all duration-200">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         Cari Buku
                     </a>
