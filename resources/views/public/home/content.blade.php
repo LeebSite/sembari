@@ -1,7 +1,7 @@
 {{-- CONTENT SECTIONS | Variabel: $terbatas, $terbaru, $jenjang, $terpopuler, $kategori --}}
 
 {{-- ═══ EDISI TERBATAS & TERBARU ═══ --}}
-<section id="koleksi" class="bg-[#F8FAFF] py-16">
+<section id="koleksi" class="bg-[#F8FAFF] py-12">
     <div class="max-w-6xl mx-auto px-6 lg:px-10">
         <div class="text-center mb-10">
             <span class="inline-block bg-red-100 text-red-600 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-3">
@@ -65,7 +65,7 @@
 
 
 {{-- ═══ JENJANG PEMBACA ═══ --}}
-<section id="jenjang" class="py-20 bg-white relative overflow-hidden">
+<section id="jenjang" class="py-12 bg-white relative overflow-hidden">
     {{-- Decorative Background Elements --}}
     <div class="absolute top-0 left-0 w-64 h-64 bg-blue-50 rounded-full blur-3xl opacity-50 -translate-x-1/2 -translate-y-1/2"></div>
     <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-50 rounded-full blur-3xl opacity-50 translate-x-1/3 translate-y-1/3"></div>
@@ -165,7 +165,7 @@
 
 
 {{-- ═══ TERPOPULER ═══ --}}
-<section class="bg-[#EEF6FF] py-16">
+<section class="bg-[#EEF6FF] py-12">
     <div class="max-w-6xl mx-auto px-6 lg:px-10">
         <div class="flex items-center justify-between mb-10">
             <div>
@@ -210,7 +210,7 @@
 
 
 {{-- ═══ KATEGORI ═══ --}}
-<section id="kategori" class="py-16 bg-white">
+<section id="kategori" class="py-12 bg-white">
     <div class="max-w-6xl mx-auto px-6 lg:px-10">
         <div class="text-center mb-10">
             <span class="inline-block bg-green-100 text-green-600 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-3">🏷️ Semua Topik</span>
@@ -246,7 +246,7 @@
 
 
 {{-- ═══ CTA BANNER ═══ --}}
-<section class="py-16 bg-gradient-to-r from-brand-blue to-blue-800 relative overflow-hidden">
+<section class="py-10 bg-gradient-to-r from-brand-blue to-blue-800 relative overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 28px 28px;"></div>
     <div class="max-w-3xl mx-auto px-6 lg:px-10 text-center relative z-10">
         <p class="text-5xl mb-4 animate-float inline-block">📚</p>

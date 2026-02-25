@@ -1,7 +1,7 @@
 {{-- HERO SECTION | Variabel: $stats --}}
-<header class="hero-bg pt-20 pb-4 overflow-hidden">
+<header class="hero-bg pt-12 pb-2 overflow-hidden">
     <div class="max-w-6xl mx-auto px-6 lg:px-10 relative z-10">
-        <div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+        <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
 
             {{-- Teks Kiri --}}
             <div class="lg:w-1/2 text-center lg:text-left">
@@ -15,17 +15,17 @@
                     Bareng <span class="text-brand-green">Sembari!</span>
                 </h1>
 
-                <p class="text-gray-500 text-base lg:text-lg leading-8 mb-10 max-w-md mx-auto lg:mx-0">
+                <p class="text-gray-500 text-base lg:text-lg leading-8 mb-8 max-w-md mx-auto lg:mx-0">
                     Platform membaca buku digital <strong class="text-gray-700">gratis</strong> untuk anak-anak Indonesia.
                     Dari dongeng Riau hingga cerita fiksi seru — semua ada di sini!
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="#koleksi" class="flex items-center justify-center gap-2.5 px-7 py-4 bg-brand-blue text-white font-black text-base rounded-2xl shadow-lg hover:bg-blue-700 hover:-translate-y-1 transition-all duration-200">
+                    <a href="#koleksi" class="flex items-center justify-center gap-2.5 px-7 py-4 bg-brand-blue text-white font-black text-base rounded-2xl shadow-lg hover:bg-blue-700 hover:-translate-y-1 transition-all duration-200 sm:w-[210px]">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                         Mulai Membaca
                     </a>
-                    <a href="{{ route('book.list') }}" class="flex items-center justify-center gap-2.5 px-7 py-4 bg-brand-yellow text-white font-black text-base rounded-2xl shadow-md hover:bg-yellow-500 hover:-translate-y-1 transition-all duration-200">
+                    <a href="{{ route('book.list') }}" class="flex items-center justify-center gap-2.5 px-7 py-4 bg-brand-yellow text-white font-black text-base rounded-2xl shadow-md hover:bg-yellow-500 hover:-translate-y-1 transition-all duration-200 sm:w-[210px]">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                         Cari Buku
                     </a>
@@ -76,7 +76,7 @@
 
         </div>
     </div>
-    <div class="wave-divider mt-12">
+    <div class="wave-divider mt-8">
         <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg">
             <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#F8FAFF"/>
         </svg>
