@@ -55,6 +55,9 @@
     {{-- Google Fonts: Nunito & Bootstrap Icons --}}
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    {{-- AOS Animation --}}
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         * { font-family: 'Nunito', sans-serif; }
@@ -164,6 +167,17 @@
     @include('public.layout.footer')
 
     @yield('scripts')
+
+    {{-- AOS Init --}}
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100,
+        easing: 'ease-out-cubic'
+      });
+    </script>
 
 </body>
 </html>

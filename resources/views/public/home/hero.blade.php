@@ -5,7 +5,7 @@
 
             {{-- Teks Kiri --}}
             <div class="lg:w-1/2 text-center lg:text-left">
-                <h1 class="text-4xl lg:text-5xl xl:text-[58px] font-black leading-[1.2] text-gray-900 mb-6">
+                <h1 class="text-4xl lg:text-5xl xl:text-[58px] font-black leading-[1.2] text-gray-900 mb-6" data-aos="fade-up">
                     Yuk, <span class="text-brand-blue relative inline-block">
                         Baca Buku
                         <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 200 10" fill="none">
@@ -15,12 +15,12 @@
                     Bareng <span class="text-brand-green">Sembari!</span>
                 </h1>
 
-                <p class="text-gray-500 text-base lg:text-lg leading-8 mb-8 max-w-md mx-auto lg:mx-0">
+                <p class="text-gray-500 text-base lg:text-lg leading-8 mb-8 max-w-md mx-auto lg:mx-0" data-aos="fade-up" data-aos-delay="100">
                     Platform membaca buku digital <strong class="text-gray-700">gratis</strong> untuk anak-anak Indonesia.
                     Dari dongeng Riau hingga cerita fiksi seru — semua ada di sini!
                 </p>
 
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" data-aos="fade-up" data-aos-delay="200">
                     <a href="#koleksi" class="w-full sm:w-52 flex items-center justify-center gap-2.5 px-4 py-4 bg-brand-blue text-white font-black text-base rounded-2xl shadow-lg hover:bg-blue-700 hover:-translate-y-1 transition-all duration-200">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
                         Mulai Membaca
@@ -49,7 +49,7 @@
             </div>
 
             {{-- Ilustrasi Kanan --}}
-            <div class="lg:w-1/2 relative flex justify-center items-center py-10 lg:py-0">
+            <div class="lg:w-1/2 relative flex justify-center items-center py-10 lg:py-0" data-aos="fade-left" data-aos-delay="200">
                 <div class="relative w-full max-w-sm">
                     <img src="{{ asset('img/logo/sembari.png') }}" alt="Logo Sembari"
                          class="relative z-10 w-full h-auto object-contain animate-float"
@@ -76,9 +76,12 @@
 
         </div>
     </div>
-    <div class="wave-divider mt-8">
-        <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="#F8FAFF"/>
-        </svg>
+    {{-- Transition to Content --}}
+    <div class="relative mt-2">
+        <div class="wave-divider">
+            <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="transform:translateY(2px)">
+                <path d="M0 40C240 80 480 0 720 40C960 80 1200 0 1440 40V80H0V40Z" fill="#F8FAFF"/>
+            </svg>
+        </div>
     </div>
 </header>

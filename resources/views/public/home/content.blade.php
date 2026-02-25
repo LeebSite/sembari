@@ -3,7 +3,7 @@
 {{-- ═══ EDISI TERBATAS & TERBARU ═══ --}}
 <section id="koleksi" class="bg-[#F8FAFF] py-12">
     <div class="max-w-6xl mx-auto px-6 lg:px-10">
-        <div class="text-center mb-10">
+        <div class="text-center mb-10" data-aos="fade-up">
             <span class="inline-block bg-red-100 text-red-600 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-3">
                 🔥 Spesial & Terbaru
             </span>
@@ -12,8 +12,8 @@
         </div>
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-5 lg:gap-7">
-            @forelse($terbatas->merge($terbaru)->unique('id')->take(8) as $book)
-            <div class="book-card group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+            @forelse($terbatas->merge($terbaru)->unique('id')->take(8) as $index => $book)
+            <div class="book-card group bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col" data-aos="fade-up" data-aos-delay="{{ ($index % 4) * 100 }}">
                 <div class="relative aspect-[5/7] bg-gradient-to-br from-blue-50 to-purple-50 overflow-hidden">
                     @if($book->license == 'Buku Edisi Terbatas')
                         <div class="absolute top-2.5 left-2.5 bg-red-500 text-white text-[9px] font-black px-2 py-1 rounded-lg shadow z-10">⭐ TERBATAS</div>
@@ -71,7 +71,7 @@
     <div class="absolute bottom-0 right-0 w-96 h-96 bg-purple-50 rounded-full blur-3xl opacity-50 translate-x-1/3 translate-y-1/3"></div>
 
     <div class="max-w-6xl mx-auto px-6 lg:px-10 relative z-10">
-        <div class="text-center mb-14">
+        <div class="text-center mb-14" data-aos="zoom-in">
             <span class="inline-block bg-brand-blue/10 text-brand-blue text-[11px] font-black px-4 py-1.5 rounded-full uppercase tracking-[0.2em] mb-4">
                 🎯 Temukan Levelmu
             </span>
@@ -167,7 +167,7 @@
 {{-- ═══ TERPOPULER ═══ --}}
 <section class="bg-[#EEF6FF] py-12">
     <div class="max-w-6xl mx-auto px-6 lg:px-10">
-        <div class="flex items-center justify-between mb-10">
+        <div class="flex items-center justify-between mb-10" data-aos="fade-right">
             <div>
                 <span class="inline-block bg-yellow-100 text-yellow-600 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-widest mb-2">⭐ Paling Disukai</span>
                 <h2 class="text-3xl font-black text-gray-900">Paling Sering Dibaca</h2>
