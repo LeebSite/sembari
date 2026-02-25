@@ -26,9 +26,26 @@
         }
 
         #top-header {
+            position: fixed; top: 0; left: 0; right: 0;
             height: 50px; background: white; display: flex; align-items: center;
-            justify-content: space-between; padding: 0 20px; z-index: 100;
+            justify-content: space-between; padding: 0 20px; z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transform: translateY(-100%);
+            transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        /* Hover Zones */
+        .hover-zone-top {
+            position: fixed; top: 0; left: 0; right: 0; height: 30px; z-index: 1001;
+        }
+        .hover-zone-bottom {
+            position: fixed; bottom: 0; left: 0; right: 0; height: 60px; z-index: 1001;
+        }
+
+        /* Show on Hover */
+        .hover-zone-top:hover ~ #top-header,
+        #top-header:hover {
+            transform: translateY(0);
         }
 
         .header-title {
@@ -84,12 +101,18 @@
         #prev-btn { left: 20px; } #next-btn { right: 20px; }
 
         #bottom-toolbar {
-            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
             background: var(--bg-dark); padding: 6px 16px; border-radius: 50px;
             display: flex; align-items: center; gap: 10px; z-index: 1000;
-            opacity: 0; transition: 0.5s; box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            opacity: 0; transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28); 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
-        #bottom-toolbar.show { opacity: 1; }
+        
+        /* Show bottom toolbar on hover zone or itself */
+        .hover-zone-bottom:hover ~ #reader-wrapper #bottom-toolbar,
+        #bottom-toolbar:hover {
+            opacity: 1; transform: translateX(-50%) translateY(0);
+        }
 
         .tool-btn {
             color: #a1a1aa; background: none; border: none; cursor: pointer;
@@ -173,6 +196,9 @@
             </a>
         </div>
     </div>
+
+    <div class="hover-zone-top"></div>
+    <div class="hover-zone-bottom"></div>
 
     <div id="top-header">
         <a href="{{ route('book.show', $book->id) }}" style="color: var(--primary); text-decoration: none; font-size: 1.2rem;">
@@ -323,7 +349,6 @@
 
             function initInterface(count) {
                 viewport.classList.add('ready');
-                document.getElementById('bottom-toolbar').classList.add('show');
                 document.getElementById('page-info').innerText = `1 / ${count}`;
                 
                 setTimeout(() => {
