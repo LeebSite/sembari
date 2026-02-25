@@ -379,6 +379,12 @@
                     if (!document.fullscreenElement) document.documentElement.requestFullscreen();
                     else document.exitFullscreen();
                 };
+
+                // Keyboard Navigation
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft') pageFlip.flipPrev();
+                    if (e.key === 'ArrowRight') pageFlip.flipNext();
+                });
             }
         });
     </script>
