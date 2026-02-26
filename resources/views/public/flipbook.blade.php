@@ -28,7 +28,7 @@
         #top-header {
             position: fixed; top: 0; left: 0; right: 0;
             height: 50px; background: white; display: flex; align-items: center;
-            justify-content: space-between; padding: 0 20px; z-index: 1000;
+            justify-content: space-between; padding: 0 20px; z-index: 1005;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             transform: translateY(-100%);
             transition: transform 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
@@ -103,7 +103,7 @@
         #bottom-toolbar {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(100px);
             background: var(--bg-dark); padding: 6px 16px; border-radius: 50px;
-            display: flex; align-items: center; gap: 10px; z-index: 1000;
+            display: flex; align-items: center; gap: 10px; z-index: 1005;
             opacity: 0; transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28); 
             box-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
