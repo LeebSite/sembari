@@ -35,11 +35,11 @@
                 </svg>
                 Buku
             </a>
-            <a href="{{ route('about') }}" class="px-4 py-2 rounded-full transition flex items-center gap-2 {{ Route::is('about') ? 'text-white bg-white/15' : 'hover:text-white hover:bg-white/10' }}">
+            <a href="{{ route('help') }}" class="px-4 py-2 rounded-full transition flex items-center gap-2 {{ Route::is('help') ? 'text-white bg-white/15' : 'hover:text-white hover:bg-white/10' }}">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                 </svg>
-                Tentang
+                Bantuan
             </a>
         </div>
 

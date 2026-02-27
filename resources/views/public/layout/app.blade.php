@@ -21,12 +21,14 @@
                             sky:    '#1d83d1',
                             green:  '#27AE60',
                             yellow: '#F5A623',
+                            yellow2: '#ffd500ff',
                             orange: '#E8621E',
                             purple: '#7C3AED',
                             pink:   '#E91E8C',
                             navy: '#08105fff',
                             darkblue: '#2838c3ff',
                             gray: '#94A3B8',
+                            white: '#ffffff',
                         }
                     },
                     animation: {
