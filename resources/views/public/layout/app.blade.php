@@ -127,11 +127,147 @@
         .toast-animate {
             animation: slide-in 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28) forwards;
         }
+
+        /* ── PRELOADER STYLES ── */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #ffffff 0%, #F8FAFF 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            transition: opacity 0.4s ease, visibility 0.4s;
+        }
+
+        /* Magic Book Animation */
+        .magic-book {
+            width: 100px;
+            height: 80px;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .book-spine {
+            width: 4px;
+            height: 100%;
+            background: #1E40AF;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            z-index: 5;
+        }
+
+        .book-page {
+            width: 50%;
+            height: 100%;
+            background: white;
+            position: absolute;
+            right: 0;
+            transform-origin: left center;
+            border: 2px solid #1E40AF;
+            border-left: none;
+            border-radius: 0 10px 10px 0;
+            animation: flip-page 2.5s infinite ease-in-out;
+            box-shadow: 2px 2px 10px rgba(30, 64, 175, 0.1);
+        }
+
+        .book-page-fixed {
+            width: 50%;
+            height: 100%;
+            background: #EFF6FF;
+            position: absolute;
+            border: 2px solid #1E40AF;
+            z-index: 1;
+        }
+
+        .page-left { left: 0; border-radius: 10px 0 0 10px; border-right: none; }
+        .page-right { right: 0; border-radius: 0 10px 10px 0; border-left: none; }
+
+        @keyframes flip-page {
+            0% { transform: rotateY(0deg); z-index: 10; }
+            50% { transform: rotateY(-180deg); z-index: 10; }
+            100% { transform: rotateY(-180deg); z-index: 1; }
+        }
+
+        .magic-book .book-page:nth-child(2) { animation-delay: 0.5s; }
+        .magic-book .book-page:nth-child(3) { animation-delay: 1.0s; }
+        .magic-book .book-page:nth-child(4) { animation-delay: 1.5s; }
+
+        /* Sparkles */
+        .sparkles {
+            position: absolute;
+            width: 100%;
+            height: 100px;
+            pointer-events: none;
+        }
+
+        .sparkle {
+            position: absolute;
+            background: #F5A623;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            animation: sparkle-float 2s infinite;
+        }
+
+        @keyframes sparkle-float {
+            0% { transform: translateY(0) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-60px) scale(1); opacity: 0; }
+        }
+
+        .loading-text {
+            margin-top: 40px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            color: #1E40AF;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 13px;
+        }
+
+        .preloader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
     </style>
 
     @yield('styles')
 </head>
 <body class="bg-white text-gray-800">
+    {{-- ══ PRELOADER (MAGIC BOOK) ══ --}}
+    <div id="preloader">
+        <div class="relative">
+            <div class="magic-book">
+                <div class="book-spine"></div>
+                <div class="book-page-fixed page-left"></div>
+                <div class="book-page-fixed page-right"></div>
+                <div class="book-page"></div>
+                <div class="book-page"></div>
+                <div class="book-page"></div>
+            </div>
+            {{-- Sparkle elements --}}
+            <div class="sparkles">
+                <div class="sparkle" style="left: 20%; animation-delay: 0.2s;"></div>
+                <div class="sparkle" style="left: 50%; animation-delay: 0.5s;"></div>
+                <div class="sparkle" style="left: 80%; animation-delay: 0.8s;"></div>
+            </div>
+        </div>
+        <div class="loading-text flex items-center gap-2">
+            <span>Sebentar ya...</span>
+            <span class="flex gap-1">
+                <span class="w-1.5 h-1.5 bg-brand-yellow rounded-full animate-bounce"></span>
+                <span class="w-1.5 h-1.5 bg-brand-yellow rounded-full animate-bounce" style="animation-delay: 0.2s"></span>
+                <span class="w-1.5 h-1.5 bg-brand-yellow rounded-full animate-bounce" style="animation-delay: 0.4s"></span>
+            </span>
+        </div>
+    </div>
 
     @include('public.layout.header')
 
@@ -178,6 +314,19 @@
         once: true,
         offset: 100,
         easing: 'ease-out-cubic'
+      });
+
+      // ── PRELOADER LOGIC ──
+      window.addEventListener('load', function() {
+          const preloader = document.getElementById('preloader');
+          setTimeout(() => {
+              preloader.classList.add('preloader-hidden');
+          }, 800); // Minimum delay to see the animation
+      });
+
+      // Show loader on navigation
+      window.addEventListener('beforeunload', function() {
+          document.getElementById('preloader').classList.remove('preloader-hidden');
       });
     </script>
 
