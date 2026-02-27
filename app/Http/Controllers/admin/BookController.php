@@ -94,6 +94,12 @@ class BookController extends Controller
             'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
             'categories' => 'nullable|array',
             'book_types' => 'nullable|array',
+        ], [
+            'title.required' => 'Judul buku wajib diisi.',
+            'cover_image.max' => 'Ukuran sampul buku maksimal 2MB.',
+            'cover_image.image' => 'File sampul harus berupa gambar (JPG, PNG).',
+            'pdf_file.max' => 'Ukuran file PDF maksimal 50MB.',
+            'pdf_file.mimes' => 'File harus berupa format PDF.',
         ]);
 
         $slug = Str::slug($request->title);
@@ -248,6 +254,12 @@ class BookController extends Controller
             'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
             'categories' => 'nullable|array',
             'book_types' => 'nullable|array',
+        ], [
+            'title.required' => 'Judul buku wajib diisi.',
+            'cover_image.max' => 'Ukuran sampul buku maksimal 2MB.',
+            'cover_image.image' => 'File sampul harus berupa gambar (JPG, PNG).',
+            'pdf_file.max' => 'Ukuran file PDF maksimal 50MB.',
+            'pdf_file.mimes' => 'File harus berupa format PDF.',
         ]);
 
         $slug = Str::slug($request->title);

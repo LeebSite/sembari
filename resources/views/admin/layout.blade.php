@@ -20,6 +20,88 @@
     {{-- Admin Global CSS --}}
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}?v={{ \Illuminate\Support\Str::random(8) }}">
 
+    {{-- Animate.css --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+    <style>
+        /* ── Custom Modal Notif ── */
+        .modal-notif-header {
+            border: none;
+            padding-top: 2rem;
+            padding-bottom: 0.5rem;
+        }
+        .icon-box {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 1rem;
+        }
+        .icon-box-success {
+            background-color: #f0fdf4;
+            color: #22c55e;
+            border: 3px solid #bbf7d0;
+        }
+        .icon-box-danger {
+            background-color: #fef2f2;
+            color: #ef4444;
+            border: 3px solid #fecaca;
+        }
+        .modal-notif-title {
+            font-weight: 800;
+            color: #1e293b;
+        }
+        .modal-notif-text {
+            color: #64748b;
+            font-size: 0.95rem;
+            padding: 0 20px;
+        }
+        .btn-notif {
+            padding: 10px 30px;
+            font-weight: 700;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── Loading Overlay ── */
+        #loading-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 10000;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        .spinner-loading {
+            width: 60px;
+            height: 60px;
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            border-top: 5px solid #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
     {{-- Per-page CSS (opsional) --}}
     @stack('styles')
 </head>
@@ -144,6 +226,62 @@
     </main>
 </div>
 
+{{-- ── LOADING OVERLAY ── --}}
+<div id="loading-overlay">
+    <div class="spinner-loading"></div>
+    <h5 class="fw-bold mb-1">Sedang Memproses...</h5>
+    <p class="text-white-50 small">Mohon tunggu sebentar, jangan tutup halaman ini.</p>
+</div>
+
+{{-- ── NOTIFICATION MODALS ── --}}
+
+{{-- Modal Sukses --}}
+@if(session('success'))
+<div class="modal fade" id="modalSuccess" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-body text-center p-4">
+                <div class="icon-box icon-box-success animate__animated animate__bounceIn">
+                    <i class="bi bi-check-circle-fill"></i>
+                </div>
+                <h4 class="modal-notif-title mt-3">Berhasil!</h4>
+                <p class="modal-notif-text mt-2">{{ session('success') }}</p>
+                <button type="button" class="btn btn-success btn-notif shadow-sm w-100" data-bs-dismiss="modal">OKE, MENGERTI</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
+{{-- Modal Error --}}
+@if(session('error') || $errors->any())
+<div class="modal fade" id="modalError" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-body text-center p-4">
+                <div class="icon-box icon-box-danger animate__animated animate__shakeX">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                </div>
+                <h4 class="modal-notif-title mt-3">Ups! Ada Kesalahan</h4>
+                <div class="modal-notif-text mt-2">
+                    @if(session('error'))
+                        {{ session('error') }}
+                    @endif
+                    @if($errors->any())
+                        <ul class="list-unstyled mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li><i class="bi bi-dot"></i> {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+                </div>
+                <button type="button" class="btn btn-danger btn-notif shadow-sm px-5" data-bs-dismiss="modal">PERBAIKI SEKARANG</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
+
 {{-- Bootstrap JS --}}
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -159,6 +297,42 @@ document.addEventListener('click', function (e) {
             sidebar.classList.remove('active');
         }
     }
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    @if(session('success'))
+        const modalSuccessEle = document.getElementById('modalSuccess');
+        if (modalSuccessEle) {
+            const modalSuccess = new bootstrap.Modal(modalSuccessEle);
+            modalSuccess.show();
+        }
+    @endif
+
+    @if(session('error') || $errors->any())
+        const modalErrorEle = document.getElementById('modalError');
+        if (modalErrorEle) {
+            const modalError = new bootstrap.Modal(modalErrorEle);
+            modalError.show();
+        }
+    @endif
+
+    // Loading Handler for Forms
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', function() {
+            // Hanya tampilkan loading jika form valid (untuk native validation)
+            if (this.checkValidity()) {
+                document.getElementById('loading-overlay').style.display = 'flex';
+                const submitBtn = this.querySelector('button[type="submit"]');
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Memproses...';
+                }
+            }
+        });
+    });
 });
 </script>
 
