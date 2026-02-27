@@ -83,6 +83,11 @@ class ReadingLevelController extends Controller
                 ->with('error', 'Tidak dapat menghapus jenjang baca karena masih ada buku yang terkait!');
         }
 
+        // Delete icon if exists
+        if ($readingLevel->icon && \Storage::disk('public')->exists($readingLevel->icon)) {
+            \Storage::disk('public')->delete($readingLevel->icon);
+        }
+
         $readingLevel->delete();
 
         return redirect()->route('admin.reading-levels.index')

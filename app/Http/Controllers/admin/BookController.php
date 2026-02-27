@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
@@ -258,11 +259,24 @@ class BookController extends Controller
         
         // Handle cover image upload
         if ($request->hasFile('cover_image')) {
+            // Delete old cover if exists
+            if ($book->cover_image && Storage::disk('public')->exists($book->cover_image)) {
+                Storage::disk('public')->delete($book->cover_image);
+            }
             $coverImagePath = $request->file('cover_image')->store('covers', 'public');
         }
 
         // Handle PDF file upload
         if ($request->hasFile('pdf_file')) {
+            // Delete old PDF if exists
+            if ($book->pdf_file && Storage::disk('public')->exists($book->pdf_file)) {
+                Storage::disk('public')->delete($book->pdf_file);
+            }
+            // Also delete generated pages folder
+            $pagesDir = 'books/' . $id;
+            if (Storage::disk('public')->exists($pagesDir)) {
+                Storage::disk('public')->deleteDirectory($pagesDir);
+            }
             $pdfFilePath = $request->file('pdf_file')->store('books', 'public');
         }
 
@@ -321,8 +335,28 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        // Delete akan cascade ke book_categories dan book_book_type
-        DB::table('books')->where('id', $id)->delete();
+        $book = DB::table('books')->where('id', $id)->first();
+        
+        if ($book) {
+            // Delete cover image
+            if ($book->cover_image && Storage::disk('public')->exists($book->cover_image)) {
+                Storage::disk('public')->delete($book->cover_image);
+            }
+
+            // Delete PDF file
+            if ($book->pdf_file && Storage::disk('public')->exists($book->pdf_file)) {
+                Storage::disk('public')->delete($book->pdf_file);
+            }
+
+            // Delete pages directory
+            $pagesDir = 'books/' . $id;
+            if (Storage::disk('public')->exists($pagesDir)) {
+                Storage::disk('public')->deleteDirectory($pagesDir);
+            }
+
+            // Delete record (will cascade to book_categories, book_book_type, and book_stats)
+            DB::table('books')->where('id', $id)->delete();
+        }
 
         return redirect()->route('admin.books.index')
             ->with('success', 'Buku berhasil dihapus!');
