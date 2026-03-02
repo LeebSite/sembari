@@ -23,8 +23,7 @@
                              style="filter: drop-shadow(0 4px 12px rgba(255,255,255,0.2));">
                     </div>
                     <p class="text-blue-100/70 text-sm leading-relaxed font-semibold max-w-sm">
-                        Platform literasi digital unggulan dari <strong class="text-white">Balai Bahasa Provinsi Riau</strong>. 
-                        Hadir untuk mewujudkan generasi emas Indonesia yang berwawasan luas melalui budaya membaca.
+                        Ruang baca serial terjemahan digital gratis untuk memperkaya literasi sekaligus melestarikan bahasa Melayu Riau dengan pengalaman FlipBook yang interaktif
                     </p>
                 </div>
                 
@@ -76,11 +75,15 @@
                     </div>
                     <div class="flex items-center gap-3">
                         <i class="bi bi-envelope text-brand-sky text-base"></i>
-                        <p class="text-[12px] text-blue-100/60 font-bold">info@balaibahasariau.id</p>
+                        <a href="mailto:produkpenerjemahanbbpr@gmail.com" class="text-[12px] text-blue-100/60 font-bold hover:text-white transition-colors">
+                            produkpenerjemahanbbpr@gmail.com
+                        </a>
                     </div>
                     <div class="flex items-center gap-3">
                         <i class="bi bi-telephone text-brand-sky text-base"></i>
-                        <p class="text-[12px] text-blue-100/60 font-bold">(0761) 65930</p>
+                        <a href="https://wa.me/628217788663" target="_blank" class="text-[12px] text-blue-100/60 font-bold hover:text-white transition-colors">
+                            08217788663
+                        </a>
                     </div>
                 </div>
             </div>
