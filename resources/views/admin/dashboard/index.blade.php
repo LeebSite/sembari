@@ -275,7 +275,7 @@
 <div class="dash-hero">
     <i class="bi bi-book-half hero-icon"></i>
     <h2>{{ $greeting }}, {{ session('admin_username', 'Admin') }}! 👋</h2>
-    <p>Selamat datang di Panel Admin Perpustakaan Digital Sembari</p>
+    <p>Selamat datang di Panel Admin SEMBARI</p>
     <div class="hero-date">
         <i class="bi bi-calendar3 me-1"></i>
         {{ $now->translatedFormat('l, d F Y') }}
@@ -292,7 +292,6 @@
             <div class="stat-info">
                 <p>Total Buku</p>
                 <h3 style="color:#6366f1;">{{ $totalBooks }}</h3>
-                <small>Koleksi digital</small>
             </div>
         </div>
     </div>
@@ -304,7 +303,6 @@
             <div class="stat-info">
                 <p>Kategori</p>
                 <h3 style="color:#10b981;">{{ $totalCategories }}</h3>
-                <small>Jenis konten</small>
             </div>
         </div>
     </div>
@@ -314,9 +312,8 @@
                 <i class="bi bi-eye-fill"></i>
             </div>
             <div class="stat-info">
-                <p>Total Views</p>
+                <p>Total Dibaca</p>
                 <h3 style="color:#f59e0b;">{{ number_format($totalViews) }}</h3>
-                <small>Kunjungan buku</small>
             </div>
         </div>
     </div>
@@ -326,9 +323,8 @@
                 <i class="bi bi-heart-fill"></i>
             </div>
             <div class="stat-info">
-                <p>Total Likes</p>
+                <p>Total Disukai</p>
                 <h3 style="color:#ef4444;">{{ number_format($totalLikes) }}</h3>
-                <small>Disukai pembaca</small>
             </div>
         </div>
     </div>
@@ -439,15 +435,15 @@
                 </h5>
             </div>
             <div class="lib-stat-row">
-                <div class="stat-label"><span class="dot" style="background:#6366f1;"></span>Total Views</div>
+                <div class="stat-label"><span class="dot" style="background:#6366f1;"></span>Total Dilihat</div>
                 <div class="stat-val">{{ number_format($totalViews) }}</div>
             </div>
             <div class="lib-stat-row">
-                <div class="stat-label"><span class="dot" style="background:#ef4444;"></span>Total Likes</div>
+                <div class="stat-label"><span class="dot" style="background:#ef4444;"></span>Total Disukai</div>
                 <div class="stat-val">{{ number_format($totalLikes) }}</div>
             </div>
             <div class="lib-stat-row">
-                <div class="stat-label"><span class="dot" style="background:#10b981;"></span>Total Reads</div>
+                <div class="stat-label"><span class="dot" style="background:#10b981;"></span>Total Dibaca</div>
                 <div class="stat-val">{{ number_format($totalReads) }}</div>
             </div>
             <div class="lib-stat-row">
