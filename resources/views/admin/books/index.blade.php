@@ -336,7 +336,7 @@
             <i class="bi bi-search"></i>
             <input type="text" name="search" id="searchInput"
                    value="{{ $search }}"
-                   placeholder="Cari judul atau kontributor..."
+                   placeholder="Cari judul atau detail..."
                    autocomplete="off">
         </div>
 
@@ -433,10 +433,10 @@
                         @if($book->description)
                             <div class="book-desc">{{ Str::limit($book->description, 90) }}</div>
                         @endif
-                        @if($book->contributors)
+                        @if($book->detail)
                             <div class="book-contributors">
                                 <i class="bi bi-people me-1" style="color:#6366f1;"></i>
-                                {{ Str::limit(str_replace("\n", " · ", $book->contributors), 70) }}
+                                {{ Str::limit(str_replace("\n", " · ", $book->detail), 70) }}
                             </div>
                         @endif
                     </td>

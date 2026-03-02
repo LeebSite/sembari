@@ -13,7 +13,7 @@ class Book extends Model
         'title',
         'slug',
         'description',
-        'contributors',
+        'detail',
         'license',
         'reading_level_id',
         'cover_image',

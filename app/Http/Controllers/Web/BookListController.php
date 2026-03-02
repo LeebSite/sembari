@@ -19,7 +19,7 @@ class BookListController extends Controller
         if ($search = $request->get('q')) {
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'like', "%$search%")
-                  ->orWhere('contributors', 'like', "%$search%")
+                  ->orWhere('detail', 'like', "%$search%")
                   ->orWhere('description', 'like', "%$search%");
             });
         }

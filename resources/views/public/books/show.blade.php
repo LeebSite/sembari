@@ -4,14 +4,14 @@
 
 @section('content')
 @php
-    // Parsing kontributor dari textarea (format Key: Value per baris)
-    $contributors = [];
-    if($book->contributors) {
-        $lines = explode("\n", str_replace("\r", "", $book->contributors));
+    // Parsing detail dari textarea (format Key: Value per baris)
+    $details = [];
+    if($book->detail) {
+        $lines = explode("\n", str_replace("\r", "", $book->detail));
         foreach($lines as $line) {
             if(str_contains($line, ':')) {
                 [$key, $value] = explode(':', $line, 2);
-                $contributors[trim($key)] = trim($value);
+                $details[trim($key)] = trim($value);
             }
         }
     }
@@ -107,15 +107,15 @@
                 <div class="grid grid-cols-1 land-grid-cols-2 lg:grid-cols-2 gap-y-6 lg:gap-y-8 gap-x-10 mb-8 pb-8 border-b border-gray-100 px-4 lg:px-0">
                     <div class="metadata-item">
                         <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Penulis</p>
-                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $contributors['Penulis'] ?? '—' }}</p>
+                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $details['Penulis'] ?? '—' }}</p>
                     </div>
                     <div class="metadata-item">
                         <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Penerjemah</p>
-                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $contributors['Penerjemah'] ?? '—' }}</p>
+                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $details['Penerjemah'] ?? '—' }}</p>
                     </div>
                     <div class="metadata-item">
                         <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Ilustrator</p>
-                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $contributors['Ilustrator'] ?? '—' }}</p>
+                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $details['Ilustrator'] ?? '—' }}</p>
                     </div>
                     <div class="metadata-item">
                         <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Lisensi</p>
@@ -187,8 +187,8 @@
                         </p>
                         <div class="flex flex-wrap justify-start gap-x-4 gap-y-2">
                             <span class="text-brand-yellow font-black text-[11px] italic hover:underline cursor-pointer">#{{ str_replace(' ', '', $book->title) }}</span>
-                            @if(isset($contributors['Penulis']))
-                                <span class="text-brand-yellow font-black text-[11px] italic hover:underline cursor-pointer">#{{ str_replace(' ', '', $contributors['Penulis']) }}</span>
+                            @if(isset($details['Penulis']))
+                                <span class="text-brand-yellow font-black text-[11px] italic hover:underline cursor-pointer">#{{ str_replace(' ', '', $details['Penulis']) }}</span>
                             @endif
                         </div>
                     </div>

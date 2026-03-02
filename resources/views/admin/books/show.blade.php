@@ -325,13 +325,13 @@
                 <div class="ic-icon" style="background: linear-gradient(135deg,#0ea5e9,#0284c7);">
                     <i class="bi bi-people"></i>
                 </div>
-                <h6>Kontributor</h6>
+                <h6>Detail</h6>
             </div>
             <div class="info-card-body">
-                @if($book->contributors)
-                    <div style="white-space: pre-line; font-size: 13.5px; color: #374151; line-height: 1.8;">{{ $book->contributors }}</div>
+                @if($book->detail)
+                    <div style="white-space: pre-line; font-size: 13.5px; color: #374151; line-height: 1.8;">{{ $book->detail }}</div>
                 @else
-                    <span style="color:#94a3b8; font-size:13px;">Belum ada data kontributor</span>
+                    <span style="color:#94a3b8; font-size:13px;">Belum ada data detail tambahan</span>
                 @endif
             </div>
         </div>

@@ -28,7 +28,7 @@ class BookController extends Controller
         if ($search) {
             $query->where(function ($q) use ($search) {
                 $q->where('books.title', 'like', "%{$search}%")
-                  ->orWhere('books.contributors', 'like', "%{$search}%");
+                  ->orWhere('books.detail', 'like', "%{$search}%");
             });
         }
 
@@ -86,7 +86,7 @@ class BookController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'nullable',
-            'contributors' => 'nullable',
+            'detail' => 'nullable',
             'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
             'tahun_terbit' => 'nullable|integer|min:1900|max:' . date('Y'),
             'reading_level_id' => 'nullable|exists:reading_levels,id',
@@ -121,7 +121,7 @@ class BookController extends Controller
             'title' => $request->title,
             'slug' => $slug,
             'description' => $request->description,
-            'contributors' => $request->contributors,
+            'detail' => $request->detail,
             'license' => $request->license,
             'tahun_terbit' => $request->tahun_terbit ?: null,
             'reading_level_id' => $request->reading_level_id,
@@ -246,7 +246,7 @@ class BookController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'description' => 'nullable',
-            'contributors' => 'nullable',
+            'detail' => 'nullable',
             'license' => 'nullable|in:Buku Edisi Terbatas,Buku Edisi Umum',
             'tahun_terbit' => 'nullable|integer|min:1900|max:' . date('Y'),
             'reading_level_id' => 'nullable|exists:reading_levels,id',
@@ -297,7 +297,7 @@ class BookController extends Controller
             'title' => $request->title,
             'slug' => $slug,
             'description' => $request->description,
-            'contributors' => $request->contributors,
+            'detail' => $request->detail,
             'license' => $request->license,
             'tahun_terbit' => $request->tahun_terbit ?: null,
             'reading_level_id' => $request->reading_level_id,

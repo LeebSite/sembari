@@ -429,7 +429,7 @@
                 </div>
             </div>
 
-                        <!-- SECTION: Kontributor -->
+            <!-- SECTION: Kontributor -->
             <div class="form-section">
                 <div class="form-section-header">
                     <div class="section-icon" style="background: linear-gradient(135deg,#0ea5e9,#0284c7);">
@@ -443,15 +443,15 @@
                 <div class="form-section-body">
                     <div class="mb-0">
                         <label class="form-label">Detail Buku</label>
-                        <textarea class="form-control description-area @error('contributors') is-invalid @enderror"
-                                  name="contributors"
+                        <textarea class="form-control description-area @error('detail') is-invalid @enderror"
+                                  name="detail"
                                   rows="3"
-                                  placeholder="Contoh:&#10;Penulis: John Doe&#10;Ilustrator: Jane Smith&#10;Penerjemah: Bob Wilson">{{ old('contributors') }}</textarea>
+                                  placeholder="Contoh:&#10;Penulis: John Doe&#10;Ilustrator: Jane Smith&#10;Penerjemah: Bob Wilson">{{ old('detail') }}</textarea>
                         <small class="text-muted mt-1 d-block">
                             <i class="bi bi-info-circle me-1"></i>
                             Tulis satu detail per baris
                         </small>
-                        @error('contributors')
+                        @error('detail')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -495,7 +495,7 @@
                                accept="image/*" onchange="previewCover(event)">
                         <div class="upload-icon"><i class="bi bi-cloud-arrow-up"></i></div>
                         <div class="upload-text">Klik atau drag & drop</div>
-                        <div class="upload-hint">JPG, PNG — Maks. 2MB</div>
+                        <div class="upload-hint">JPG, PNG ï¿½ Maks. 2MB</div>
                     </div>
 
                     @error('cover_image')
@@ -536,7 +536,7 @@
                                accept=".pdf" onchange="previewPdf(event)">
                         <div class="upload-icon"><i class="bi bi-file-earmark-pdf"></i></div>
                         <div class="upload-text">Klik atau drag & drop</div>
-                        <div class="upload-hint">PDF — Maks. 50MB</div>
+                        <div class="upload-hint">PDF ï¿½ Maks. 50MB</div>
                     </div>
 
                     @error('pdf_file')

@@ -408,14 +408,14 @@
                 <div class="form-section-body">
                     <div class="mb-0">
                         <label class="form-label">Detail Buku</label>
-                        <textarea class="form-control description-area @error('contributors') is-invalid @enderror"
-                                  name="contributors"
+                        <textarea class="form-control description-area @error('detail') is-invalid @enderror"
+                                  name="detail"
                                   rows="3"
-                                  placeholder="Contoh:&#10;Penulis: John Doe&#10;Ilustrator: Jane Smith">{{ old('contributors', $book->contributors) }}</textarea>
+                                  placeholder="Contoh:&#10;Penulis: John Doe&#10;Ilustrator: Jane Smith">{{ old('detail', $book->detail) }}</textarea>
                         <small class="text-muted mt-1 d-block">
                             <i class="bi bi-info-circle me-1"></i>Tulis satu detail per baris
                         </small>
-                        @error('contributors')
+                        @error('detail')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>

@@ -8,7 +8,7 @@
        PAGE HERO — Kategori (Hijau Teal)
     ══════════════════════════════════ */
     .page-hero {
-        background: linear-gradient(-45deg, #009432, #FFC312, #EE5A24, #006266);
+        background: linear-gradient(135deg, #6366f1 0%, #4f46e5 60%, #7c3aed 100%);
         border-radius: 16px;
         padding: 28px 32px;
         color: #fff;
