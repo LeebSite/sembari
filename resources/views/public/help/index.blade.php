@@ -60,60 +60,98 @@
     <div class="max-w-6xl mx-auto px-6">
         
         {{-- ══ PENJELASAN APLIKASI ══ --}}
-        <div class="grid lg:grid-cols-12 gap-12 items-center mb-32">
-            <div class="lg:col-span-7 relative">
-                <div class="absolute inset-0 bg-brand-blue/5 rounded-[3rem] -rotate-2 scale-105"></div>
-                <div class="relative bg-white p-10 lg:p-14 rounded-[3rem] shadow-xl border border-blue-50">
-                    <div class="flex items-center gap-4 mb-8">
-                        <div class="p-4 bg-brand-blue/10 rounded-2xl text-3xl">
-                            <i class="bi bi-journal-text text-brand-blue"></i>
-                        </div>
-                        <h2 class="text-3xl lg:text-4xl font-black text-brand-navy">Apa itu SEMBARI?</h2>
-                    </div>
-                    
-                    <div class="space-y-6 text-gray-600 text-lg leading-relaxed font-medium">
-                        <p>
-                            <span class="text-brand-blue font-bold">SEMBARI</span> merupakan penjenamaan dari serial terjemahan yang diterbitkan oleh <span class="text-brand-navy font-bold">Balai Bahasa Provinsi Riau</span>, Platform ini hadir sebagai ruang baca digital yang memungkinkan masyarakat mengakses berbagai produk penerjemahan secara gratis, kapan saja dan di mana saja.
-                        </p>
-                        <p>
-                             Melalui SEMBARI, pembaca dapat menikmati cerita rakyat yang diceritakan kembali dan diterjemahkan ke dalam bahasa Indonesia, serta cerita anak dwibahasa dalam bahasa Melayu Riau dan bahasa Indonesia.
-                        </p>
-                        <p class="text-sm border-l-4 border-brand-yellow pl-5 py-1 italic text-gray-400">
-                            Kami menghadirkan pengalaman membaca digital yang senyata mungkin dengan teknologi Flipbook.
-                        </p>
-                    </div>
+        <div class="mb-32">
+            <div class="max-w-4xl mx-auto text-center mb-16 px-4" data-aos="fade-up">
+                <h2 class="text-4xl lg:text-5xl font-black text-brand-navy mb-8 leading-tight">
+                    Apa itu <span class="bg-gradient-to-r from-brand-blue to-blue-400 bg-clip-text text-transparent italic pr-3">SEMBARI?</span>
+                </h2>
+                <div class="space-y-6 text-gray-500 text-lg lg:text-xl leading-relaxed font-medium">
+                    <p>
+                        <span class="text-brand-blue font-black">SEMBARI</span> merupakan penjenamaan dari serial terjemahan yang diterbitkan oleh <span class="text-brand-navy font-bold">Balai Bahasa Provinsi Riau</span>. Platform ini hadir sebagai ruang baca digital yang memungkinkan masyarakat mengakses berbagai produk penerjemahan secara gratis, kapan saja dan di mana saja.
+                    </p>
+                    <p>
+                        Melalui <span class="text-brand-navy font-bold">SEMBARI</span>, pembaca dapat menikmati cerita rakyat yang diceritakan kembali dan diterjemahkan ke dalam bahasa Indonesia, serta cerita anak dwibahasa dalam bahasa Melayu Riau dan bahasa Indonesia.
+                    </p>
                 </div>
             </div>
 
-            <div class="lg:col-span-5 space-y-6">
-                <div class="bg-white p-7 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-6 hover:shadow-md transition-all group">
-                    <div class="bg-green-100 p-4 rounded-2xl text-2xl group-hover:scale-110 transition-transform">🌱</div>
-                    <div>
-                        <h4 class="font-black text-brand-navy mb-1 text-lg">Ramah Anak</h4>
-                        <p class="text-sm font-medium text-gray-400">Konten edukatif untuk usia sekolah.</p>
+            {{-- Feature Cards Container --}}
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+                {{-- 1. Bacaan Ramah Anak --}}
+                <div class="group bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-2xl hover:shadow-brand-blue/10 hover:-translate-y-2 transition-all duration-500" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-green-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 text-green-600">
+                        <i class="bx bx-happy-beaming"></i>
                     </div>
+                    <h4 class="text-xl font-black text-brand-navy mb-4 leading-tight">Bacaan Ramah Anak</h4>
+                    <p class="text-sm font-semibold text-gray-400 leading-relaxed">
+                        Menyediakan cerita yang aman, mendidik, dan menyenangkan untuk dibaca oleh anak-anak.
+                    </p>
                 </div>
-                <div class="bg-white p-7 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-6 hover:shadow-md transition-all group">
-                    <div class="bg-yellow-100 p-4 rounded-2xl text-2xl group-hover:scale-110 transition-transform">🚀</div>
-                    <div>
-                        <h4 class="font-black text-brand-navy mb-1 text-lg">Akses Tanpa Batas</h4>
-                        <p class="text-sm font-medium text-gray-400">Baca kapan saja & di mana saja.</p>
+
+                {{-- 2. Cerita Dwibahasa --}}
+                <div class="group bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-2xl hover:shadow-brand-blue/10 hover:-translate-y-2 transition-all duration-500" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 text-brand-blue">
+                        <i class="bx bx-globe"></i>
                     </div>
+                    <h4 class="text-xl font-black text-brand-navy mb-4 leading-tight">Cerita Dwibahasa</h4>
+                    <p class="text-sm font-semibold text-gray-400 leading-relaxed">
+                        Menghadirkan cerita dalam bahasa Melayu Riau dan bahasa Indonesia untuk mengenal bahasa daerah.
+                    </p>
                 </div>
-                <div class="bg-white p-7 rounded-[2rem] shadow-sm border border-gray-100 flex items-center gap-6 hover:shadow-md transition-all group">
-                    <div class="bg-purple-100 p-4 rounded-2xl text-2xl group-hover:scale-110 transition-transform">💎</div>
-                    <div>
-                        <h4 class="font-black text-brand-navy mb-1 text-lg">Gratis Selamanya</h4>
-                        <p class="text-sm font-medium text-gray-400">Dedikasi untuk literasi bangsa.</p>
+
+                {{-- 3. Gratis Kapan Saja --}}
+                <div class="group bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-2xl hover:shadow-brand-blue/10 hover:-translate-y-2 transition-all duration-500" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-yellow-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 text-yellow-600">
+                        <i class="bx bx-wallet-alt"></i>
                     </div>
+                    <h4 class="text-xl font-black text-brand-navy mb-4 leading-tight">Gratis Kapan Saja</h4>
+                    <p class="text-sm font-semibold text-gray-400 leading-relaxed">
+                        Baca gratis melalui ponsel maupun komputer tanpa perlu membuat akun terlebih dahulu.
+                    </p>
+                </div>
+
+                {{-- 4. Tampilan Interaktif --}}
+                <div class="group bg-white p-8 rounded-[2.5rem] shadow-sm border border-gray-100 hover:shadow-2xl hover:shadow-brand-blue/10 hover:-translate-y-2 transition-all duration-500" data-aos="fade-up" data-aos-delay="400">
+                    <div class="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center text-3xl mb-8 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-500 text-purple-600">
+                        <i class="bx bx-book"></i>
+                    </div>
+                    <h4 class="text-xl font-black text-brand-navy mb-4 leading-tight">Buku Interaktif</h4>
+                    <p class="text-sm font-semibold text-gray-400 leading-relaxed">
+                        Dilengkapi fitur FlipBook dengan efek membalik halaman yang menarik dan menyenangkan.
+                    </p>
                 </div>
             </div>
+
+            {{-- Closing Summary Card --}}
+            <div class="relative bg-brand-navy p-10 lg:p-16 rounded-[3rem] overflow-hidden group shadow-2xl shadow-brand-navy/20" data-aos="zoom-in">
+                {{-- Decorative elements for dark card --}}
+                <div class="absolute top-0 right-0 w-64 h-64 bg-brand-blue/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-1000"></div>
+                <div class="absolute bottom-0 left-0 w-48 h-48 bg-brand-yellow/5 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2 group-hover:scale-150 transition-transform duration-1000"></div>
+                
+                <div class="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 text-brand-yellow font-black text-[10px] uppercase tracking-widest mb-6">
+                            <i class="bi bi-stars"></i> Inovasi Literasi
+                        </div>
+                        <h3 class="text-3xl lg:text-4xl font-black text-white mb-6 leading-tight">
+                            Pengalaman Membaca <br> <span class="bg-gradient-to-r from-brand-yellow to-yellow-300 bg-clip-text text-transparent italic pr-4">Lebih Nyata & Interaktif</span>
+                        </h3>
+                    </div>
+                    <div class="space-y-6">
+                        <p class="text-lg text-blue-50/80 leading-relaxed font-medium italic">
+                            "Dilengkapi dengan fitur FlipBook, SEMBARI menghadirkan pengalaman membaca digital yang lebih menarik, interaktif, dan nyaman."
+                        </p>
+                        <p class="text-sm text-white/60 leading-relaxed font-semibold">
+                            Kehadiran SEMBARI tidak hanya memudahkan akses terhadap bahan bacaan berkualitas, tetapi juga menjadi wadah untuk meningkatkan literasi masyarakat sekaligus melestarikan bahasa dan sastra Melayu Riau sebagai bagian penting dari khazanah budaya bangsa.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
 
         {{-- ══ LANGKAH-LANGKAH (DEMO) ══ --}}
         <div class="text-center mb-16">
-            <h2 class="text-3xl lg:text-4xl font-black text-brand-navy mb-4">Cara Membaca di Sembari</h2>
+            <h2 class="text-3xl lg:text-4xl font-black text-brand-navy mb-4">Cara Membaca di SEMBARI</h2>
             <p class="text-gray-500 font-bold">Langkah mudah untuk memulai petualangan literasimu.</p>
         </div>
 
@@ -133,7 +171,7 @@
                     <span class="absolute -top-3 -right-3 w-8 h-8 bg-brand-blue text-white rounded-full flex items-center justify-center font-black text-xs shadow-lg">2</span>
                     <i class="bi bi-mouse3 text-3xl text-brand-blue"></i>
                 </div>
-                <h4 class="font-black text-brand-navy mb-2">Pilih & Kilik</h4>
+                <h4 class="font-black text-brand-navy mb-2">Pilih & Klik</h4>
                 <p class="text-xs font-bold text-gray-400">Klik buku yang menarik perhatianmu untuk detailnya.</p>
             </div>
             {{-- Step 3 --}}
@@ -159,11 +197,7 @@
         {{-- ══ DEVELOPER SECTION ══ --}}
         <div class="max-w-5xl mx-auto mt-32">
             <div class="text-center mb-16">
-                <div class="inline-flex items-center gap-2 bg-blue-50 text-brand-blue px-5 py-2 rounded-full mb-4">
-                    <span class="animate-pulse">💻</span>
-                    <span class="text-[11px] font-black uppercase tracking-[0.2em]">Tim Pengembang Sistem</span>
-                </div>
-                <h2 class="text-4xl lg:text-5xl font-black text-brand-navy tracking-tight">Penyusun <span class="text-brand-blue">Sistem</span></h2>
+                <h2 class="text-4xl lg:text-5xl font-black text-brand-navy tracking-tight">Pengembang <span class="text-brand-blue">Sistem</span></h2>
             </div>
 
             <div class="group relative">
@@ -197,7 +231,7 @@
                         <h3 class="text-3xl lg:text-4xl font-black text-brand-navy mb-2 tracking-tight">MUHAMMAD GHALIB PRADIPA</h3>
                         <p class="text-brand-blue font-extrabold text-lg mb-8 flex items-center justify-center lg:justify-start gap-3">
                             <span class="w-10 h-1 bg-brand-yellow2 rounded-full hidden lg:block"></span>
-                            Pengembang Sistem Utana
+                            Pengembang Sistem Utama
                         </p>
                         
                         <div class="grid sm:grid-cols-2 gap-6 mb-8 text-left">

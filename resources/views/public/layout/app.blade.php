@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Sembari — Perpustakaan Digital BBPR')</title>
+    <link rel="icon" type="image/svg+xml" href="{{ asset('img/logo/sembari.svg') }}">
     <meta name="description" content="@yield('description', 'Sembari adalah platform membaca buku digital gratis dari Balai Bahasa Provinsi Riau. Ribuan buku cerita untuk anak tersedia di sini!')">
 
     {{-- Tailwind CSS CDN --}}
@@ -57,6 +58,7 @@
     {{-- Google Fonts: Nunito & Bootstrap Icons --}}
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
     {{-- AOS Animation --}}
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
