@@ -68,15 +68,15 @@
                         <div class="p-4 bg-brand-blue/10 rounded-2xl text-3xl">
                             <i class="bi bi-journal-text text-brand-blue"></i>
                         </div>
-                        <h2 class="text-3xl lg:text-4xl font-black text-brand-navy">Apa itu Sembari?</h2>
+                        <h2 class="text-3xl lg:text-4xl font-black text-brand-navy">Apa itu SEMBARI?</h2>
                     </div>
                     
                     <div class="space-y-6 text-gray-600 text-lg leading-relaxed font-medium">
                         <p>
-                            <span class="text-brand-blue font-bold">Sembari</span> adalah akronim dari <span class="text-brand-navy font-bold">Sistem Edukasi Membaca Bersama Literasi Digital</span>, sebuah inovasi dari Balai Bahasa Provinsi Riau.
+                            <span class="text-brand-blue font-bold">SEMBARI</span> merupakan penjenamaan dari serial terjemahan yang diterbitkan oleh <span class="text-brand-navy font-bold">Balai Bahasa Provinsi Riau</span>, Platform ini hadir sebagai ruang baca digital yang memungkinkan masyarakat mengakses berbagai produk penerjemahan secara gratis, kapan saja dan di mana saja.
                         </p>
                         <p>
-                            Sembari hadir sebagai jembatan untuk mempermudah akses ke ribuan koleksi buku digital, mulai dari dongeng rakyat, ensiklopedia mini, hingga buku pelajaran interaktif.
+                             Melalui SEMBARI, pembaca dapat menikmati cerita rakyat yang diceritakan kembali dan diterjemahkan ke dalam bahasa Indonesia, serta cerita anak dwibahasa dalam bahasa Melayu Riau dan bahasa Indonesia.
                         </p>
                         <p class="text-sm border-l-4 border-brand-yellow pl-5 py-1 italic text-gray-400">
                             Kami menghadirkan pengalaman membaca digital yang senyata mungkin dengan teknologi Flipbook.
@@ -244,16 +244,16 @@
             
             <div class="relative z-10 max-w-4xl mx-auto">
                 <div class="inline-block p-4 bg-white/10 backdrop-blur-md rounded-3xl mb-8 animate-float">
-                    <i class="bi bi-rocket-takeoff-fill text-4xl text-brand-yellow2"></i>
+                    <i class="bi bi-rocket-takeoff-fill text-4xl text-brand-yellow"></i>
                 </div>
                 <h3 class="text-3xl lg:text-5xl font-black mb-6 leading-tight tracking-tight">
-                    Mari Mulai <br> <span class="text-brand-yellow2">Membaca Bersama Kami!</span>
+                    Mari Mulai <br> <span class="text-brand-yellow">Membaca Bersama Kami!</span>
                 </h3>
                 <p class="text-blue-100/80 text-lg font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
                     Setiap halaman adalah petualangan baru. Ribuan cerita bermutu menantimu di Sembari. Ayo, jelajahi koleksi kami sekarang!
                 </p>
                 <div class="flex flex-wrap justify-center gap-6">
-                    <a href="{{ route('book.list') }}" class="group bg-brand-yellow2 text-brand-navy font-black px-10 py-4 rounded-2xl shadow-xl shadow-yellow-600/30 hover:scale-105 hover:-translate-y-1 transition-all flex items-center gap-3 text-base">
+                    <a href="{{ route('book.list') }}" class="group bg-brand-yellow text-brand-navy font-black px-10 py-4 rounded-2xl shadow-xl shadow-yellow-600/30 hover:scale-105 hover:-translate-y-1 transition-all flex items-center gap-3 text-base">
                         Jelajahi Koleksi
                         <i class="bi bi-arrow-right-circle-fill text-xl group-hover:translate-x-1 transition-transform"></i>
                     </a>

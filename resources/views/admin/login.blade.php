@@ -294,7 +294,7 @@
         <div class="login-card">
             <!-- Logo Section -->
             <div class="logo-section">
-                <img src="{{ asset('img/logobalai.png') }}" alt="Logo Balai Bahasa">
+                <img src="{{ asset('img/logo/sembari.png') }}" alt="Logo Sembari">
                 <h1>Sembari Admin</h1>
                 <p>Perpustakaan Digital</p>
             </div>
