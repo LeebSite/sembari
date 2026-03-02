@@ -166,6 +166,14 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="{{ route('admin.type-book.index') }}"
+                       class="nav-link {{ request()->routeIs('admin.type-book*') ? 'active' : '' }}">
+                        <i class="bi bi-collection"></i> 
+                        <span>Jenis Buku</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
                     <a href="{{ route('admin.reading-levels.index') }}"
                        class="nav-link {{ request()->routeIs('admin.reading-levels*') ? 'active' : '' }}">
                         <i class="bi bi-bar-chart-steps"></i>

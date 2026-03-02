@@ -9,6 +9,7 @@ use App\Http\Middleware\AdminAuth;
 use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\BookListController;
 use App\Http\Controllers\Web\HelpController;
+use App\Http\Controllers\Admin\TypeBookController;
 
 // --- PUBLIC ROUTES ---
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -96,6 +97,14 @@ Route::prefix('admin')
             'store'   => 'admin.categories.store',
             'update'  => 'admin.categories.update',
             'destroy' => 'admin.categories.destroy',
+        ])->only(['index', 'store', 'update', 'destroy']);
+
+               // ===== JENIS BUKU =====
+       Route::resource('type-book', TypeBookController::class)->names([ 
+            'index'   => 'admin.type-book.index',
+            'store'   => 'admin.type-book.store',
+            'update'  => 'admin.type-book.update',
+            'destroy' => 'admin.type-book.destroy',
         ])->only(['index', 'store', 'update', 'destroy']);
 
         // ===== JENJANG BACA =====
