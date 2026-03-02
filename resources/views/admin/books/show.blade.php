@@ -4,6 +4,7 @@
 
 @push('styles')
 <style>
+    /* Header Styling */
     .detail-header {
         background: linear-gradient(135deg, #6366f1 0%, #4f46e5 60%, #7c3aed 100%);
         border-radius: 16px;
@@ -40,6 +41,7 @@
     }
     .btn-back:hover { background: rgba(255,255,255,0.3); color: #fff; }
 
+    /* Card Styling */
     .info-card {
         background: #fff;
         border-radius: 14px;
@@ -64,6 +66,7 @@
     .info-card-header h6 { margin: 0; font-size: 13.5px; font-weight: 700; color: #1e293b; }
     .info-card-body { padding: 20px; }
 
+    /* Detail Row */
     .detail-row {
         display: flex;
         gap: 12px;
@@ -81,7 +84,7 @@
     }
     .detail-value { color: #1e293b; flex: 1; }
 
-    /* Cover */
+    /* Cover Box */
     .cover-box {
         border-radius: 12px;
         overflow: hidden;
@@ -105,10 +108,8 @@
         color: #94a3b8;
         gap: 10px;
     }
-    .cover-placeholder i { font-size: 48px; }
-    .cover-placeholder span { font-size: 13px; }
 
-    /* PDF box */
+    /* PDF Box */
     .pdf-box {
         display: flex;
         align-items: center;
@@ -120,9 +121,8 @@
     }
     .pdf-box .pdf-icon { font-size: 32px; color: #ef4444; flex-shrink: 0; }
     .pdf-box .pdf-name { font-size: 13px; font-weight: 600; color: #374151; word-break: break-all; }
-    .pdf-box .pdf-label { font-size: 11.5px; color: #94a3b8; }
 
-    /* Tags */
+    /* Badges & Tags */
     .tag-list { display: flex; flex-wrap: wrap; gap: 6px; }
     .tag {
         padding: 4px 12px;
@@ -130,11 +130,26 @@
         font-size: 12px;
         font-weight: 500;
     }
-    .tag-cat  { background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; }
-    .tag-type { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+    .tag-cat   { background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe; }
+    .tag-type  { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
     .tag-level { background: #fdf4ff; color: #9333ea; border: 1px solid #e9d5ff; }
 
-    /* Action bar */
+    .badge-terbatas {
+        background: #fff7ed; color: #c2410c;
+        border: 1px solid #fed7aa;
+        font-size: 12px; font-weight: 600;
+        padding: 4px 12px; border-radius: 20px;
+        display: inline-flex; align-items: center; gap: 5px;
+    }
+    .badge-umum {
+        background: #f0fdf4; color: #15803d;
+        border: 1px solid #bbf7d0;
+        font-size: 12px; font-weight: 600;
+        padding: 4px 12px; border-radius: 20px;
+        display: inline-flex; align-items: center; gap: 5px;
+    }
+
+    /* Action Buttons */
     .action-bar {
         background: #fff;
         border: 1px solid #e8edf2;
@@ -174,26 +189,11 @@
         transition: all 0.2s;
     }
     .btn-delete-main:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
-
-    .badge-terbatas {
-        background: #fff7ed; color: #c2410c;
-        border: 1px solid #fed7aa;
-        font-size: 12px; font-weight: 600;
-        padding: 4px 12px; border-radius: 20px;
-        display: inline-flex; align-items: center; gap: 5px;
-    }
-    .badge-umum {
-        background: #f0fdf4; color: #15803d;
-        border: 1px solid #bbf7d0;
-        font-size: 12px; font-weight: 600;
-        padding: 4px 12px; border-radius: 20px;
-        display: inline-flex; align-items: center; gap: 5px;
 </style>
 @endpush
 
 @section('content')
 
-<!-- Header -->
 <div class="detail-header">
     <div class="d-flex justify-content-between align-items-start">
         <div>
@@ -207,11 +207,7 @@
 </div>
 
 <div class="row g-4">
-
-    <!-- LEFT: Cover & File -->
     <div class="col-lg-4">
-
-        <!-- Cover -->
         <div class="info-card">
             <div class="info-card-header">
                 <div class="ic-icon" style="background: linear-gradient(135deg,#ec4899,#db2777);">
@@ -226,14 +222,13 @@
                     </div>
                 @else
                     <div class="cover-placeholder">
-                        <i class="bi bi-image"></i>
+                        <i class="bi bi-image" style="font-size: 48px;"></i>
                         <span>Belum ada cover</span>
                     </div>
                 @endif
             </div>
         </div>
 
-        <!-- PDF -->
         <div class="info-card">
             <div class="info-card-header">
                 <div class="ic-icon" style="background: linear-gradient(135deg,#ef4444,#dc2626);">
@@ -258,13 +253,9 @@
                 @endif
             </div>
         </div>
-
     </div>
 
-    <!-- RIGHT: Info -->
     <div class="col-lg-8">
-
-        <!-- Informasi Utama -->
         <div class="info-card">
             <div class="info-card-header">
                 <div class="ic-icon" style="background: linear-gradient(135deg,#6366f1,#4f46e5);">
@@ -285,9 +276,9 @@
                     <span class="detail-label">Lisensi</span>
                     <span class="detail-value">
                         @if($book->license == 'Buku Edisi Terbatas')
-                            <span class="badge-terbatas"><i class="bi bi-lock-fill"></i>Edisi Terbatas</span>
+                            <span class="badge-terbatas"><i class="bi bi-lock-fill"></i> Edisi Terbatas</span>
                         @elseif($book->license == 'Buku Edisi Umum')
-                            <span class="badge-umum"><i class="bi bi-globe"></i>Edisi Umum</span>
+                            <span class="badge-umum"><i class="bi bi-globe"></i> Edisi Umum</span>
                         @else
                             <span style="color:#94a3b8;">—</span>
                         @endif
@@ -309,9 +300,7 @@
                     <span class="detail-label">Tingkat Pembaca</span>
                     <span class="detail-value">
                         @php
-                            $level = $book->reading_level_id
-                                ? DB::table('reading_levels')->find($book->reading_level_id)
-                                : null;
+                            $level = $book->reading_level_id ? DB::table('reading_levels')->find($book->reading_level_id) : null;
                         @endphp
                         @if($level)
                             <span class="tag tag-level">{{ $level->name }}</span>
@@ -331,7 +320,6 @@
             </div>
         </div>
 
-        <!-- Kontributor -->
         <div class="info-card">
             <div class="info-card-header">
                 <div class="ic-icon" style="background: linear-gradient(135deg,#0ea5e9,#0284c7);">
@@ -348,7 +336,6 @@
             </div>
         </div>
 
-        <!-- Jenis & Kategori -->
         <div class="info-card">
             <div class="info-card-header">
                 <div class="ic-icon" style="background: linear-gradient(135deg,#10b981,#059669);">
@@ -388,7 +375,6 @@
             </div>
         </div>
 
-        <!-- Action Bar -->
         <div class="action-bar">
             <a href="{{ route('admin.books.edit', $book->id) }}" class="btn-edit-main">
                 <i class="bi bi-pencil-square"></i> Edit Buku
@@ -402,7 +388,6 @@
                 </button>
             </form>
         </div>
-
     </div>
 </div>
 

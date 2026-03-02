@@ -468,7 +468,7 @@
                             <button type="button"
                                     class="btn-action btn-delete"
                                     title="Hapus Buku"
-                                    onclick="openDeleteModal({{ $book->id }}, '{{ addslashes($book->title) }}')">
+                                    onclick="openDeleteModal('{{ route('admin.books.destroy', $book->id) }}', '{{ addslashes($book->title) }}')">
                                 <i class="bi bi-trash"></i>
                             </button>
                         </div>
@@ -547,9 +547,9 @@
 @push('scripts')
 <script>
 // ── Modal hapus ──
-function openDeleteModal(id, title) {
+function openDeleteModal(actionUrl, title) {
     document.getElementById('deleteBookTitle').textContent = '"' + title + '"';
-    document.getElementById('formHapus').action = '/admin/books/' + id;
+    document.getElementById('formHapus').action = actionUrl;
     new bootstrap.Modal(document.getElementById('modalHapus')).show();
 }
 

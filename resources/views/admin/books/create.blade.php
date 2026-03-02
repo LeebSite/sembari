@@ -4,11 +4,21 @@
 
 @push('styles')
 <style>
+    
+    .row.g-4 {
+        align-items: flex-start;
+        --bs-gutter-y: 0;   /* matikan jarak vertikal bawaan bootstrap */
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+    .form-control.description-area {
+        height: 135px;
+    }
     .form-section {
         background: #fff;
         border-radius: 12px;
         border: 1px solid #e8edf2;
-        margin-bottom: 20px;
+        margin-bottom: 16px;
         overflow: hidden;
     }
     .form-section-header {
@@ -152,8 +162,11 @@
     .upload-area {
         border: 2px dashed #e2e8f0;
         border-radius: 10px;
-        padding: 20px;
-        text-align: center;
+        height: 77px; /* 🔥 samakan tinggi preview */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
         transition: all 0.2s;
         position: relative;
@@ -171,17 +184,17 @@
         height: 100%;
     }
     .upload-icon {
-        font-size: 28px;
+        font-size: 20px;
         color: #cbd5e1;
-        margin-bottom: 8px;
+        margin-bottom: 0px;
     }
     .upload-text {
-        font-size: 13px;
+        font-size: 10px;
         font-weight: 500;
         color: #64748b;
     }
     .upload-hint {
-        font-size: 11.5px;
+        font-size: 10px;
         color: #b0bec5;
         margin-top: 3px;
     }
@@ -216,32 +229,70 @@
         align-items: center;
         justify-content: center;
     }
-
-    /* PDF preview */
-    #pdfPreviewBox {
+    
+    .file-preview-box {
         display: none;
         align-items: center;
+        justify-content: space-between;
         gap: 12px;
-        padding: 12px 14px;
-        background: #fef2f2;
-        border: 1.5px solid #fecaca;
+        padding: 0 16px;      
+        height: 72px;         
+        background: #f8fafc;
+        border: 2px dashed #e2e8f0; 
         border-radius: 10px;
-        margin-top: 10px;
+        margin-bottom: 5px;
+        width: 100%;
     }
-    #pdfPreviewBox .pdf-icon {
-        font-size: 28px;
-        color: #ef4444;
+    
+    .file-preview-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .file-preview-icon {
+        font-size: 22px;
         flex-shrink: 0;
     }
-    #pdfPreviewBox .pdf-name {
+    
+    .file-preview-info {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+    
+    .file-preview-name {
         font-size: 13px;
         font-weight: 500;
         color: #374151;
-        word-break: break-all;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
-    #pdfPreviewBox .pdf-size {
+    
+    .file-preview-size {
         font-size: 11.5px;
         color: #94a3b8;
+    }
+    
+    .file-remove-btn {
+        background: #e2e8f0;
+        border: none;
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        font-size: 13px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+    }
+    
+    .file-remove-btn:hover {
+        background: #cbd5e1;
     }
 
     /* Submit bar */
@@ -367,10 +418,10 @@
                     <!-- Deskripsi -->
                     <div class="mb-0">
                         <label class="form-label">Deskripsi / Sinopsis</label>
-                        <textarea class="form-control @error('description') is-invalid @enderror"
-                                  name="description"
-                                  rows="4"
-                                  placeholder="Tulis sinopsis atau deskripsi singkat buku...">{{ old('description') }}</textarea>
+                        <textarea 
+                            class="form-control description-area @error('description') is-invalid @enderror"
+                            name="description"
+                            placeholder="Tulis sinopsis atau deskripsi singkat buku...">{{ old('description') }}</textarea>
                         @error('description')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -378,27 +429,27 @@
                 </div>
             </div>
 
-            <!-- SECTION: Kontributor -->
+                        <!-- SECTION: Kontributor -->
             <div class="form-section">
                 <div class="form-section-header">
                     <div class="section-icon" style="background: linear-gradient(135deg,#0ea5e9,#0284c7);">
                         <i class="bi bi-people"></i>
                     </div>
                     <div>
-                        <h6>Kontributor</h6>
+                        <h6>Detail</h6>
                         <p>Penulis, ilustrator, penerjemah, dll.</p>
                     </div>
                 </div>
                 <div class="form-section-body">
                     <div class="mb-0">
-                        <label class="form-label">Daftar Kontributor</label>
-                        <textarea class="form-control @error('contributors') is-invalid @enderror"
+                        <label class="form-label">Detail Buku</label>
+                        <textarea class="form-control description-area @error('contributors') is-invalid @enderror"
                                   name="contributors"
                                   rows="3"
                                   placeholder="Contoh:&#10;Penulis: John Doe&#10;Ilustrator: Jane Smith&#10;Penerjemah: Bob Wilson">{{ old('contributors') }}</textarea>
                         <small class="text-muted mt-1 d-block">
                             <i class="bi bi-info-circle me-1"></i>
-                            Tulis satu kontributor per baris
+                            Tulis satu detail per baris
                         </small>
                         @error('contributors')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -407,129 +458,8 @@
                 </div>
             </div>
 
-            <!-- SECTION: Lisensi & Tingkat Pembaca -->
-            <div class="form-section">
-                <div class="form-section-header">
-                    <div class="section-icon" style="background: linear-gradient(135deg,#f59e0b,#d97706);">
-                        <i class="bi bi-shield-check"></i>
-                    </div>
-                    <div>
-                        <h6>Lisensi & Tingkat Pembaca</h6>
-                        <p>Jenis edisi dan target pembaca</p>
-                    </div>
-                </div>
-                <div class="form-section-body">
-                    <!-- Lisensi -->
-                    <div class="mb-4">
-                        <label class="form-label">Lisensi Buku</label>
-                        <div class="d-flex gap-3">
-                            <label class="license-option">
-                                <input type="radio" name="license" value="Buku Edisi Terbatas"
-                                       {{ old('license') == 'Buku Edisi Terbatas' ? 'checked' : '' }}>
-                                <div>
-                                    <div class="license-label">Edisi Terbatas</div>
-                                    <div class="license-desc">Distribusi terbatas</div>
-                                </div>
-                            </label>
-                            <label class="license-option">
-                                <input type="radio" name="license" value="Buku Edisi Umum"
-                                       {{ old('license') == 'Buku Edisi Umum' ? 'checked' : '' }}>
-                                <div>
-                                    <div class="license-label">Edisi Umum</div>
-                                    <div class="license-desc">Tersedia untuk publik</div>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
+        </div> <!-- END col-lg-8 -->
 
-                    {{-- Tahun Terbit --}}
-                    <div class="mb-4">
-                        <label class="form-label">
-                            Tahun Terbit
-                            <span class="text-muted fw-normal">(Opsional)</span>
-                        </label>
-                        <input type="number"
-                               class="form-control @error('tahun_terbit') is-invalid @enderror"
-                               name="tahun_terbit"
-                               value="{{ old('tahun_terbit') }}"
-                               min="1900"
-                               max="{{ date('Y') }}"
-                               placeholder="Contoh: 2023"
-                               style="max-width: 180px;">
-                        @error('tahun_terbit')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                        <small class="text-muted mt-1 d-block">
-                            <i class="bi bi-info-circle me-1"></i>Tahun buku diterbitkan (1900–{{ date('Y') }})
-                        </small>
-                    </div>
-
-                    <!-- Tingkat Pembaca -->
-                    <div class="mb-0">
-                        <label class="form-label">Tingkat Pembaca <span class="text-muted fw-normal">(Opsional)</span></label>
-                        <select class="form-select @error('reading_level_id') is-invalid @enderror"
-                                name="reading_level_id">
-                            <option value="">— Pilih tingkat pembaca —</option>
-                            @foreach($readingLevels as $level)
-                                <option value="{{ $level->id }}" {{ old('reading_level_id') == $level->id ? 'selected' : '' }}>
-                                    {{ $level->name ?? $level->label }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('reading_level_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
-            </div>
-
-            <!-- SECTION: Jenis & Kategori -->
-            <div class="form-section">
-                <div class="form-section-header">
-                    <div class="section-icon" style="background: linear-gradient(135deg,#10b981,#059669);">
-                        <i class="bi bi-tags"></i>
-                    </div>
-                    <div>
-                        <h6>Jenis & Kategori</h6>
-                        <p>Klasifikasi buku (bisa pilih lebih dari satu)</p>
-                    </div>
-                </div>
-                <div class="form-section-body">
-                    <!-- Jenis Buku -->
-                    <div class="mb-4">
-                        <label class="form-label">Jenis Buku</label>
-                        <div class="check-grid">
-                            @foreach($bookTypes as $type)
-                            <label class="check-item">
-                                <input type="checkbox"
-                                       name="book_types[]"
-                                       value="{{ $type->id }}"
-                                       {{ in_array($type->id, old('book_types', [])) ? 'checked' : '' }}>
-                                <label style="pointer-events:none;">{{ $type->name }}</label>
-                            </label>
-                            @endforeach
-                        </div>
-                    </div>
-
-                    <!-- Kategori -->
-                    <div class="mb-0">
-                        <label class="form-label">Kategori</label>
-                        <div class="check-grid">
-                            @foreach($categories as $category)
-                            <label class="check-item">
-                                <input type="checkbox"
-                                       name="categories[]"
-                                       value="{{ $category->id }}"
-                                       {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}>
-                                <label style="pointer-events:none;">{{ $category->name }}</label>
-                            </label>
-                            @endforeach
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
 
         <!-- ===== RIGHT COLUMN ===== -->
         <div class="col-lg-4">
@@ -546,25 +476,32 @@
                     </div>
                 </div>
                 <div class="form-section-body">
-                    <!-- Preview -->
-                    <div id="coverPreviewBox" class="mb-3">
-                        <img id="coverPreview" src="" alt="Preview">
-                        <button type="button" class="remove-btn" onclick="removeCover()">
+
+                    <div id="coverPreviewBox" class="file-preview-box">
+                        <div class="file-preview-left">
+                            <i class="bi bi-image file-preview-icon" style="color:#6366f1;"></i>
+                            <div class="file-preview-info">
+                                <div id="coverName" class="file-preview-name"></div>
+                                <div id="coverSize" class="file-preview-size"></div>
+                            </div>
+                        </div>
+                        <button type="button" class="file-remove-btn" onclick="removeCover()">
                             <i class="bi bi-x"></i>
                         </button>
                     </div>
 
-                    <!-- Upload area -->
                     <div class="upload-area" id="coverUploadArea">
                         <input type="file" name="cover_image" id="cover_image"
                                accept="image/*" onchange="previewCover(event)">
                         <div class="upload-icon"><i class="bi bi-cloud-arrow-up"></i></div>
                         <div class="upload-text">Klik atau drag & drop</div>
-                        <div class="upload-hint">JPG, PNG — Maks. 2MB</div>
+                        <div class="upload-hint">JPG, PNG � Maks. 2MB</div>
                     </div>
+
                     @error('cover_image')
                         <div class="text-danger small mt-2">{{ $message }}</div>
                     @enderror
+
                 </div>
             </div>
 
@@ -580,26 +517,32 @@
                     </div>
                 </div>
                 <div class="form-section-body">
+
+                    <div id="pdfPreviewBox" class="file-preview-box">
+                        <div class="file-preview-left">
+                            <i class="bi bi-file-earmark-pdf file-preview-icon" style="color:#ef4444;"></i>
+                            <div class="file-preview-info">
+                                <div id="pdfName" class="file-preview-name"></div>
+                                <div id="pdfSize" class="file-preview-size"></div>
+                            </div>
+                        </div>
+                        <button type="button" class="file-remove-btn" onclick="removePdf()">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </div>
+
                     <div class="upload-area" id="pdfUploadArea">
                         <input type="file" name="pdf_file" id="pdf_file"
                                accept=".pdf" onchange="previewPdf(event)">
                         <div class="upload-icon"><i class="bi bi-file-earmark-pdf"></i></div>
                         <div class="upload-text">Klik atau drag & drop</div>
-                        <div class="upload-hint">PDF — Maks. 50MB</div>
-                    </div>
-
-                    <!-- PDF info -->
-                    <div id="pdfPreviewBox">
-                        <i class="bi bi-file-pdf-fill pdf-icon"></i>
-                        <div>
-                            <div class="pdf-name" id="pdfName">—</div>
-                            <div class="pdf-size" id="pdfSize">—</div>
-                        </div>
+                        <div class="upload-hint">PDF � Maks. 50MB</div>
                     </div>
 
                     @error('pdf_file')
                         <div class="text-danger small mt-2">{{ $message }}</div>
                     @enderror
+
                 </div>
             </div>
 
@@ -620,9 +563,138 @@
                 </div>
             </div>
 
+        </div> <!-- END col-lg-4 -->
+
+
+        <!-- SECTION: Lisensi & Tingkat Pembaca (FULL WIDTH) -->
+        <div class="col-12">
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg,#f59e0b,#d97706);">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <h6>Lisensi & Tingkat Pembaca</h6>
+                        <p>Jenis edisi dan target pembaca</p>
+                    </div>
+                </div>
+                <div class="form-section-body">
+
+                    <!-- Lisensi -->
+                    <div class="mb-4">
+                        <label class="form-label">Lisensi Buku</label>
+                        <div class="d-flex gap-3">
+                            <label class="license-option">
+                                <input type="radio" name="license" value="Buku Edisi Terbatas"
+                                    {{ old('license') == 'Buku Edisi Terbatas' ? 'checked' : '' }}>
+                                <div>
+                                    <div class="license-label">Edisi Terbatas</div>
+                                    <div class="license-desc">Distribusi terbatas</div>
+                                </div>
+                            </label>
+                            <label class="license-option">
+                                <input type="radio" name="license" value="Buku Edisi Umum"
+                                    {{ old('license') == 'Buku Edisi Umum' ? 'checked' : '' }}>
+                                <div>
+                                    <div class="license-label">Edisi Umum</div>
+                                    <div class="license-desc">Tersedia untuk publik</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-4">
+                                <label class="form-label">Tahun Terbit <span class="text-muted fw-normal">(Opsional)</span></label>
+                                <input type="number"
+                                    class="form-control @error('tahun_terbit') is-invalid @enderror"
+                                    name="tahun_terbit"
+                                    value="{{ old('tahun_terbit') }}"
+                                    min="1900"
+                                    max="{{ date('Y') }}"
+                                    placeholder="Contoh: 2023">
+                                @error('tahun_terbit')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                
+                                <small class="text-muted mt-1 d-block">
+                                    <i class="bi bi-info-circle me-1"></i>Tahun buku diterbitkan (1900—2026)
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="mb-0">
+                                <label class="form-label">Tingkat Pembaca <span class="text-muted fw-normal">(Opsional)</span></label>
+                                <select class="form-select @error('reading_level_id') is-invalid @enderror"
+                                    name="reading_level_id">
+                                    <option value="">— Pilih tingkat pembaca —</option>
+                                    @foreach($readingLevels as $level)
+                                        <option value="{{ $level->id }}"
+                                            {{ old('reading_level_id') == $level->id ? 'selected' : '' }}>
+                                            {{ $level->name ?? $level->label }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('reading_level_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- SECTION: Jenis & Kategori -->
+        <div class="col-12">
+            <div class="form-section">
+                <div class="form-section-header">
+                    <div class="section-icon" style="background: linear-gradient(135deg,#10b981,#059669);">
+                        <i class="bi bi-tags"></i>
+                    </div>
+                    <div>
+                        <h6>Jenis & Kategori</h6>
+                        <p>Klasifikasi buku (bisa pilih lebih dari satu)</p>
+                    </div>
+                </div>
+                <div class="form-section-body">
+                    <div class="mb-4">
+                        <label class="form-label">Jenis Buku</label>
+                        <div class="check-grid">
+                            @foreach($bookTypes as $type)
+                                <label class="check-item">
+                                    <input type="checkbox"
+                                           name="book_types[]"
+                                           value="{{ $type->id }}"
+                                           {{ in_array($type->id, old('book_types', [])) ? 'checked' : '' }}>
+                                    <label style="pointer-events:none;">{{ $type->name }}</label>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="mb-0">
+                        <label class="form-label">Kategori</label>
+                        <div class="check-grid">
+                            @foreach($categories as $category)
+                                <label class="check-item">
+                                    <input type="checkbox"
+                                           name="categories[]"
+                                           value="{{ $category->id }}"
+                                           {{ in_array($category->id, old('categories', [])) ? 'checked' : '' }}>
+                                    <label style="pointer-events:none;">{{ $category->name }}</label>
+                                </label>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-
     <!-- Submit Bar -->
     <div class="submit-bar mt-2">
         <div style="font-size:13px; color:#94a3b8;">
@@ -645,28 +717,39 @@
 function previewCover(event) {
     const file = event.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-        document.getElementById('coverPreview').src = e.target.result;
-        document.getElementById('coverPreviewBox').style.display = 'block';
-        document.getElementById('coverUploadArea').style.display = 'none';
-    };
-    reader.readAsDataURL(file);
+
+    const size = (file.size / 1024 / 1024).toFixed(2);
+
+    document.getElementById('coverName').textContent = file.name;
+    document.getElementById('coverSize').textContent = size + ' MB';
+
+    document.getElementById('coverPreviewBox').style.display = 'flex';
+    document.getElementById('coverUploadArea').style.display = 'none';
 }
 
 function removeCover() {
     document.getElementById('cover_image').value = '';
     document.getElementById('coverPreviewBox').style.display = 'none';
-    document.getElementById('coverUploadArea').style.display = 'block';
+    document.getElementById('coverUploadArea').style.display = 'flex';
 }
 
 function previewPdf(event) {
     const file = event.target.files[0];
     if (!file) return;
+
     const size = (file.size / 1024 / 1024).toFixed(2);
+
     document.getElementById('pdfName').textContent = file.name;
     document.getElementById('pdfSize').textContent = size + ' MB';
+
     document.getElementById('pdfPreviewBox').style.display = 'flex';
+    document.getElementById('pdfUploadArea').style.display = 'none';
+}
+
+function removePdf() {
+    document.getElementById('pdf_file').value = '';
+    document.getElementById('pdfPreviewBox').style.display = 'none';
+    document.getElementById('pdfUploadArea').style.display = 'flex';
 }
 </script>
 
