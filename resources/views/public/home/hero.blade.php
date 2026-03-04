@@ -1,5 +1,5 @@
 {{-- HERO SECTION | Variabel: $stats --}}
-<header class="hero-bg pt-12 pb-2 overflow-hidden">
+<header class="hero-bg pt-20 pb-2 overflow-hidden">
     <div class="max-w-6xl mx-auto px-6 lg:px-10 relative z-10">
         <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-20">
 
@@ -16,8 +16,7 @@
                 </h1>
 
                 <p class="text-gray-500 text-base lg:text-lg leading-8 mb-8 max-w-md mx-auto lg:mx-0" data-aos="fade-up" data-aos-delay="100">
-                    Platform membaca buku digital <strong class="text-gray-700">gratis</strong> untuk anak-anak Indonesia.
-                    Dari dongeng Riau hingga cerita fiksi seru — semua ada di sini!
+                    Ruang baca serial terjemahan digital <strong class="text-gray-700">gratis</strong>  untuk memperkaya literasi sekaligus melestarikan bahasa Melayu Riau dengan pengalaman FlipBook yang interaktif.
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start" data-aos="fade-up" data-aos-delay="200">
@@ -32,7 +31,7 @@
                 </div>
 
                 {{-- Trust Badges --}}
-                <div class="mt-10 flex flex-wrap items-center gap-4 justify-center lg:justify-start">
+                <div class="mt-6 flex flex-wrap items-center gap-4 justify-center lg:justify-start">
                     <span class="flex items-center gap-2 bg-green-50 text-green-700 text-sm font-bold px-4 py-2 rounded-full border border-green-100">
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
                         Gratis 100%
@@ -49,7 +48,7 @@
             </div>
 
             {{-- Ilustrasi Kanan --}}
-            <div class="lg:w-1/2 relative flex justify-center items-center py-10 lg:py-0" data-aos="fade-left" data-aos-delay="200">
+            <div class="lg:w-1/2 relative flex justify-center items-center py-4 lg:py-0" data-aos="fade-left" data-aos-delay="200">
                 <div class="relative w-full max-w-sm">
                     <img src="{{ asset('img/logo/sembari.png') }}" alt="Logo Sembari"
                          class="relative z-10 w-full h-auto object-contain animate-float"
