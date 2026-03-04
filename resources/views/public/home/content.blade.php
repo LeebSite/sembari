@@ -367,15 +367,17 @@
 <section class="py-20 bg-gradient-to-br from-brand-blue via-blue-600 to-indigo-700 relative overflow-hidden">
     <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 32px 32px;"></div>
     <div class="max-w-3xl mx-auto px-6 lg:px-10 text-center relative z-10">
-        <p class="text-6xl mb-6 animate-bounce">📚</p>
+        <div class="w-20 h-20 bg-white/15 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl">
+            <i class="bi bi-book-half text-4xl text-white"></i>
+        </div>
         <h2 class="text-3xl lg:text-4xl font-black text-white mb-4">Mulai Petualangan Literasimu!</h2>
         <p class="text-blue-100 text-lg mb-10 font-semibold">Ribuan cerita dari Balai Bahasa Provinsi Riau menantimu.<br> Gratis, interaktif, dan menyenangkan!</p>
         <div class="flex flex-wrap justify-center gap-4">
-            <a href="{{ route('book.list') }}" class="px-8 py-4 bg-brand-yellow text-white font-black text-base rounded-2xl shadow-xl hover:-translate-y-1 transition-transform">
-                📖 Jelajahi Koleksi
+            <a href="{{ route('book.list') }}" class="inline-flex items-center gap-2.5 px-8 py-4 bg-brand-yellow text-white font-black text-base rounded-2xl shadow-xl hover:-translate-y-1 transition-transform">
+                <i class="bi bi-grid-3x3-gap-fill text-lg"></i> Jelajahi Koleksi
             </a>
-            <a href="{{ route('help') }}" class="px-8 py-4 bg-white/15 border border-white/20 text-white font-black text-base rounded-2xl hover:bg-white/25 transition-all">
-                ℹ️ Bantuan
+            <a href="{{ route('help') }}" class="inline-flex items-center gap-2.5 px-8 py-4 bg-white/15 border border-white/20 text-white font-black text-base rounded-2xl hover:bg-white/25 transition-all">
+                <i class="bi bi-question-circle-fill text-lg"></i> Bantuan
             </a>
         </div>
     </div>
