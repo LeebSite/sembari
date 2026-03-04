@@ -128,13 +128,16 @@
                         </div>
                     @endif
                 </div>
-                {{-- Info --}}
-                <div class="p-3 flex flex-col items-center text-center">
-                    <h4 class="text-[12px] font-black text-slate-800 line-clamp-2 leading-tight mb-2.5">{{ $book->title }}</h4>
+                {{-- Info — flex-1 agar semua kartu sama tinggi --}}
+                <div class="p-3 flex flex-col items-center text-center flex-1">
+                    {{-- Judul: tinggi tetap 2 baris agar tombol sejajar --}}
+                    <h4 class="text-[12px] font-black text-slate-800 line-clamp-2 leading-tight mb-2.5"
+                        style="min-height: 2.4em;">{{ $book->title }}</h4>
                     <span class="text-[9px] font-bold text-white bg-blue-500 px-3 py-1 rounded-full mb-3">
                         {{ $book->readingLevel->name ?? 'Pembaca' }}
                     </span>
-                    <span class="w-full text-center text-[11px] font-black text-white bg-[#4ea2f0] px-3 py-2 rounded-xl flex items-center justify-center gap-1.5 group-hover:bg-blue-600 transition-colors">
+                    {{-- mt-auto: tombol selalu di bawah --}}
+                    <span class="mt-auto w-full text-center text-[11px] font-black text-white bg-[#4ea2f0] px-3 py-2 rounded-xl flex items-center justify-center gap-1.5 group-hover:bg-blue-600 transition-colors">
                         <i class="bi bi-book-half"></i> Baca
                     </span>
                 </div>
