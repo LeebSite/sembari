@@ -13,22 +13,23 @@ class HomeController extends Controller
 {
     public function index()
     {
-        // 1. Buku Terbaru (4 terbaru)
+        // 1. Buku Terbaru (berdasarkan urutan input terakhir)
         $terbaru = Book::with(['readingLevel', 'stat'])
             ->orderBy('created_at', 'desc')
-            ->take(4)
+            ->take(12)
             ->get();
 
-        // 2. Buku Terpopuler (berdasarkan views di table book_stats)
+        // 2. Buku Terpopuler (berdasarkan like tertinggi)
         $terpopuler = Book::select('books.*')
             ->leftJoin('book_stats', 'books.id', '=', 'book_stats.book_id')
-            ->orderBy('book_stats.views_count', 'desc')
-            ->take(8)
+            ->orderBy('book_stats.likes_count', 'desc')
+            ->take(12)
             ->get();
 
-        // 3. Edisi Terbatas
+        // 3. Edisi Terbatas (berdasarkan lisensi)
         $terbatas = Book::where('license', 'Buku Edisi Terbatas')
-            ->take(4)
+            ->orderBy('created_at', 'desc')
+            ->take(12)
             ->get();
 
         // 4. Jenjang Pembaca

@@ -117,6 +117,11 @@
             50%       { box-shadow: 0 0 0 8px rgba(245,166,35,0); }
         }
         .badge-pulse { animation: pulseBadge 2s infinite; }
+        @keyframes pulseFast {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(39, 174, 96, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(39, 174, 96, 0); }
+        }
+        .pulse-fast { animation: pulseFast 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
 
         /* ── Section Alt ── */
         .section-alt { background: linear-gradient(to bottom, #F0F7FF, #EEF6FF); }
@@ -311,24 +316,39 @@
     {{-- AOS Init --}}
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-      AOS.init({
-        duration: 1000,
-        once: true,
-        offset: 100,
-        easing: 'ease-out-cubic'
-      });
-
       // ── PRELOADER LOGIC ──
-      window.addEventListener('load', function() {
-          const preloader = document.getElementById('preloader');
-          setTimeout(() => {
-              preloader.classList.add('preloader-hidden');
-          }, 800); // Minimum delay to see the animation
-      });
+      (function() {
+          var preloader = document.getElementById('preloader');
+          if (!preloader) return;
 
-      // Show loader on navigation
-      window.addEventListener('beforeunload', function() {
-          document.getElementById('preloader').classList.remove('preloader-hidden');
+          function hidePreloader() {
+              preloader.classList.add('preloader-hidden');
+          }
+
+          // Hide after page fully loads
+          window.addEventListener('load', function() {
+              setTimeout(hidePreloader, 600);
+          });
+
+          // Safety fallback: force hide after max 3s regardless
+          setTimeout(hidePreloader, 3000);
+
+          // Show on navigation
+          window.addEventListener('beforeunload', function() {
+              preloader.classList.remove('preloader-hidden');
+          });
+      })();
+
+      // ── AOS INIT ──
+      document.addEventListener('DOMContentLoaded', function() {
+          if (typeof AOS !== 'undefined') {
+              AOS.init({
+                  duration: 800,
+                  once: true,
+                  offset: 80,
+                  easing: 'ease-out-cubic'
+              });
+          }
       });
     </script>
 
