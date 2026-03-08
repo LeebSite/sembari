@@ -76,10 +76,10 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a href="{{ route('admin.type-book.index') }}"
-                       class="nav-link {{ request()->routeIs('admin.type-book*') ? 'active' : '' }}">
-                        <i class="bi bi-collection"></i> 
-                        <span>Jenis Buku</span>
+                    <a href="{{ route('admin.daerah.index') }}"
+                       class="nav-link {{ request()->routeIs('admin.daerah*') ? 'active' : '' }}">
+                        <i class="bi bi-geo-alt"></i>
+                        <span>Daerah</span>
                     </a>
                 </li>
 

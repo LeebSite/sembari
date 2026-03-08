@@ -16,6 +16,7 @@ class Book extends Model
         'detail',
         'license',
         'reading_level_id',
+        'daerah_id',
         'cover_image',
         'pdf_file',
     ];
@@ -26,6 +27,14 @@ class Book extends Model
     public function readingLevel(): BelongsTo
     {
         return $this->belongsTo(ReadingLevel::class);
+    }
+
+    /**
+     * Daerah asal buku (one-to-many: 1 buku punya 1 daerah).
+     */
+    public function daerah(): BelongsTo
+    {
+        return $this->belongsTo(Daerah::class, 'daerah_id');
     }
 
     /**
@@ -45,7 +54,7 @@ class Book extends Model
     }
 
     /**
-     * Jenis-jenis buku ini (many-to-many).
+     * Jenis-jenis buku ini (many-to-many) — legacy.
      */
     public function bookTypes(): BelongsToMany
     {

@@ -71,11 +71,11 @@ class BookController extends Controller
      */
     public function create()
     {
-        $categories = DB::table('categories')->orderBy('name')->get();
-        $bookTypes = DB::table('book_types')->orderBy('name')->get();
+        $categories    = DB::table('categories')->orderBy('name')->get();
+        $daerahList    = DB::table('daerah')->orderBy('name')->get();
         $readingLevels = DB::table('reading_levels')->orderBy('order')->get();
 
-        return view('admin.books.create', compact('categories', 'bookTypes', 'readingLevels'));
+        return view('admin.books.create', compact('categories', 'daerahList', 'readingLevels'));
     }
 
     /**
@@ -93,7 +93,7 @@ class BookController extends Controller
             'cover_image' => 'nullable|image|max:2048',
             'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
             'categories' => 'nullable|array',
-            'book_types' => 'nullable|array',
+            'daerah'     => 'nullable|array',
         ], [
             'title.required' => 'Judul buku wajib diisi.',
             'cover_image.max' => 'Ukuran sampul buku maksimal 2MB.',
@@ -118,17 +118,18 @@ class BookController extends Controller
 
         // Insert book
         $bookId = DB::table('books')->insertGetId([
-            'title' => $request->title,
-            'slug' => $slug,
-            'description' => $request->description,
-            'detail' => $request->detail,
-            'license' => $request->license,
-            'tahun_terbit' => $request->tahun_terbit ?: null,
+            'title'            => $request->title,
+            'slug'             => $slug,
+            'description'      => $request->description,
+            'detail'           => $request->detail,
+            'license'          => $request->license,
+            'tahun_terbit'     => $request->tahun_terbit ?: null,
             'reading_level_id' => $request->reading_level_id,
-            'pdf_file' => $pdfFilePath,
-            'cover_image' => $coverImagePath,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'daerah_id'        => $request->daerah_id ?: null,
+            'pdf_file'         => $pdfFilePath,
+            'cover_image'      => $coverImagePath,
+            'created_at'       => now(),
+            'updated_at'       => now(),
         ]);
 
         // Insert book stats
@@ -153,17 +154,6 @@ class BookController extends Controller
             }
         }
 
-        // Attach book types
-        if ($request->has('book_types')) {
-            foreach ($request->book_types as $bookTypeId) {
-                DB::table('book_book_type')->insert([
-                    'book_id' => $bookId,
-                    'book_type_id' => $bookTypeId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-        }
 
         // Dispatch conversion job if PDF exists
         if ($pdfFilePath) {
@@ -192,13 +182,13 @@ class BookController extends Controller
             ->select('categories.name')
             ->get();
 
-        $bookTypes = DB::table('book_book_type')
-            ->join('book_types', 'book_book_type.book_type_id', '=', 'book_types.id')
-            ->where('book_book_type.book_id', $id)
-            ->select('book_types.name')
+        $regions = DB::table('book_daerah')
+            ->join('daerah', 'book_daerah.daerah_id', '=', 'daerah.id')
+            ->where('book_daerah.book_id', $id)
+            ->select('daerah.name')
             ->get();
 
-        return view('admin.books.show', compact('book', 'categories', 'bookTypes'));
+        return view('admin.books.show', compact('book', 'categories', 'regions'));
     }
 
     /**
@@ -213,7 +203,7 @@ class BookController extends Controller
         }
 
         $categories = DB::table('categories')->orderBy('name')->get();
-        $bookTypes = DB::table('book_types')->orderBy('name')->get();
+        $daerahList    = DB::table('daerah')->orderBy('name')->get();
         $readingLevels = DB::table('reading_levels')->orderBy('order')->get();
 
         // Get selected categories
@@ -222,19 +212,15 @@ class BookController extends Controller
             ->pluck('category_id')
             ->toArray();
 
-        // Get selected book types
-        $selectedBookTypes = DB::table('book_book_type')
+        // Get selected daerah
+        $selectedDaerah = DB::table('book_daerah')
             ->where('book_id', $id)
-            ->pluck('book_type_id')
+            ->pluck('daerah_id')
             ->toArray();
 
         return view('admin.books.edit', compact(
-            'book',
-            'categories',
-            'bookTypes',
-            'readingLevels',
-            'selectedCategories',
-            'selectedBookTypes'
+            'book', 'categories', 'daerahList', 'readingLevels',
+            'selectedCategories', 'selectedDaerah'
         ));
     }
 
@@ -253,7 +239,7 @@ class BookController extends Controller
             'cover_image' => 'nullable|image|max:2048',
             'pdf_file' => 'nullable|mimes:pdf|max:51200', // Max 50MB
             'categories' => 'nullable|array',
-            'book_types' => 'nullable|array',
+            'daerah'     => 'nullable|array',
         ], [
             'title.required' => 'Judul buku wajib diisi.',
             'cover_image.max' => 'Ukuran sampul buku maksimal 2MB.',
@@ -294,16 +280,17 @@ class BookController extends Controller
 
         // Update book
         DB::table('books')->where('id', $id)->update([
-            'title' => $request->title,
-            'slug' => $slug,
-            'description' => $request->description,
-            'detail' => $request->detail,
-            'license' => $request->license,
-            'tahun_terbit' => $request->tahun_terbit ?: null,
+            'title'            => $request->title,
+            'slug'             => $slug,
+            'description'      => $request->description,
+            'detail'           => $request->detail,
+            'license'          => $request->license,
+            'tahun_terbit'     => $request->tahun_terbit ?: null,
             'reading_level_id' => $request->reading_level_id,
-            'pdf_file' => $pdfFilePath,
-            'cover_image' => $coverImagePath,
-            'updated_at' => now(),
+            'daerah_id'        => $request->daerah_id ?: null,
+            'pdf_file'         => $pdfFilePath,
+            'cover_image'      => $coverImagePath,
+            'updated_at'       => now(),
         ]);
 
         // Update categories
@@ -311,23 +298,10 @@ class BookController extends Controller
         if ($request->has('categories')) {
             foreach ($request->categories as $categoryId) {
                 DB::table('book_categories')->insert([
-                    'book_id' => $id,
+                    'book_id'     => $id,
                     'category_id' => $categoryId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-        }
-
-        // Update book types
-        DB::table('book_book_type')->where('book_id', $id)->delete();
-        if ($request->has('book_types')) {
-            foreach ($request->book_types as $bookTypeId) {
-                DB::table('book_book_type')->insert([
-                    'book_id' => $id,
-                    'book_type_id' => $bookTypeId,
-                    'created_at' => now(),
-                    'updated_at' => now(),
+                    'created_at'  => now(),
+                    'updated_at'  => now(),
                 ]);
             }
         }

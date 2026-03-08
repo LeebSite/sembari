@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\HomeController;
 use App\Http\Controllers\Web\BookListController;
 use App\Http\Controllers\Web\HelpController;
 use App\Http\Controllers\Admin\TypeBookController;
+use App\Http\Controllers\Admin\DaerahController;
 
 // --- PUBLIC ROUTES ---
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -99,12 +100,21 @@ Route::prefix('admin')
             'destroy' => 'admin.categories.destroy',
         ])->only(['index', 'store', 'update', 'destroy']);
 
-               // ===== JENIS BUKU =====
-       Route::resource('type-book', TypeBookController::class)->names([ 
+               // ===== JENIS BUKU (LEGACY — tidak digunakan lagi) =====
+       // Route type-book dipertahankan agar admin lama tidak error
+       Route::resource('type-book', TypeBookController::class)->names([
             'index'   => 'admin.type-book.index',
             'store'   => 'admin.type-book.store',
             'update'  => 'admin.type-book.update',
             'destroy' => 'admin.type-book.destroy',
+        ])->only(['index', 'store', 'update', 'destroy']);
+
+        // ===== DAERAH =====
+        Route::resource('daerah', DaerahController::class)->names([
+            'index'   => 'admin.daerah.index',
+            'store'   => 'admin.daerah.store',
+            'update'  => 'admin.daerah.update',
+            'destroy' => 'admin.daerah.destroy',
         ])->only(['index', 'store', 'update', 'destroy']);
 
         // ===== JENJANG BACA =====
