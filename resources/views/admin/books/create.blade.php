@@ -649,7 +649,7 @@
         </div>
 
 
-        <!-- SECTION: Jenis & Kategori -->
+        <!-- SECTION: Daerah & Kategori -->
         <div class="col-12">
             <div class="form-section">
                 <div class="form-section-header">
@@ -657,26 +657,33 @@
                         <i class="bi bi-tags"></i>
                     </div>
                     <div>
-                        <h6>Jenis & Kategori</h6>
-                        <p>Klasifikasi buku (bisa pilih lebih dari satu)</p>
+                        <h6>Daerah & Kategori</h6>
+                        <p>Pilih daerah asal buku dan kategori (bisa pilih lebih dari satu)</p>
                     </div>
                 </div>
                 <div class="form-section-body">
+
+                    {{-- DAERAH — select satu pilihan (1 buku = 1 daerah) --}}
                     <div class="mb-4">
-                        <label class="form-label">Jenis Buku</label>
-                        <div class="check-grid">
-                            @foreach($bookTypes as $type)
-                                <label class="check-item">
-                                    <input type="checkbox"
-                                           name="book_types[]"
-                                           value="{{ $type->id }}"
-                                           {{ in_array($type->id, old('book_types', [])) ? 'checked' : '' }}>
-                                    <label style="pointer-events:none;">{{ $type->name }}</label>
-                                </label>
+                        <label class="form-label">
+                            <i class="bi bi-geo-alt-fill me-1 text-primary"></i> Daerah Asal
+                            <span class="text-muted fw-normal">(Opsional)</span>
+                        </label>
+                        <select name="daerah_id" class="form-select @error('daerah_id') is-invalid @enderror">
+                            <option value="">-- Pilih Daerah --</option>
+                            @foreach($daerahList as $daerah)
+                                <option value="{{ $daerah->id }}"
+                                    {{ old('daerah_id') == $daerah->id ? 'selected' : '' }}>
+                                    {{ $daerah->name }}
+                                </option>
                             @endforeach
-                        </div>
+                        </select>
+                        @error('daerah_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
+                    {{-- KATEGORI — checkbox banyak pilihan --}}
                     <div class="mb-0">
                         <label class="form-label">Kategori</label>
                         <div class="check-grid">

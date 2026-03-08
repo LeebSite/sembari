@@ -624,26 +624,29 @@
                         <i class="bi bi-tags"></i>
                     </div>
                     <div>
-                        <h6>Jenis & Kategori</h6>
-                        <p>Klasifikasi buku (bisa pilih lebih dari satu)</p>
+                        <h6>Daerah & Kategori</h6>
+                        <p>Pilih daerah asal buku dan kategori (bisa pilih lebih dari satu)</p>
                     </div>
                 </div>
                 <div class="form-section-body">
+
+                    {{-- DAERAH — select satu pilihan (1 buku = 1 daerah) --}}
                     <div class="mb-4">
-                        <label class="form-label">Jenis Buku</label>
-                        <div class="check-grid">
-                            @foreach($bookTypes as $type)
-                                <label class="check-item">
-                                    <input type="checkbox"
-                                        name="book_types[]"
-                                        value="{{ $type->id }}"
-                                        {{ in_array($type->id, old('book_types', $selectedBookTypes)) ? 'checked' : '' }}>
-                                    <label style="pointer-events:none;">{{ $type->name }}</label>
-                                </label>
+                        <label class="form-label">
+                            <i class="bi bi-geo-alt-fill me-1 text-primary"></i> Daerah Asal
+                        </label>
+                        <select name="daerah_id" class="form-control" style="border:1.5px solid #e2e8f0;border-radius:8px;padding:9px 12px;font-size:13.5px;">
+                            <option value="">-- Pilih Daerah --</option>
+                            @foreach($daerahList as $daerah)
+                                <option value="{{ $daerah->id }}"
+                                    {{ old('daerah_id', $selectedDaerah) == $daerah->id ? 'selected' : '' }}>
+                                    {{ $daerah->name }}
+                                </option>
                             @endforeach
-                        </div>
+                        </select>
                     </div>
-        
+
+                    {{-- KATEGORI — checkbox banyak pilihan --}}
                     <div class="mb-0">
                         <label class="form-label">Kategori</label>
                         <div class="check-grid">

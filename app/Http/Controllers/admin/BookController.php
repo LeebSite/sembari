@@ -212,11 +212,8 @@ class BookController extends Controller
             ->pluck('category_id')
             ->toArray();
 
-        // Get selected daerah
-        $selectedDaerah = DB::table('book_daerah')
-            ->where('book_id', $id)
-            ->pluck('daerah_id')
-            ->toArray();
+        // Daerah dipilih langsung dari kolom daerah_id di tabel books (bukan pivot)
+        $selectedDaerah = $book->daerah_id;
 
         return view('admin.books.edit', compact(
             'book', 'categories', 'daerahList', 'readingLevels',
