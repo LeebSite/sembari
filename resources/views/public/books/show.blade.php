@@ -101,19 +101,7 @@
                     Baca Sekarang
                 </a>
 
-                {{-- Daerah Badge (sidebar) --}}
-                @if($book->daerah)
-                <div class="mt-4 flex items-center gap-2.5 p-3.5 bg-blue-50 border border-blue-100 rounded-xl">
-                    <i class="bi bi-geo-alt-fill text-blue-500 text-lg flex-shrink-0"></i>
-                    <div>
-                        <p class="text-[9px] font-black text-blue-400 uppercase tracking-widest mb-0.5">Daerah Asal</p>
-                        <a href="{{ route('book.list', ['daerah' => $book->daerah->id]) }}"
-                           class="text-blue-700 font-black text-sm hover:underline">
-                            {{ $book->daerah->name }}, Riau
-                        </a>
-                    </div>
-                </div>
-                @endif
+
             </div>
 
             {{-- ══ RIGHT: Info ══ --}}
