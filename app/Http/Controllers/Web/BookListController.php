@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\ReadingLevel;
-use App\Models\BookType;
+use App\Models\Daerah;
 
 class BookListController extends Controller
 {
     public function index(Request $request)
     {
-        $query = Book::with(['readingLevel', 'stat', 'categories', 'bookTypes']);
+        $query = Book::with(['readingLevel', 'stat', 'categories', 'daerah']);
 
         // ── Search ──
         if ($search = $request->get('q')) {
@@ -45,9 +45,9 @@ class BookListController extends Controller
             $query->whereHas('categories', fn($q) => $q->where('categories.id', $kategori));
         }
 
-        // ── Filter Jenis Buku ──
-        if ($jenis = $request->get('jenis')) {
-            $query->whereHas('bookTypes', fn($q) => $q->where('book_types.id', $jenis));
+        // ── Filter Daerah ──
+        if ($daerah = $request->get('daerah')) {
+            $query->where('daerah_id', $daerah);
         }
 
         // ── Filter Tahun ──
@@ -66,33 +66,31 @@ class BookListController extends Controller
             default    => $query->orderBy('created_at', 'desc'),
         };
 
-        $books         = $query->paginate(20)->withQueryString();
-        $totalBuku     = Book::count();
-        $allKategori   = Category::withCount('books')->orderBy('name')->get();
-        $allJenjang    = ReadingLevel::orderBy('order')->get();
-        $allJenis      = BookType::orderBy('name')->get();
-        $tahunList     = Book::whereNotNull('tahun_terbit')
-                            ->distinct()
-                            ->orderByDesc('tahun_terbit')
-                            ->pluck('tahun_terbit');
+        $books       = $query->paginate(20)->withQueryString();
+        $totalBuku   = Book::count();
+        $allKategori = Category::withCount('books')->orderBy('name')->get();
+        $allJenjang  = ReadingLevel::orderBy('order')->get();
+        $allDaerah   = Daerah::withCount('books')->orderBy('name')->get();
+        $tahunList   = Book::whereNotNull('tahun_terbit')
+                          ->distinct()
+                          ->orderByDesc('tahun_terbit')
+                          ->pluck('tahun_terbit');
 
         return view('public.books.index', compact(
             'books', 'totalBuku',
-            'allKategori', 'allJenjang', 'allJenis', 'tahunList',
-            'search', 'lisensi', 'jenjang', 'kategori', 'jenis', 'tahun', 'sort'
+            'allKategori', 'allJenjang', 'allDaerah', 'tahunList',
+            'search', 'lisensi', 'jenjang', 'kategori', 'daerah', 'tahun', 'sort'
         ));
     }
 
     public function show($id)
     {
-        // Cari buku berdasarkan slug atau ID
-        $book = Book::with(['readingLevel', 'stat', 'categories', 'bookTypes'])
+        $book = Book::with(['readingLevel', 'stat', 'categories', 'daerah'])
             ->where('id', $id)
             ->orWhere('slug', $id)
             ->firstOrFail();
 
         // ── Logic Stats: Views ──
-        // Gunakan session untuk mencegah spam views dalam satu sesi
         $viewed = session()->get('viewed_books', []);
         if (!in_array($book->id, $viewed)) {
             $stat = $book->stat()->firstOrCreate(['book_id' => $book->id]);
@@ -105,13 +103,12 @@ class BookListController extends Controller
 
     /**
      * Fitur Like tanpa login (Public).
-     * Validasi dilakukan via frontend (localStorage) & backend increment/decrement.
      */
     public function toggleLike(Request $request, $id)
     {
         $book = Book::findOrFail($id);
         $stat = $book->stat()->firstOrCreate(['book_id' => $book->id]);
-        $type = $request->get('type', 'like'); // like atau unlike
+        $type = $request->get('type', 'like');
 
         if ($type === 'like') {
             $stat->increment('likes_count');
@@ -123,9 +120,9 @@ class BookListController extends Controller
         }
 
         return response()->json([
-            'success' => true,
-            'likes_count' => $stat->likes_count,
-            'likes_formatted' => number_format($stat->likes_count)
+            'success'          => true,
+            'likes_count'      => $stat->likes_count,
+            'likes_formatted'  => number_format($stat->likes_count)
         ]);
     }
 }

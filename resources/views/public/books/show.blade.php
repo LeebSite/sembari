@@ -125,6 +125,19 @@
                         <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Tahun Terbit</p>
                         <p class="text-gray-800 font-bold text-base leading-tight">{{ $book->tahun_terbit ?? '—' }}</p>
                     </div>
+                    <div class="metadata-item">
+                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Daerah Asal</p>
+                        <p class="text-gray-800 font-bold text-base leading-tight">
+                            @if($book->daerah)
+                                <span class="inline-flex items-center gap-1.5">
+                                    <i class="bi bi-geo-alt-fill text-blue-500 text-sm"></i>
+                                    {{ $book->daerah->name }}
+                                </span>
+                            @else
+                                —
+                            @endif
+                        </p>
+                    </div>
                 </div>
 
                 {{-- Description Full --}}
@@ -158,6 +171,23 @@
                                 </div>
                             @else
                                 <span class="text-gray-400 italic font-semibold text-[11px]">Semua Umur</span>
+                            @endif
+                        </div>
+
+                        {{-- Daerah Asal --}}
+                        <div>
+                            <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-3 flex items-center justify-start gap-2">
+                                <i class="bi bi-geo-alt-fill text-brand-blue"></i>
+                                <span>Daerah Asal</span>
+                            </p>
+                            @if($book->daerah)
+                                <a href="{{ route('book.list', ['daerah' => $book->daerah->id]) }}"
+                                   class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-lg text-[11px] font-bold border border-blue-100 hover:bg-blue-100 transition-colors">
+                                    <i class="bi bi-pin-map-fill text-blue-500"></i>
+                                    {{ $book->daerah->name }}, Riau
+                                </a>
+                            @else
+                                <span class="text-gray-400 italic font-semibold text-[11px]">—</span>
                             @endif
                         </div>
 

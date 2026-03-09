@@ -300,7 +300,7 @@
             <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 4h18M7 8h10M11 12h2M11 16h2"/></svg>
             Filter Koleksi
             @php
-                $activeCount = collect([request('lisensi'), request('jenjang'), request('kategori'), request('jenis'), request('tahun'), request('q')])->filter()->count();
+                $activeCount = collect([request('lisensi'), request('jenjang'), request('kategori'), request('daerah'), request('tahun'), request('q')])->filter()->count();
             @endphp
             @if($activeCount > 0)
             <span class="bg-red-500 text-white rounded-full w-5 h-5 text-[10px] flex items-center justify-center">{{ $activeCount }}</span>
@@ -389,6 +389,21 @@
                         </div>
                     </div>
 
+                    {{-- DAERAH --}}
+                    <div class="fgroup">
+                        <div class="fgroup-label"><i class="bi bi-geo-alt-fill text-blue-400"></i> <span>Daerah Asal</span></div>
+                        <div class="fselect-wrap">
+                            <select name="daerah" class="fselect" onchange="this.form.submit()">
+                                <option value="">Semua Daerah</option>
+                                @foreach($allDaerah as $d)
+                                    <option value="{{ $d->id }}" {{ ($daerah ?? '') == $d->id ? 'selected' : '' }}>
+                                        {{ $d->name }} ({{ $d->books_count }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
                     @if($tahunList->count() > 0)
                         <div class="fdivider"></div>
                         <div class="fgroup">
@@ -467,6 +482,14 @@
                             <div class="p-4 flex-1 flex flex-col">
                                 <h3 class="font-black text-gray-800 text-sm leading-snug line-clamp-2 mb-1 group-hover:text-brand-blue transition">{{ $book->title }}</h3>
                                 
+                                {{-- Daerah --}}
+                                @if($book->daerah)
+                                    <div class="flex items-center gap-1 text-[10px] font-bold text-blue-500 mb-1.5">
+                                        <i class="bi bi-geo-alt-fill"></i>
+                                        <span>{{ $book->daerah->name }}</span>
+                                    </div>
+                                @endif
+
                                 {{-- Kategori --}}
                                 @if($book->categories->count() > 0)
                                     <div class="text-[10px] text-gray-400 font-bold mb-2 flex flex-wrap gap-1">
