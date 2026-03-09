@@ -103,40 +103,43 @@
                     {{ $book->title }}
                 </h1>
 
-                {{-- Metadata Grid --}}
-                <div class="grid grid-cols-1 land-grid-cols-2 lg:grid-cols-2 gap-y-6 lg:gap-y-8 gap-x-10 mb-8 pb-8 border-b border-gray-100 px-4 lg:px-0">
+                {{-- Metadata Grid — selalu tampil 9 field --}}
+                <div class="grid grid-cols-2 lg:grid-cols-3 gap-y-6 gap-x-8 mb-8 pb-8 border-b border-gray-100 px-4 lg:px-0">
                     <div class="metadata-item">
                         <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Penulis</p>
-                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $details['Penulis'] ?? '—' }}</p>
+                        <p class="text-gray-800 font-bold text-sm leading-tight">{{ $details['Penulis'] ?? '—' }}</p>
                     </div>
                     <div class="metadata-item">
                         <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Penerjemah</p>
-                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $details['Penerjemah'] ?? '—' }}</p>
+                        <p class="text-gray-800 font-bold text-sm leading-tight">{{ $details['Penerjemah'] ?? '—' }}</p>
+                    </div>
+                    <div class="metadata-item">
+                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Penyunting</p>
+                        <p class="text-gray-800 font-bold text-sm leading-tight">{{ $details['Penyunting'] ?? '—' }}</p>
                     </div>
                     <div class="metadata-item">
                         <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Ilustrator</p>
-                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $details['Ilustrator'] ?? '—' }}</p>
+                        <p class="text-gray-800 font-bold text-sm leading-tight">{{ $details['Ilustrator'] ?? '—' }}</p>
                     </div>
                     <div class="metadata-item">
-                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Lisensi</p>
-                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $book->license ?? 'Buku Edisi Umum' }}</p>
+                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Penelaah</p>
+                        <p class="text-gray-800 font-bold text-sm leading-tight">{{ $details['Penelaah'] ?? '—' }}</p>
+                    </div>
+                    <div class="metadata-item">
+                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Penata Letak</p>
+                        <p class="text-gray-800 font-bold text-sm leading-tight">{{ $details['Penata Letak'] ?? '—' }}</p>
+                    </div>
+                    <div class="metadata-item">
+                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">ISBN</p>
+                        <p class="text-gray-800 font-bold text-sm leading-tight">{{ $details['ISBN'] ?? '—' }}</p>
                     </div>
                     <div class="metadata-item">
                         <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Tahun Terbit</p>
-                        <p class="text-gray-800 font-bold text-base leading-tight">{{ $book->tahun_terbit ?? '—' }}</p>
+                        <p class="text-gray-800 font-bold text-sm leading-tight">{{ $book->tahun_terbit ?? '—' }}</p>
                     </div>
                     <div class="metadata-item">
-                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Daerah Asal</p>
-                        <p class="text-gray-800 font-bold text-base leading-tight">
-                            @if($book->daerah)
-                                <span class="inline-flex items-center gap-1.5">
-                                    <i class="bi bi-geo-alt-fill text-blue-500 text-sm"></i>
-                                    {{ $book->daerah->name }}
-                                </span>
-                            @else
-                                —
-                            @endif
-                        </p>
+                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-[0.3em] mb-1.5">Lisensi</p>
+                        <p class="text-gray-800 font-bold text-sm leading-tight">{{ $book->license ?? '—' }}</p>
                     </div>
                 </div>
 

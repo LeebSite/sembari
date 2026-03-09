@@ -102,6 +102,9 @@ class BookController extends Controller
             'pdf_file.mimes' => 'File harus berupa format PDF.',
         ]);
 
+        // Rakit kolom detail dari input terstruktur
+        $detail = $this->buildDetailString($request);
+
         $slug = Str::slug($request->title);
 
         // Handle cover image upload
@@ -121,7 +124,7 @@ class BookController extends Controller
             'title'            => $request->title,
             'slug'             => $slug,
             'description'      => $request->description,
-            'detail'           => $request->detail,
+            'detail'           => $detail,
             'license'          => $request->license,
             'tahun_terbit'     => $request->tahun_terbit ?: null,
             'reading_level_id' => $request->reading_level_id,
@@ -245,6 +248,9 @@ class BookController extends Controller
             'pdf_file.mimes' => 'File harus berupa format PDF.',
         ]);
 
+        // Rakit kolom detail dari input terstruktur
+        $detail = $this->buildDetailString($request);
+
         $slug = Str::slug($request->title);
 
         // Get current book data
@@ -280,7 +286,7 @@ class BookController extends Controller
             'title'            => $request->title,
             'slug'             => $slug,
             'description'      => $request->description,
-            'detail'           => $request->detail,
+            'detail'           => $detail,
             'license'          => $request->license,
             'tahun_terbit'     => $request->tahun_terbit ?: null,
             'reading_level_id' => $request->reading_level_id,
@@ -343,5 +349,30 @@ class BookController extends Controller
 
         return redirect()->route('admin.books.index')
             ->with('success', 'Buku berhasil dihapus!');
+    }
+
+    /**
+     * Rakit string detail dari input terstruktur.
+     * Format output: "Penulis: xxx\nPenerjemah: xxx\n..."
+     */
+    private function buildDetailString($request): ?string
+    {
+        $fields = [
+            'Penulis'      => $request->detail_penulis,
+            'Penerjemah'   => $request->detail_penerjemah,
+            'Penyunting'   => $request->detail_penyunting,
+            'Ilustrator'   => $request->detail_ilustrator,
+            'Penelaah'     => $request->detail_penelaah,
+            'Penata Letak' => $request->detail_penata_letak,
+            'ISBN'         => $request->detail_isbn,
+        ];
+
+        $lines = [];
+        foreach ($fields as $label => $value) {
+            // Simpan semua field, kosong pun disimpan sebagai "-"
+            $lines[] = $label . ': ' . (trim($value ?? '') ?: '-');
+        }
+
+        return implode("\n", $lines);
     }
 }

@@ -429,31 +429,61 @@
                 </div>
             </div>
 
-            <!-- SECTION: Kontributor -->
+            <!-- SECTION: Detail Buku -->
             <div class="form-section">
                 <div class="form-section-header">
                     <div class="section-icon" style="background: linear-gradient(135deg,#0ea5e9,#0284c7);">
                         <i class="bi bi-people"></i>
                     </div>
                     <div>
-                        <h6>Detail</h6>
-                        <p>Penulis, ilustrator, penerjemah, dll.</p>
+                        <h6>Detail Buku</h6>
+                        <p>Penulis, penerjemah, ilustrator, dll. Kosongkan jika tidak ada.</p>
                     </div>
                 </div>
                 <div class="form-section-body">
-                    <div class="mb-0">
-                        <label class="form-label">Detail Buku</label>
-                        <textarea class="form-control description-area @error('detail') is-invalid @enderror"
-                                  name="detail"
-                                  rows="3"
-                                  placeholder="Contoh:&#10;Penulis: John Doe&#10;Ilustrator: Jane Smith&#10;Penerjemah: Bob Wilson">{{ old('detail') }}</textarea>
-                        <small class="text-muted mt-1 d-block">
-                            <i class="bi bi-info-circle me-1"></i>
-                            Tulis satu detail per baris
-                        </small>
-                        @error('detail')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Penulis</label>
+                            <input type="text" class="form-control" name="detail_penulis"
+                                   value="{{ old('detail_penulis') }}"
+                                   placeholder="Nama penulis buku">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Penerjemah</label>
+                            <input type="text" class="form-control" name="detail_penerjemah"
+                                   value="{{ old('detail_penerjemah') }}"
+                                   placeholder="Nama penerjemah">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Penyunting</label>
+                            <input type="text" class="form-control" name="detail_penyunting"
+                                   value="{{ old('detail_penyunting') }}"
+                                   placeholder="Nama penyunting / editor">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Ilustrator</label>
+                            <input type="text" class="form-control" name="detail_ilustrator"
+                                   value="{{ old('detail_ilustrator') }}"
+                                   placeholder="Nama ilustrator">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Penelaah</label>
+                            <input type="text" class="form-control" name="detail_penelaah"
+                                   value="{{ old('detail_penelaah') }}"
+                                   placeholder="Nama penelaah / reviewer">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Penata Letak</label>
+                            <input type="text" class="form-control" name="detail_penata_letak"
+                                   value="{{ old('detail_penata_letak') }}"
+                                   placeholder="Nama penata letak / layout">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">ISBN</label>
+                            <input type="text" class="form-control" name="detail_isbn"
+                                   value="{{ old('detail_isbn') }}"
+                                   placeholder="978-602-xxx-xxx-x">
+                        </div>
                     </div>
                 </div>
             </div>

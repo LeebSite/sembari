@@ -394,30 +394,74 @@
                 </div>
             </div>
 
-            <!-- SECTION: Kontributor -->
+            <!-- SECTION: Detail Buku -->
             <div class="form-section">
                 <div class="form-section-header">
                     <div class="section-icon" style="background: linear-gradient(135deg,#0ea5e9,#0284c7);">
                         <i class="bi bi-people"></i>
                     </div>
                     <div>
-                        <h6>Detail</h6>
-                        <p>Penulis, ilustrator, penerjemah, dll.</p>
+                        <h6>Detail Buku</h6>
+                        <p>Penulis, penerjemah, ilustrator, dll. Kosongkan jika tidak ada.</p>
                     </div>
                 </div>
+                @php
+                    // Parse detail lama (format "Key : Value" per baris)
+                    $detailParsed = [];
+                    if ($book->detail) {
+                        foreach (explode("\n", str_replace("\r", "", $book->detail)) as $line) {
+                            if (str_contains($line, ':')) {
+                                [$k, $v] = explode(':', $line, 2);
+                                $detailParsed[trim(strtolower(str_replace(' ', '_', $k)))] = trim($v);
+                            }
+                        }
+                    }
+                    $dp = fn($key) => old('detail_' . $key, $detailParsed[$key] ?? $detailParsed[strtolower($key)] ?? '');
+                @endphp
                 <div class="form-section-body">
-                    <div class="mb-0">
-                        <label class="form-label">Detail Buku</label>
-                        <textarea class="form-control description-area @error('detail') is-invalid @enderror"
-                                  name="detail"
-                                  rows="3"
-                                  placeholder="Contoh:&#10;Penulis: John Doe&#10;Ilustrator: Jane Smith">{{ old('detail', $book->detail) }}</textarea>
-                        <small class="text-muted mt-1 d-block">
-                            <i class="bi bi-info-circle me-1"></i>Tulis satu detail per baris
-                        </small>
-                        @error('detail')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Penulis</label>
+                            <input type="text" class="form-control" name="detail_penulis"
+                                   value="{{ $dp('penulis') }}"
+                                   placeholder="Nama penulis buku">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Penerjemah</label>
+                            <input type="text" class="form-control" name="detail_penerjemah"
+                                   value="{{ $dp('penerjemah') }}"
+                                   placeholder="Nama penerjemah">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Penyunting</label>
+                            <input type="text" class="form-control" name="detail_penyunting"
+                                   value="{{ $dp('penyunting') }}"
+                                   placeholder="Nama penyunting / editor">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Ilustrator</label>
+                            <input type="text" class="form-control" name="detail_ilustrator"
+                                   value="{{ $dp('ilustrator') }}"
+                                   placeholder="Nama ilustrator">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Penelaah</label>
+                            <input type="text" class="form-control" name="detail_penelaah"
+                                   value="{{ $dp('penelaah') }}"
+                                   placeholder="Nama penelaah / reviewer">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Penata Letak</label>
+                            <input type="text" class="form-control" name="detail_penata_letak"
+                                   value="{{ old('detail_penata_letak', $detailParsed['penata_letak'] ?? $detailParsed['penata letak'] ?? '') }}"
+                                   placeholder="Nama penata letak / layout">
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">ISBN</label>
+                            <input type="text" class="form-control" name="detail_isbn"
+                                   value="{{ $dp('isbn') }}"
+                                   placeholder="978-602-xxx-xxx-x">
+                        </div>
                     </div>
                 </div>
             </div>
