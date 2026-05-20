@@ -145,6 +145,98 @@ Route::prefix('admin')
 | MAINTENANCE ROUTES
 |--------------------------------------------------------------------------
 */
+
+Route::get('/linkstorage', function () {
+    $log = [];
+
+    // Target storage yang berisi file upload
+    $storagePath = storage_path('app/public');
+    // /home/xjkvtwyw/sembari/storage/app/public
+
+    // Web root yang benar-benar diakses browser (public_html)
+    // Naik dari: sembari/ -> xjkvtwyw/ -> masuk ke public_html/
+    $publicHtml  = realpath(base_path('/../public_html'));
+    // Fallback: coba deteksi manual jika realpath gagal
+    if (!$publicHtml) {
+        $publicHtml = dirname(base_path()) . '/public_html';
+    }
+
+    // Daftar path symlink yang akan dicoba (prioritas: public_html dulu)
+    $linkTargets = [
+        $publicHtml . '/storage',                // public_html/storage  ← UTAMA
+        public_path('storage'),                  // sembari/public/storage (backup)
+    ];
+
+    $log[] = "<b>Storage Source:</b> $storagePath";
+    $log[] = "<b>public_html terdeteksi:</b> $publicHtml";
+    $log[] = "---";
+
+    // Fungsi rekursif hapus folder
+    $deleteDir = function (string $dir) use (&$deleteDir): bool {
+        if (!file_exists($dir)) return true;
+        if (is_link($dir)) return unlink($dir);
+        foreach (array_diff(scandir($dir), ['.', '..']) as $item) {
+            $sub = $dir . DIRECTORY_SEPARATOR . $item;
+            is_dir($sub) && !is_link($sub) ? $deleteDir($sub) : unlink($sub);
+        }
+        return rmdir($dir);
+    };
+
+    foreach ($linkTargets as $linkPath) {
+        $log[] = "<b>Proses:</b> $linkPath";
+
+        if (!file_exists(dirname($linkPath))) {
+            $log[] = "&nbsp;&nbsp;❌ Folder induk tidak ditemukan, dilewati.";
+            continue;
+        }
+
+        // Hapus jika sudah ada (folder asli atau symlink lama)
+        if (file_exists($linkPath) || is_link($linkPath)) {
+            if (is_link($linkPath)) {
+                $target = readlink($linkPath);
+                if ($target === $storagePath) {
+                    $log[] = "&nbsp;&nbsp;✅ Symlink sudah benar, dilewati.";
+                    continue;
+                }
+                unlink($linkPath);
+                $log[] = "&nbsp;&nbsp;🗑️ Symlink lama (salah target) dihapus.";
+            } else {
+                $ok = $deleteDir($linkPath);
+                $log[] = $ok
+                    ? "&nbsp;&nbsp;🗑️ Folder asli berhasil dihapus."
+                    : "&nbsp;&nbsp;❌ Gagal hapus folder asli (periksa permission).";
+                if (!$ok) continue;
+            }
+        }
+
+        // Buat symlink
+        try {
+            symlink($storagePath, $linkPath);
+            $log[] = "&nbsp;&nbsp;✅ <span style='color:#4ade80'><b>Symlink berhasil dibuat!</b></span> → $storagePath";
+        } catch (\Exception $e) {
+            $log[] = "&nbsp;&nbsp;❌ Gagal: " . $e->getMessage();
+        }
+    }
+
+    $output = implode("<br>", $log);
+
+    return '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Storage Link</title>
+    <style>
+        body{font-family:sans-serif;background:#0f172a;display:flex;justify-content:center;align-items:flex-start;padding:50px;min-height:100vh;}
+        .card{background:#1e293b;border-radius:16px;padding:40px;box-shadow:0 10px 40px rgba(0,0,0,.4);max-width:750px;width:100%;}
+        h2{color:#818cf8;text-align:center;margin:0 0 24px;}
+        .log{background:#0f172a;color:#a5b4fc;padding:20px;border-radius:10px;font-family:monospace;font-size:13px;line-height:2.2;word-break:break-all;}
+        .btn{display:block;text-align:center;margin-top:24px;text-decoration:none;background:#6366f1;color:white;padding:12px 28px;border-radius:8px;font-weight:700;}
+        .btn:hover{background:#4f46e5;}
+    </style></head><body><div class="card">
+    <h2>🔗 Storage Link Manager</h2>
+    <div class="log">' . $output . '</div>
+    <a class="btn" href="' . url('/') . '">← Kembali ke Home</a>
+    </div></body></html>';
+});
+
+
+
 Route::get('/maintenance', function () {
     $log = [];
     

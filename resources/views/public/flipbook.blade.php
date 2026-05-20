@@ -58,13 +58,43 @@
         #reader-wrapper {
             flex: 1; display: flex; align-items: center; justify-content: center;
             position: relative; overflow: hidden; padding: 10px;
+            touch-action: none; /* Penting: matikan default touch agar pinch bisa dikontrol JS */
         }
 
         #book-viewport {
             visibility: hidden;
+            transform-origin: center center;
+            transition: transform 0.05s linear;
+            will-change: transform;
             /* background: #fff; - DIHAPUS agar tidak ada blok putih */
         }
         #book-viewport.ready { visibility: visible; }
+
+        /* Indikator pinch zoom di mobile */
+        #zoom-indicator {
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.65);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        #zoom-indicator.visible { opacity: 1; }
+
+        /* Saat zoom aktif, sembunyikan side nav agar tidak mengganggu pan */
+        body.zoomed #prev-btn,
+        body.zoomed #next-btn {
+            opacity: 0.3;
+            pointer-events: none;
+        }
 
         .st-page {
             background-color: white;
@@ -213,6 +243,8 @@
 
     <button id="prev-btn" class="side-nav"><i class="bi bi-chevron-left"></i></button>
     <button id="next-btn" class="side-nav"><i class="bi bi-chevron-right"></i></button>
+
+    <div id="zoom-indicator">100%</div>
 
     <div id="reader-wrapper">
         <div id="book-viewport"></div>
@@ -371,20 +403,133 @@
                 document.getElementById('prev-btn').onclick = () => pageFlip.flipPrev();
                 document.getElementById('next-btn').onclick = () => pageFlip.flipNext();
                 
+                // ─── State Zoom & Pan ─────────────────────────────────
                 let zoom = 1;
-                document.getElementById('zoom-in').onclick = () => { zoom += 0.1; viewport.style.transform = `scale(${zoom})`; };
-                document.getElementById('zoom-out').onclick = () => { if(zoom > 0.5) zoom -= 0.1; viewport.style.transform = `scale(${zoom})`; };
-                document.getElementById('home-btn').onclick = () => { zoom = 1; viewport.style.transform = 'scale(1)'; };
+                let panX = 0, panY = 0;
+                const MIN_ZOOM = 0.5, MAX_ZOOM = 4;
+                const zoomIndicator = document.getElementById('zoom-indicator');
+                let zoomIndicatorTimer = null;
+
+                function applyTransform() {
+                    // Saat zoom = 1, reset pan ke tengah
+                    if (zoom <= 1) { panX = 0; panY = 0; }
+                    viewport.style.transform = `scale(${zoom}) translate(${panX}px, ${panY}px)`;
+
+                    // Tampilkan indikator
+                    zoomIndicator.textContent = Math.round(zoom * 100) + '%';
+                    zoomIndicator.classList.add('visible');
+                    clearTimeout(zoomIndicatorTimer);
+                    zoomIndicatorTimer = setTimeout(() => zoomIndicator.classList.remove('visible'), 1500);
+
+                    // Toggle class 'zoomed' di body untuk disable flip button
+                    document.body.classList.toggle('zoomed', zoom > 1.05);
+                }
+
+                // ─── Zoom Button (Desktop & Mobile) ───────────────────
+                document.getElementById('zoom-in').onclick = () => {
+                    zoom = Math.min(MAX_ZOOM, zoom + 0.2);
+                    applyTransform();
+                };
+                document.getElementById('zoom-out').onclick = () => {
+                    zoom = Math.max(MIN_ZOOM, zoom - 0.2);
+                    applyTransform();
+                };
+                document.getElementById('home-btn').onclick = () => {
+                    zoom = 1; panX = 0; panY = 0;
+                    applyTransform();
+                };
                 document.getElementById('full-screen').onclick = () => {
                     if (!document.fullscreenElement) document.documentElement.requestFullscreen();
                     else document.exitFullscreen();
                 };
 
-                // Keyboard Navigation
+                // ─── Keyboard Navigation ──────────────────────────────
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'ArrowLeft') pageFlip.flipPrev();
                     if (e.key === 'ArrowRight') pageFlip.flipNext();
                 });
+
+                // ─── PINCH TO ZOOM (Touch) ────────────────────────────
+                const readerWrapper = document.getElementById('reader-wrapper');
+
+                let lastDist = 0;         // jarak 2 jari terakhir
+                let pinching = false;     // sedang pinch?
+                let zoomAtPinchStart = 1; // zoom saat pinch mulai
+
+                // Pan state
+                let isPanning = false;
+                let panStartX = 0, panStartY = 0;
+                let panXAtStart = 0, panYAtStart = 0;
+
+                function getTouchDist(touches) {
+                    const dx = touches[0].clientX - touches[1].clientX;
+                    const dy = touches[0].clientY - touches[1].clientY;
+                    return Math.sqrt(dx * dx + dy * dy);
+                }
+
+                readerWrapper.addEventListener('touchstart', (e) => {
+                    if (e.touches.length === 2) {
+                        // ── Mulai Pinch ──
+                        pinching = true;
+                        isPanning = false;
+                        lastDist = getTouchDist(e.touches);
+                        zoomAtPinchStart = zoom;
+                        e.preventDefault();
+                    } else if (e.touches.length === 1 && zoom > 1.05) {
+                        // ── Mulai Pan (hanya jika sudah zoom) ──
+                        isPanning = true;
+                        pinching = false;
+                        panStartX = e.touches[0].clientX;
+                        panStartY = e.touches[0].clientY;
+                        panXAtStart = panX;
+                        panYAtStart = panY;
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+
+                readerWrapper.addEventListener('touchmove', (e) => {
+                    if (pinching && e.touches.length === 2) {
+                        // ── Hitung zoom baru dari rasio jarak jari ──
+                        const dist = getTouchDist(e.touches);
+                        const delta = dist / lastDist;
+                        zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoomAtPinchStart * delta));
+                        applyTransform();
+                        e.preventDefault();
+                    } else if (isPanning && e.touches.length === 1 && zoom > 1.05) {
+                        // ── Hitung offset pan ──
+                        const dx = (e.touches[0].clientX - panStartX) / zoom;
+                        const dy = (e.touches[0].clientY - panStartY) / zoom;
+
+                        // Batasi pan agar tidak keluar terlalu jauh
+                        const maxPan = 300;
+                        panX = Math.min(maxPan, Math.max(-maxPan, panXAtStart + dx));
+                        panY = Math.min(maxPan, Math.max(-maxPan, panYAtStart + dy));
+                        applyTransform();
+                        e.preventDefault();
+                    }
+                }, { passive: false });
+
+                readerWrapper.addEventListener('touchend', (e) => {
+                    if (e.touches.length < 2) pinching = false;
+                    if (e.touches.length === 0) {
+                        isPanning = false;
+                        // Snap kembali ke zoom=1 jika hampir normal
+                        if (zoom < 1.1) {
+                            zoom = 1;
+                            applyTransform();
+                        }
+                    }
+                });
+
+                // ─── Mouse Wheel Zoom (Desktop) ───────────────────────
+                readerWrapper.addEventListener('wheel', (e) => {
+                    if (e.ctrlKey || e.metaKey) {
+                        e.preventDefault();
+                        const delta = e.deltaY > 0 ? -0.1 : 0.1;
+                        zoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom + delta));
+                        applyTransform();
+                    }
+                }, { passive: false });
             }
         });
     </script>

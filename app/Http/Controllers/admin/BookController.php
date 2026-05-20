@@ -185,13 +185,22 @@ class BookController extends Controller
             ->select('categories.name')
             ->get();
 
-        $regions = DB::table('book_daerah')
-            ->join('daerah', 'book_daerah.daerah_id', '=', 'daerah.id')
-            ->where('book_daerah.book_id', $id)
+        // Daerah diambil langsung dari kolom daerah_id di tabel books (one-to-one)
+        $regions = DB::table('books')
+            ->leftJoin('daerah', 'books.daerah_id', '=', 'daerah.id')
+            ->where('books.id', $id)
             ->select('daerah.name')
+            ->get()
+            ->filter(fn($r) => !is_null($r->name)); // buang jika daerah_id null
+
+        // Jenis buku dari pivot book_book_type → book_types
+        $bookTypes = DB::table('book_book_type')
+            ->join('book_types', 'book_book_type.book_type_id', '=', 'book_types.id')
+            ->where('book_book_type.book_id', $id)
+            ->select('book_types.name')
             ->get();
 
-        return view('admin.books.show', compact('book', 'categories', 'regions'));
+        return view('admin.books.show', compact('book', 'categories', 'regions', 'bookTypes'));
     }
 
     /**
