@@ -154,36 +154,41 @@
 
         #page-info { color: white; font-weight: 700; font-size: 0.8rem; min-width: 50px; text-align: center; }
 
-        /* Finish Modal Styles */
+        /* Finish / Rating Modal */
         #finish-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(10px);
+            position: fixed; inset: 0; background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(12px);
             display: none; align-items: center; justify-content: center; z-index: 3000;
-            opacity: 0; transition: 0.5s;
+            opacity: 0; transition: opacity 0.4s ease;
         }
         #finish-overlay.show { display: flex; opacity: 1; }
 
         .finish-card {
-            background: white; width: 90%; max-width: 500px; padding: 40px;
-            border-radius: 30px; text-align: center; position: relative;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            background: white; width: 90%; max-width: 480px; padding: 36px 32px 28px;
+            border-radius: 28px; text-align: center; position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+            animation: cardPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+        }
+        @keyframes cardPop {
+            from { transform: scale(0.85); opacity: 0; }
+            to   { transform: scale(1);    opacity: 1; }
         }
         .close-finish {
-            position: absolute; top: 20px; right: 20px; font-size: 1.5rem;
-            color: #94a3b8; cursor: pointer;
+            position: absolute; top: 18px; right: 20px; font-size: 1.4rem;
+            color: #cbd5e1; cursor: pointer; transition: color 0.2s;
         }
-        .finish-title { font-weight: 800; font-size: 1.5rem; color: #1e293b; margin-bottom: 30px; }
-        
-        .rating-container { display: flex; gap: 20px; justify-content: center; margin-bottom: 30px; }
-        .rating-option {
-            flex: 1; padding: 25px 15px; border: 2px solid #f1f5f9; border-radius: 20px;
-            cursor: pointer; transition: 0.3s;
-        }
-        .rating-option:hover { border-color: var(--primary); background: #f8fafc; transform: translateY(-5px); }
-        .rating-option img { width: 80px; height: 80px; margin: 0 auto 15px; }
-        .rating-label { font-weight: 700; color: #475569; }
+        .close-finish:hover { color: #64748b; }
+        .finish-title { font-weight: 800; font-size: 1.35rem; color: #1e293b; margin-bottom: 28px; line-height: 1.4; }
 
-        .footer-note { font-size: 0.75rem; color: #94a3b8; margin-top: 20px; }
+        .rating-container { display: flex; gap: 16px; justify-content: center; margin-bottom: 24px; }
+        .rating-option {
+            flex: 1; padding: 22px 12px 18px; border: 2px solid #f1f5f9; border-radius: 20px;
+            cursor: pointer; transition: all 0.25s ease; background: #fafafa;
+        }
+        .rating-option:hover { border-color: var(--primary); background: #f0f0ff; transform: translateY(-6px); box-shadow: 0 8px 24px rgba(99,102,241,0.15); }
+        .rating-option:active { transform: translateY(-2px); }
+        .rating-emoji { font-size: 64px; line-height: 1; display: block; margin-bottom: 12px; }
+        .rating-label { font-weight: 700; font-size: 0.95rem; color: #475569; }
 
         #loading-overlay {
             position: fixed; inset: 0; background: #f9fafb;
@@ -204,24 +209,24 @@
         <div id="loading-text">Menyiapkan Koleksi...</div>
     </div>
 
-    <!-- Finish Modal -->
+    <!-- Finish / Rating Modal -->
     <div id="finish-overlay">
         <div class="finish-card">
             <i class="bi bi-x-lg close-finish" onclick="hideFinish()"></i>
-            <h2 class="finish-title">Apakah kamu menyukai cerita dalam buku ini?</h2>
-            
+            <h2 class="finish-title">Apakah kamu menyukai<br>cerita dalam buku ini?</h2>
+
             <div class="rating-container">
-                <div class="rating-option" onclick="submitRating('biasa')">
-                    <img src="https://openmoji.org/data/color/svg/1F610.svg" alt="Biasa Saja">
+                <div class="rating-option" id="opt-biasa" onclick="submitRating('biasa')">
+                    <span class="rating-emoji">😐</span>
                     <div class="rating-label">Biasa Saja.</div>
                 </div>
-                <div class="rating-option" onclick="submitRating('suka')">
-                    <img src="https://openmoji.org/data/color/svg/1F60D.svg" alt="Sangat Suka!">
+                <div class="rating-option" id="opt-suka" onclick="submitRating('suka')">
+                    <span class="rating-emoji">😍</span>
                     <div class="rating-label">Sangat Suka!</div>
                 </div>
             </div>
 
-            <a href="{{ route('home') }}" style="display: inline-block; padding: 12px 30px; background: var(--primary); color: white; text-decoration: none; border-radius: 50px; font-weight: 700; margin-top: 10px;">
+            <a href="{{ route('book.list') }}" style="display:inline-block; padding:11px 28px; background:var(--primary); color:white; text-decoration:none; border-radius:50px; font-weight:700; font-size:0.9rem;">
                 Cari Buku Lain
             </a>
         </div>
@@ -231,7 +236,10 @@
     <div class="hover-zone-bottom"></div>
 
     <div id="top-header">
-        <a href="{{ route('book.show', $book->id) }}" style="color: var(--primary); text-decoration: none; font-size: 1.2rem;">
+        {{-- Tombol kembali: intercept jika sudah sampai halaman terakhir --}}
+        <a href="{{ route('book.show', $book->id) }}" id="back-btn"
+           style="color: var(--primary); text-decoration: none; font-size: 1.2rem;"
+           onclick="handleBackButton(event, '{{ route('book.show', $book->id) }}')">
             <i class="bi bi-arrow-left-short"></i>
         </a>
         <div class="header-title">
@@ -269,12 +277,46 @@
 
     <script>
         let pageFlip;
-        
+        let reachedLastPage = false;   // apakah pembaca sudah sampai halaman terakhir?
+        let pendingBackUrl  = null;     // URL tujuan setelah menutup modal
+
+        function showFinishModal(backUrl) {
+            pendingBackUrl = backUrl || null;
+            const overlay = document.getElementById('finish-overlay');
+            overlay.style.display = 'flex';
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => overlay.classList.add('show'));
+            });
+        }
+
         function hideFinish() {
-            document.getElementById('finish-overlay').classList.remove('show');
+            const overlay = document.getElementById('finish-overlay');
+            overlay.classList.remove('show');
+            // Setelah transisi selesai, sembunyikan dan navigasi jika ada
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                if (pendingBackUrl) {
+                    window.location.href = pendingBackUrl;
+                }
+            }, 400);
+        }
+
+        // Intercept tombol kembali: tampilkan rating dulu jika sudah di halaman terakhir
+        function handleBackButton(event, backUrl) {
+            if (reachedLastPage) {
+                event.preventDefault();
+                showFinishModal(backUrl);
+            }
+            // Jika belum sampai halaman terakhir, biarkan navigasi normal
         }
 
         async function submitRating(val) {
+            // Tampilkan loading state pada tombol
+            document.querySelectorAll('.rating-option').forEach(el => {
+                el.style.pointerEvents = 'none';
+                el.style.opacity = '0.6';
+            });
+
             // Hanya kirim like jika memilih "suka"
             if (val === 'suka') {
                 try {
@@ -286,17 +328,16 @@
                         },
                         body: JSON.stringify({ type: 'like' })
                     });
-                    
                     const result = await response.json();
                     if (result.success) {
-                        console.log("Liked! New count:", result.likes_count);
+                        console.log('Liked! Count:', result.likes_count);
                     }
                 } catch (error) {
-                    console.error("Error liking book:", error);
+                    console.error('Error liking book:', error);
                 }
             }
-            
-            // Redirect ke Koleksi (Notifikasi akan muncul di sana via session flash)
+
+            // Redirect ke daftar koleksi
             window.location.href = "{{ route('book.list') }}";
         }
 
@@ -391,12 +432,18 @@
                 pageFlip.on('flip', (e) => {
                     const currentPage = e.data + 1;
                     document.getElementById('page-info').innerText = `${currentPage} / ${count}`;
-                    
-                    // Jika sampai halaman terakhir, munculkan modal Like
-                    if (currentPage === count) {
-                        setTimeout(() => {
-                            document.getElementById('finish-overlay').classList.add('show');
-                        }, 1000);
+
+                    // Tandai jika sudah sampai 2 halaman terakhir
+                    if (e.data >= count - 2) {
+                        reachedLastPage = true;
+                    }
+                });
+
+                pageFlip.on('changeState', () => {
+                    // Backup deteksi via getCurrentPageIndex
+                    const curr = pageFlip.getCurrentPageIndex();
+                    if (curr >= count - 2) {
+                        reachedLastPage = true;
                     }
                 });
 
